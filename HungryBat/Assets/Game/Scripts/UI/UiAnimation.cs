@@ -11,7 +11,6 @@ namespace Game.UI
         [SerializeField] private Transform _skills;
         [SerializeField] private Transform _starProgress;
         [SerializeField] private Transform _score;
-        [SerializeField] private Transform[] _levelFruit;
 
         private void Start()
         {
@@ -26,7 +25,6 @@ namespace Game.UI
             sequence.Append(AnimateScore());
             sequence.Append(AnimateBat());
             sequence.Append(AnimateGoal());
-            sequence.Append(AnimateLevelFruit());
             sequence.Append(AnimateSkills());
 
             sequence.Play();
@@ -77,19 +75,6 @@ namespace Game.UI
         {
             float duration = 0.5f;
             return PopAnimation(_goal, duration);
-        }
-
-        private Tween AnimateLevelFruit()
-        {
-            float duration = 0.5f;
-            Tween tween = null;
-
-            foreach (Transform fruit in _levelFruit)
-            {
-                tween = PopAnimation(fruit, duration);
-            }
-
-            return tween;
         }
 
         private Tween AnimateSkills()
