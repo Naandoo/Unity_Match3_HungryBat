@@ -41,3 +41,18 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Environment
+    uniqueID: 534531885
+    locked: 0
+  - name: Background Board
+    uniqueID: 1839021475
+    locked: 0
+  - name: Fruits
+    uniqueID: 1628530307
+    locked: 0
+  - name: UI
+    uniqueID: 1961707165
+    locked: 0
+  - name: Particles
+    uniqueID: 2024906231
+    locked: 0
