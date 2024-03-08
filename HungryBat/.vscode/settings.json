@@ -52,5 +52,9 @@
     "Temp/": true
   },
   "dotnet.preferCSharpExtension": true,
-  "cSpell.words": ["Behaviour"]
+  "cSpell.words": [
+    "Behaviour",
+    "Tilemap",
+    "Tilemaps"
+  ]
 }
