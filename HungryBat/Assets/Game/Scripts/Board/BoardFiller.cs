@@ -8,8 +8,8 @@ public class BoardFiller : MonoBehaviour
     [SerializeField] private BoardListener _boardListener;
     private const float _itemOffset = 0.25f;
     private BoardItem[,] _boardItemsArray;
-    public int Rows { get => _boardTilemap.size.x; private set { } }
-    public int Columns { get => _boardTilemap.size.y; private set { } }
+    public int Columns { get => _boardTilemap.size.x; private set { } }
+    public int Rows { get => _boardTilemap.size.y; private set { } }
     public BoardItem[,] BoardItemsArray { get => _boardItemsArray; private set { } }
 
     private void Start()
@@ -26,81 +26,79 @@ public class BoardFiller : MonoBehaviour
 
     private void CreateBoard()
     {
-        int rows = _boardTilemap.size.x;
-        int columns = _boardTilemap.size.y;
-        _boardItemsArray = new BoardItem[rows, columns];
+        _boardItemsArray = new BoardItem[Columns, Rows];
 
-        for (int i = 0; i < rows; i++)
+        for (int i = 0; i < Columns; i++)
         {
-            for (int j = 0; j < columns; j++)
+            for (int j = 0; j < Rows; j++)
             {
-                Vector3Int cellPosition = GetCellPosition(i, j);
+                Vector3Int cellPosition = GetCellPosition(j, i);
                 if (_boardTilemap.HasTile(cellPosition))
                 {
-                    GenerateBoardItem(i, j);
+                    GenerateBoardItem(j, i);
                 }
             }
         }
     }
 
-    private Vector3Int GetCellPosition(int row, int column)
+    private Vector3Int GetCellPosition(int column, int row)
     {
-        Vector3Int cellPosition = new(_boardTilemap.cellBounds.x + row, _boardTilemap.cellBounds.y + column, 0);
+        Vector3Int cellPosition = new(_boardTilemap.cellBounds.x + column, _boardTilemap.cellBounds.y + row, 0);
 
         return cellPosition;
     }
 
-    private void GenerateBoardItem(int row, int column)
+    private void GenerateBoardItem(int column, int row)
     {
         BoardItem item = _boardItemPool.PoolSystem.Get();
 
-        _boardItemsArray[row, column] = item;
+        _boardItemsArray[column, row] = item;
 
-        item.UpdatePosition(row, column, itemPosition: GetItemPosition(row, column));
+        item.UpdatePosition(column, row, itemPosition: GetItemPosition(column, row));
         _boardListener.SubscribeEventsIn(item);
     }
 
-    public Vector3 GetItemPosition(int row, int column)
+    public Vector3 GetItemPosition(int column, int row)
     {
-        Vector3Int cellPosition = GetCellPosition(row, column);
+        Vector3Int cellPosition = GetCellPosition(column, row);
         Vector3 offset = new(0, _itemOffset, 0);
         Vector3 itemPosition = _boardTilemap.CellToWorld(cellPosition) + _boardTilemap.tileAnchor + offset;
 
         return itemPosition;
     }
 
-    public void CheckEmptyStartingAt(int row, int column)
+    public void CheckEmptyStartingAt(int column, int row)
     {
         for (int i = row; i < Rows; i++)
         {
             if (IsEmptyBoardItem(i, column))
             {
-                GenerateBoardItem(row: i, column);
+                GenerateBoardItem(column, row: i);
             }
         }
     }
 
-    public void ReleaseItem(int row, int column)
+    public void ReleaseItem(int column, int row)
     {
-        _boardListener.UnsubscribeEvents(_boardItemsArray[row, column]);
-        _boardItemsArray[row, column] = null;
+        _boardListener.UnsubscribeEvents(_boardItemsArray[column, row]);
+        _boardItemsArray[column, row] = null;
 
     }
 
-    public bool IsEmptyBoardItem(int row, int column)
+    public bool IsEmptyBoardItem(int column, int row)
     {
-        bool IsEmpty = _boardItemsArray[row, column] == null;
+        bool IsEmpty = _boardItemsArray[column, row] == null;
         return IsEmpty;
     }
 
-    public void UpdateItemPosition(BoardItem boardItem, int newRow, int newColumn, Vector3 itemPosition)
+    public void UpdateItemPosition(BoardItem boardItem, int newColumn, int newRow, Vector3 itemPosition)
     {
-        int oldRow = boardItem.Row;
         int oldColumn = boardItem.Column;
+        int oldRow = boardItem.Row;
 
-        _boardItemsArray[newRow, newColumn] = boardItem;
-        boardItem.UpdatePosition(newRow, newColumn, itemPosition);
+        _boardItemsArray[newColumn, newRow] = boardItem;
+        boardItem.UpdatePosition(newColumn, newRow, itemPosition);
 
-        ReleaseItem(oldRow, oldColumn);
+        ReleaseItem(oldColumn, oldRow);
     }
 }

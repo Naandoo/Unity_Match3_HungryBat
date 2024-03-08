@@ -4,23 +4,23 @@ using UnityEngine.Events;
 
 public class BoardItem : MonoBehaviour
 {
-    private int _row;
     private int _column;
-    public int Row { get => _row; set { } }
+    private int _row;
     public int Column { get => _column; set { } }
+    public int Row { get => _row; set { } }
     private const float moveDuration = 0.5f;
     public ItemVanishEvent OnItemVanish = new();
 
     private void OnMouseDown()
     {
         Debug.Log(_row + " " + _column);
-        // Vanish();
+        Vanish();
     }
 
-    public void UpdatePosition(int Row, int Column, Vector3 itemPosition)
+    public void UpdatePosition(int Column, int Row, Vector3 itemPosition)
     {
-        _row = Row;
         _column = Column;
+        _row = Row;
 
         Move(itemPosition);
         // Debug.Log(_row + " " + _column);

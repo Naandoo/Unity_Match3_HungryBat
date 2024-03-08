@@ -8,26 +8,26 @@ public class BoardListener : MonoBehaviour
 
     public void SubscribeEventsIn(BoardItem boardItem)
     {
-        int Row = boardItem.Row;
         int Column = boardItem.Column;
+        int Row = boardItem.Row;
 
-        boardItem.OnItemVanish.AddListener((Row, Column) =>
+        boardItem.OnItemVanish.AddListener((Column, Row) =>
         {
-            _boardFiller.ReleaseItem(Row, Column);
-            _boardSorter.OnReleasedItem(Row, Column);
+            _boardFiller.ReleaseItem(Column, Row);
+            _boardSorter.OnReleasedItem(Column, Row);
             _boardItemPool.OnReleasedItem(boardItem);
         });
     }
 
     public void UnsubscribeEvents(BoardItem boardItem)
     {
-        int Row = boardItem.Row;
         int Column = boardItem.Column;
+        int Row = boardItem.Row;
 
-        boardItem.OnItemVanish.RemoveListener((Row, Column) =>
+        boardItem.OnItemVanish.RemoveListener((Column, Row) =>
         {
-            _boardSorter.OnReleasedItem(Row, Column);
-            _boardFiller.ReleaseItem(Row, Column);
+            _boardSorter.OnReleasedItem(Column, Row);
+            _boardFiller.ReleaseItem(Column, Row);
             _boardItemPool.OnReleasedItem(boardItem);
         });
     }
