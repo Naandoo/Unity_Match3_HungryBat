@@ -14,21 +14,21 @@ public class BoardListener : MonoBehaviour
         boardItem.OnItemVanish.AddListener((Column, Row) =>
         {
             _boardFiller.ReleaseItem(Column, Row);
-            _boardSorter.OnReleasedItem(Column, Row);
             _boardItemPool.OnReleasedItem(boardItem);
+            _boardSorter.OnReleasedItem(Column, Row);
         });
     }
 
-    public void UnsubscribeEvents(BoardItem boardItem)
+    public void UnsubscribeEventsIn(BoardItem boardItem)
     {
         int Column = boardItem.Column;
         int Row = boardItem.Row;
 
         boardItem.OnItemVanish.RemoveListener((Column, Row) =>
         {
-            _boardSorter.OnReleasedItem(Column, Row);
             _boardFiller.ReleaseItem(Column, Row);
             _boardItemPool.OnReleasedItem(boardItem);
+            _boardSorter.OnReleasedItem(Column, Row);
         });
     }
 }

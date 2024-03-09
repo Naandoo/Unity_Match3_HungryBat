@@ -13,7 +13,6 @@ public class BoardItem : MonoBehaviour
 
     private void OnMouseDown()
     {
-        Debug.Log(_row + " " + _column);
         Vanish();
     }
 
@@ -23,7 +22,6 @@ public class BoardItem : MonoBehaviour
         _row = Row;
 
         Move(itemPosition);
-        // Debug.Log(_row + " " + _column);
     }
 
     private void Move(Vector3 itemPosition)
@@ -34,7 +32,7 @@ public class BoardItem : MonoBehaviour
 
     public void Vanish()
     {
-        OnItemVanish?.Invoke(_row, _column);
+        OnItemVanish?.Invoke(_column, _row);
     }
 }
 

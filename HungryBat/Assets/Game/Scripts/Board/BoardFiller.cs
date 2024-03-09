@@ -32,8 +32,7 @@ public class BoardFiller : MonoBehaviour
         {
             for (int j = 0; j < Rows; j++)
             {
-                Vector3Int cellPosition = GetCellPosition(j, i);
-                if (_boardTilemap.HasTile(cellPosition))
+                if (HasTileAt(j, i))
                 {
                     GenerateBoardItem(j, i);
                 }
@@ -71,7 +70,7 @@ public class BoardFiller : MonoBehaviour
     {
         for (int i = row; i < Rows; i++)
         {
-            if (IsEmptyBoardItem(i, column))
+            if (IsEmptyBoardItem(column, row))
             {
                 GenerateBoardItem(column, row: i);
             }
@@ -80,9 +79,7 @@ public class BoardFiller : MonoBehaviour
 
     public void ReleaseItem(int column, int row)
     {
-        _boardListener.UnsubscribeEvents(_boardItemsArray[column, row]);
         _boardItemsArray[column, row] = null;
-
     }
 
     public bool IsEmptyBoardItem(int column, int row)
@@ -100,5 +97,11 @@ public class BoardFiller : MonoBehaviour
         boardItem.UpdatePosition(newColumn, newRow, itemPosition);
 
         ReleaseItem(oldColumn, oldRow);
+    }
+
+    public bool HasTileAt(int column, int row)
+    {
+        Vector3Int placement = GetCellPosition(column, row);
+        return _boardTilemap.HasTile(placement);
     }
 }

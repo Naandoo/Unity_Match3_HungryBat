@@ -3,6 +3,7 @@ using UnityEngine;
 public class BoardItemPool : MonoBehaviour
 {
     [SerializeField] private BoardItem _boardItem;
+    [SerializeField] private BoardListener _boardListener;
     private PoolSystem<BoardItem> _poolSystem;
     public PoolSystem<BoardItem> PoolSystem { get => _poolSystem; set { } }
 
@@ -13,6 +14,7 @@ public class BoardItemPool : MonoBehaviour
 
     public void OnReleasedItem(BoardItem boardItem)
     {
+        _boardListener.UnsubscribeEventsIn(boardItem);
         _poolSystem.Return(boardItem);
     }
 }
