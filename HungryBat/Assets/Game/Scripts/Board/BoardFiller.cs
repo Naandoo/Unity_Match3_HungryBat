@@ -53,7 +53,12 @@ public class BoardFiller : MonoBehaviour
 
         _boardItemsArray[column, row] = item;
 
-        item.UpdatePosition(column, row, itemPosition: GetItemPosition(column, row));
+        float offset = 5;
+        Vector3 finalItemPosition = GetItemPosition(column, row);
+        Vector3 initialItemPosition = new(finalItemPosition.x, finalItemPosition.y + offset, finalItemPosition.z);
+        item.transform.position = initialItemPosition;
+
+        item.UpdatePosition(column, row, itemPosition: finalItemPosition);
         _boardListener.SubscribeEventsIn(item);
     }
 
