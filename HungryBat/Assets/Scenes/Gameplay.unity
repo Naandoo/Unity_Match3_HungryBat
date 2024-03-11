@@ -985,7 +985,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _boardTilemap: {fileID: 2042303258}
-  _boardItemPool: {fileID: 455438044}
+  _boardFruitPool: {fileID: 455438044}
   _boardListener: {fileID: 455438042}
 --- !u!114 &455438042
 MonoBehaviour:
@@ -1001,7 +1001,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _boardFiller: {fileID: 455438041}
   _boardSorter: {fileID: 455438043}
-  _boardItemPool: {fileID: 455438044}
+  _boardFruitPool: {fileID: 455438044}
 --- !u!114 &455438043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1027,8 +1027,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6e85e25a87211d4ebe21d2bf46dc7d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _boardItem: {fileID: 2632409612101428526, guid: dcfa150433e47994ebf8b1bc2346b4f9, type: 3}
+  _boardFruit: {fileID: -1766169844454168766, guid: 6681822d38bb9f74ca0f397bbf767f5a, type: 3}
   _boardListener: {fileID: 455438042}
+  _levelFruits: {fileID: 11400000, guid: 98d790dad2c167845a7ea24b158e587e, type: 2}
 --- !u!1 &611484870
 GameObject:
   m_ObjectHideFlags: 0

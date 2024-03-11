@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1393836645415585426}
   - component: {fileID: 1387574217047105602}
+  - component: {fileID: -1766169844454168766}
   m_Layer: 0
   m_Name: Fruit
   m_TagString: Untagged
@@ -68,6 +69,19 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.43
+--- !u!114 &-1766169844454168766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1393836645415585421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b2100ee9fbb00349b2a2660455594e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spriteRenderer: {fileID: 1393836646070208606}
 --- !u!1 &1393836646070208601
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6761794f75677345b5ffa5fa823cbe0, type: 3}
+  m_Name: LevelFruits
+  m_EditorClassIdentifier: 
+  _availableFruits:
+  - {fileID: 11400000, guid: 434633b82e424744f85ac7120c1b42f0, type: 2}
+  - {fileID: 11400000, guid: 37f5d8a68cc0f6c49a144ddcba004dc2, type: 2}
+  - {fileID: 11400000, guid: 61245b29c3bcbf74bb58b130cb930a93, type: 2}
+  - {fileID: 11400000, guid: 0971677f619e6554e8ec2854867139f2, type: 2}
+  - {fileID: 11400000, guid: 8bed8ef240fd8d3418075c107d119d29, type: 2}
+  - {fileID: 11400000, guid: f5ae2f2b7ef607e4597e835e048fcf6c, type: 2}
+  - {fileID: 11400000, guid: c3a1b3fe2c80efa45949aa3ed63dcae0, type: 2}

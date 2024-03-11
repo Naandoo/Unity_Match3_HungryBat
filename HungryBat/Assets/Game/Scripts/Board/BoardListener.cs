@@ -1,29 +1,30 @@
 using UnityEngine;
+using BoardItem;
 
-public class BoardListener : MonoBehaviour
+namespace Board
 {
-    [SerializeField] private BoardFiller _boardFiller;
-    [SerializeField] private BoardSorter _boardSorter;
-    [SerializeField] private BoardItemPool _boardItemPool;
-
-    public void SubscribeEventsIn(BoardItem boardItem)
+    public class BoardListener : MonoBehaviour
     {
-        int Column = boardItem.Column;
-        int Row = boardItem.Row;
+        [SerializeField] private BoardFiller _boardFiller;
+        [SerializeField] private BoardSorter _boardSorter;
+        [SerializeField] private BoardFruitPool _boardFruitPool;
 
-        boardItem.OnItemVanish.AddListener((Column, Row) =>
+        public void SubscribeEventsIn(Fruit boardItem)
         {
-            _boardFiller.ReleaseItem(Column, Row);
-            _boardItemPool.OnReleasedItem(boardItem);
-            _boardSorter.OnReleasedItem(Column, Row);
-        });
-    }
+            int Column = boardItem.Column;
+            int Row = boardItem.Row;
 
-    public void UnsubscribeEventsIn(BoardItem boardItem)
-    {
-        int Column = boardItem.Column;
-        int Row = boardItem.Row;
+            boardItem.OnItemVanish.AddListener((Column, Row) =>
+            {
+                _boardFiller.ReleaseFruit(Column, Row);
+                _boardFruitPool.OnReleasedFruit(boardItem);
+                _boardSorter.OnReleasedItem(Column, Row);
+            });
+        }
 
-        boardItem.OnItemVanish.RemoveAllListeners();
+        public void UnsubscribeEventsIn(Fruit boardItem)
+        {
+            boardItem.OnItemVanish.RemoveAllListeners();
+        }
     }
 }
