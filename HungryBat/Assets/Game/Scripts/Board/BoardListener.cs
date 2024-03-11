@@ -24,11 +24,6 @@ public class BoardListener : MonoBehaviour
         int Column = boardItem.Column;
         int Row = boardItem.Row;
 
-        boardItem.OnItemVanish.RemoveListener((Column, Row) =>
-        {
-            _boardFiller.ReleaseItem(Column, Row);
-            _boardItemPool.OnReleasedItem(boardItem);
-            _boardSorter.OnReleasedItem(Column, Row);
-        });
+        boardItem.OnItemVanish.RemoveAllListeners();
     }
 }
