@@ -6,8 +6,9 @@ namespace BoardItem
     public class FruitID : ScriptableObject
     {
         [SerializeField] private Sprite _sprite;
-        [SerializeField] private FruitType fruitType;
+        [SerializeField] private FruitType _fruitType;
 
         public Sprite Sprite { get => _sprite; private set { } }
+        public FruitType FruitType { get => _fruitType; private set { } }
     }
 }
