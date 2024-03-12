@@ -1,14 +1,16 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using BoardItem;
+using ScriptableVariable;
 
 namespace Board
 {
-    public class BoardFiller : MonoBehaviour
+    public class BoardGrid : MonoBehaviour
     {
         [SerializeField] private Tilemap _boardTilemap;
         [SerializeField] private BoardFruitPool _boardFruitPool;
         [SerializeField] private BoardListener _boardListener;
+        [SerializeField] private Vector3Variable _boardCellSize;
         private const float _fruitOffset = 0.25f;
         private Fruit[,] _boardFruitArray;
         public int Columns { get => _boardTilemap.size.x; private set { } }
@@ -41,6 +43,8 @@ namespace Board
                     }
                 }
             }
+
+            _boardCellSize.Value = _boardTilemap.cellSize;
         }
 
         private Vector3Int GetCellPosition(int column, int row)
@@ -50,7 +54,7 @@ namespace Board
             return cellPosition;
         }
 
-        private void GenerateBoardFruit(int column, int row)
+        public void GenerateBoardFruit(int column, int row)
         {
             Fruit fruit = _boardFruitPool.GetRandomFruit();
 
@@ -74,37 +78,9 @@ namespace Board
             return fruitPosition;
         }
 
-        public void CheckEmptyStartingAt(int column, int row)
-        {
-            for (int i = row; i < Rows; i++)
-            {
-                if (IsEmptyBoardItem(column, row))
-                {
-                    GenerateBoardFruit(column, row: i);
-                }
-            }
-        }
-
         public void ReleaseFruit(int column, int row)
         {
             _boardFruitArray[column, row] = null;
-        }
-
-        public bool IsEmptyBoardItem(int column, int row)
-        {
-            bool IsEmpty = _boardFruitArray[column, row] == null;
-            return IsEmpty;
-        }
-
-        public void UpdateFruitPosition(Fruit boardFruit, int newColumn, int newRow, Vector3 itemPosition)
-        {
-            int oldColumn = boardFruit.Column;
-            int oldRow = boardFruit.Row;
-
-            _boardFruitArray[newColumn, newRow] = boardFruit;
-            boardFruit.UpdatePosition(newColumn, newRow, itemPosition);
-
-            ReleaseFruit(oldColumn, oldRow);
         }
 
         public bool HasTileAt(int column, int row)

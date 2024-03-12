@@ -5,8 +5,8 @@ namespace Board
 {
     public class BoardSorter : MonoBehaviour
     {
-        [SerializeField] private BoardFiller _boardFiller;
-        private int BoardRowBound => _boardFiller.Rows;
+        [SerializeField] private BoardGrid _boardGrid;
+        private int BoardRowBound => _boardGrid.Rows;
 
         public void OnReleasedItem(int emptyColumn, int emptyRow)
         {
@@ -21,30 +21,75 @@ namespace Board
 
             for (int i = emptyRow; i < BoardRowBound; i++)
             {
-                if (!_boardFiller.HasTileAt(emptyColumn, i)) continue;
-                if (_boardFiller.IsEmptyBoardItem(emptyColumn, i))
+                if (!_boardGrid.HasTileAt(emptyColumn, i)) continue;
+                if (IsEmptyBoardItem(emptyColumn, i))
                 {
                     emptySpaces += 1;
                 }
                 else
                 {
-                    Fruit boardItemAbove = _boardFiller.BoardFruitArray[emptyColumn, i];
-                    MoveItemDown(boardItemAbove, emptySpaces);
+                    Fruit boardItem = _boardGrid.BoardFruitArray[emptyColumn, i];
+                    MoveItem(boardItem, emptySpaces, Direction.Down);
 
                     lastKnownEmptyRow = i;
                     lastKnownEmptyColumn = emptyColumn;
                 }
             }
 
-            _boardFiller.CheckEmptyStartingAt(lastKnownEmptyColumn, lastKnownEmptyRow);
+            CheckEmptyStartingAt(lastKnownEmptyColumn, lastKnownEmptyRow);
         }
 
-        private void MoveItemDown(Fruit boardItemAbove, int emptyPositions)
+        public void CheckEmptyStartingAt(int column, int row)
         {
-            int newColumn = boardItemAbove.Column;
-            int newRow = boardItemAbove.Row - emptyPositions;
-            Vector3 newPosition = _boardFiller.GetFruitPosition(newColumn, newRow);
-            _boardFiller.UpdateFruitPosition(boardItemAbove, newColumn, newRow, newPosition);
+            for (int i = row; i < _boardGrid.Rows; i++)
+            {
+                if (IsEmptyBoardItem(column, row))
+                {
+                    _boardGrid.GenerateBoardFruit(column, row: i);
+                }
+            }
+        }
+
+        public bool IsEmptyBoardItem(int column, int row)
+        {
+            bool IsEmpty = _boardGrid.BoardFruitArray[column, row] == null;
+            return IsEmpty;
+        }
+
+        private void MoveItem(Fruit boardFruit, int distance, Direction direction)
+        {
+            int newColumn = boardFruit.Column;
+            int newRow = boardFruit.Row;
+
+            switch (direction)
+            {
+                case Direction.Up:
+                    newRow += distance;
+                    break;
+                case Direction.Down:
+                    newRow -= distance;
+                    break;
+                case Direction.Right:
+                    newColumn += distance;
+                    break;
+                case Direction.Left:
+                    newColumn -= distance;
+                    break;
+            }
+
+            Vector3 newPosition = _boardGrid.GetFruitPosition(newColumn, newRow);
+            UpdateFruitPosition(boardFruit, newColumn, newRow, newPosition);
+        }
+
+        public void UpdateFruitPosition(Fruit boardFruit, int newColumn, int newRow, Vector3 itemPosition)
+        {
+            int oldColumn = boardFruit.Column;
+            int oldRow = boardFruit.Row;
+
+            _boardGrid.BoardFruitArray[newColumn, newRow] = boardFruit;
+            boardFruit.UpdatePosition(newColumn, newRow, itemPosition);
+
+            _boardGrid.ReleaseFruit(oldColumn, oldRow);
         }
     }
 }
