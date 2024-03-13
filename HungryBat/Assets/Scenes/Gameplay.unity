@@ -987,6 +987,7 @@ MonoBehaviour:
   _boardTilemap: {fileID: 2042303258}
   _boardFruitPool: {fileID: 455438044}
   _boardListener: {fileID: 455438042}
+  _boardCellSize: {fileID: 11400000, guid: 877eb2d29576932459701d2cbc9567df, type: 2}
 --- !u!114 &455438042
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -999,9 +1000,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2fe31e1091d9904d8bca5a256fdc0e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _boardFiller: {fileID: 455438041}
+  _boardGrid: {fileID: 455438041}
   _boardSorter: {fileID: 455438043}
   _boardFruitPool: {fileID: 455438044}
+  _boardMatcher: {fileID: 0}
 --- !u!114 &455438043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1014,7 +1016,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 484959394f7096d4dab207b74c27ea4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _boardFiller: {fileID: 455438041}
+  _boardGrid: {fileID: 455438041}
 --- !u!114 &455438044
 MonoBehaviour:
   m_ObjectHideFlags: 0
