@@ -20,12 +20,6 @@ namespace BoardItem
         public ItemMovedEvent OnItemMoved = new();
         public Direction LastMovementDirection { get => _lastMovementDirection; private set { } }
 
-        //TODO: Delete after create logic to vanish fruits
-        private void OnMouseDown()
-        {
-            Vanish();
-        }
-
         public void SetFruitID(FruitID fruitID)
         {
             this._fruitID = fruitID;

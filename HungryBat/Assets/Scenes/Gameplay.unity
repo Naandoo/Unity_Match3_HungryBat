@@ -937,6 +937,7 @@ GameObject:
   - component: {fileID: 455438043}
   - component: {fileID: 455438041}
   - component: {fileID: 455438042}
+  - component: {fileID: 455438045}
   m_Layer: 0
   m_Name: 'Grid Board '
   m_TagString: Untagged
@@ -1003,7 +1004,7 @@ MonoBehaviour:
   _boardGrid: {fileID: 455438041}
   _boardSorter: {fileID: 455438043}
   _boardFruitPool: {fileID: 455438044}
-  _boardMatcher: {fileID: 0}
+  _boardMatcher: {fileID: 455438045}
 --- !u!114 &455438043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1032,6 +1033,19 @@ MonoBehaviour:
   _boardFruit: {fileID: -1766169844454168766, guid: 6681822d38bb9f74ca0f397bbf767f5a, type: 3}
   _boardListener: {fileID: 455438042}
   _levelFruits: {fileID: 11400000, guid: 98d790dad2c167845a7ea24b158e587e, type: 2}
+--- !u!114 &455438045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 455438038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc292cfdfd8ae8348a1bb4435bb83d0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _boardGrid: {fileID: 455438041}
 --- !u!1 &611484870
 GameObject:
   m_ObjectHideFlags: 0

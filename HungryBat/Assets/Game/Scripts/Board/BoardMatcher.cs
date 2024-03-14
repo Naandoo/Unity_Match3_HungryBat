@@ -2,7 +2,7 @@ using UnityEngine;
 using BoardItem;
 using Board.MatchesStrategy;
 using DG.Tweening;
-using UnityEngine.UIElements;
+using System.Collections.Generic;
 
 namespace Board
 {
@@ -10,20 +10,21 @@ namespace Board
     {
         [SerializeField] private BoardGrid _boardGrid;
         private MatchStrategies matchStrategies = new();
+        private List<Fruit> EqualFruits = new();
 
         public void TryMatchFruit(int Column, int Row, Direction direction)
         {
             EqualFruitsCount equalFruitsCount = GetEqualFruitsCountStartingAt(Column, Row);
             MatchStrategy matchStrategy = matchStrategies.GetMostValuableMatch(equalFruitsCount);
             Fruit fruit = _boardGrid.BoardFruitArray[Column, Row];
+
             if (matchStrategy == null)
             {
                 AnimateItemWrongAttempt(fruit, direction);
             }
             else
             {
-                // ExecuteMatch(matchStrategy);
-                //continue from executing the match
+                ExecuteMatch(fruit, equalFruitsCount, matchStrategy);
             }
         }
 
@@ -54,6 +55,9 @@ namespace Board
                 amountOfFruits++;
                 currentColumn += columnDirection;
                 currentColumn += rowDirection;
+
+                Fruit fruit = _boardGrid.BoardFruitArray[currentColumn, currentRow];
+                EqualFruits.Add(fruit);
             }
 
             return amountOfFruits;
@@ -85,6 +89,40 @@ namespace Board
             sequenceAnimation.Join(trialFruit.transform.DOMove(fruitPosition, duration));
             sequenceAnimation.Append(fruit.transform.DOMove(fruitPosition, duration));
             sequenceAnimation.Join(trialFruit.transform.DOMove(trialPosition, duration));
+        }
+
+        private void ExecuteMatch(Fruit initialMatchFruit, EqualFruitsCount equalFruitsCount, MatchStrategy matchStrategy)
+        {
+            int totalVerticalFruits = equalFruitsCount.vertical;
+            int totalHorizontalFruits = equalFruitsCount.horizontal;
+
+            int verticalMatches = matchStrategy.GetSumVerticalMatches(totalVerticalFruits);
+            int horizontalMatches = matchStrategy.GetSumHorizontalMatches(totalHorizontalFruits);
+
+            List<Fruit> MatchFruits = new() { initialMatchFruit };
+
+            for (int i = 0; i < verticalMatches; i++)
+            {
+                if (EqualFruits[i].Column == initialMatchFruit.Column)
+                {
+                    verticalMatches--;
+                    MatchFruits.Add(EqualFruits[i]);
+                }
+            }
+
+            for (int i = 0; i < horizontalMatches; i++)
+            {
+                if (EqualFruits[i].Row == initialMatchFruit.Row)
+                {
+                    horizontalMatches--;
+                    MatchFruits.Add(EqualFruits[i]);
+                }
+            }
+
+            foreach (Fruit fruit in MatchFruits)
+            {
+                fruit.Vanish();
+            }
         }
     }
 

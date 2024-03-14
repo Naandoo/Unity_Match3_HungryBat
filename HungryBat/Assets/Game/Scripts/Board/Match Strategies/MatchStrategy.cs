@@ -15,13 +15,23 @@ namespace Board
             {
                 if (ValidateMatchStrategy(verticalItems, horizontalItems))
                 {
-                    int totalVerticalItems = Math.Min(verticalItems, MaxAmountVerticalItems);
-                    int totalHorizontalItems = Math.Min(horizontalItems, MaxAmountHorizontalItems);
+                    int totalVerticalItems = GetSumVerticalMatches(verticalItems);
+                    int totalHorizontalItems = GetSumHorizontalMatches(horizontalItems);
 
                     int SumOfMatches = totalVerticalItems + totalHorizontalItems;
                     return SumOfMatches;
                 }
                 else return 0;
+            }
+
+            public int GetSumVerticalMatches(int verticalItems)
+            {
+                return Math.Min(verticalItems, MaxAmountVerticalItems);
+            }
+
+            public int GetSumHorizontalMatches(int horizontalItems)
+            {
+                return Math.Min(horizontalItems, MaxAmountHorizontalItems);
             }
 
             private bool ValidateMatchStrategy(int verticalItems, int horizontalItems)

@@ -8,23 +8,22 @@ namespace BoardItem
     public class FruitMovement : MonoBehaviour
     {
         [SerializeField] private Fruit _fruit;
-        [SerializeField] private Vector3Variable _fruitSize;
+        [SerializeField] private Vector3Variable _cellBoardSize;
         private Vector3 _inputInitialPosition;
         private Vector3 _inputFinalPosition;
-        private Vector3 _minDistanceToMove => _fruitSize.Value + (_fruitSize.Value / 2);
         private bool _selected;
 
         private void OnMouseDown()
         {
             _selected = true;
-            _inputInitialPosition = Input.mousePosition;
+            _inputInitialPosition = GetWorldMousePosition();
         }
 
         private void OnMouseDrag()
         {
             if (_selected)
             {
-                _inputFinalPosition = Input.mousePosition;
+                _inputFinalPosition = GetWorldMousePosition();
 
                 if (ReachedMinimumDistance())
                 {
@@ -33,13 +32,22 @@ namespace BoardItem
             }
         }
 
+        private Vector3 GetWorldMousePosition()
+        {
+            Vector3 mousePosition = Input.mousePosition;
+            mousePosition.z = Camera.main.transform.position.z;
+
+            return Camera.main.ScreenToWorldPoint(mousePosition);
+        }
+
         private bool ReachedMinimumDistance()
         {
-            float inputDistance = _inputFinalPosition.magnitude - _inputInitialPosition.magnitude;
-            if (inputDistance >= _minDistanceToMove.magnitude)
-            {
-                return true;
-            }
+            float inputDistance = Vector3.Distance(_inputInitialPosition, _inputFinalPosition);
+
+            float squareWidth = _cellBoardSize.Value.x * _cellBoardSize.Value.y;
+            float minDistanceToMove = squareWidth / 2;
+
+            if (inputDistance >= minDistanceToMove) return true;
             else return false;
         }
 
@@ -65,12 +73,28 @@ namespace BoardItem
 
         private Direction GetDirection(Vector3 initialInput, Vector3 finalInput)
         {
-            float angle = Vector3.Angle(initialInput, finalInput);
+            Vector3 direction = finalInput - initialInput;
+            float angleRad = Mathf.Atan2(direction.y, direction.x);
+            float angleDeg = angleRad * Mathf.Rad2Deg;
 
-            if (angle >= 60 && angle <= 120) return Direction.Up;
-            if (angle >= 150 && angle <= 210) return Direction.Left;
-            if (angle >= 240 && angle <= 300) return Direction.Down;
-            if (angle >= 330 && angle <= 30) return Direction.Right;
+            if (angleDeg < 0) angleDeg += 360;
+
+            if (angleDeg >= 60 && angleDeg <= 120)
+            {
+                return Direction.Up;
+            }
+            if (angleDeg >= 150 && angleDeg <= 210)
+            {
+                return Direction.Left;
+            }
+            if (angleDeg >= 240 && angleDeg <= 300)
+            {
+                return Direction.Down;
+            }
+            if (angleDeg >= 330 || angleDeg <= 30)
+            {
+                return Direction.Right;
+            }
 
             return Direction.Undefined;
         }
