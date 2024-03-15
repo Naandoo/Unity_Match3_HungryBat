@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Pear
   m_EditorClassIdentifier: 
   _sprite: {fileID: 21300000, guid: 50dd2e8acaa7426438d693e39eb73026, type: 3}
-  fruitType: 5
+  _fruitType: 5

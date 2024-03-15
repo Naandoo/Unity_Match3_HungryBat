@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Blueberry
   m_EditorClassIdentifier: 
   _sprite: {fileID: 21300000, guid: 23c39604c54f9f944ac7791b186f3dce, type: 3}
-  fruitType: 2
+  _fruitType: 2

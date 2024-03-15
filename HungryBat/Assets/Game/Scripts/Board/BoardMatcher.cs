@@ -1,134 +1,110 @@
 using UnityEngine;
 using BoardItem;
-using Board.MatchesStrategy;
-using DG.Tweening;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Board
 {
     public class BoardMatcher : MonoBehaviour
     {
         [SerializeField] private BoardGrid _boardGrid;
-        private MatchStrategies matchStrategies = new();
-        private List<Fruit> EqualFruits = new();
+        private Fruit[] lastSwappedItems;
+        private bool lastMovementResultInMatch = false;
 
-        public void TryMatchFruit(int Column, int Row, Direction direction)
+        public void MoveFruit(int Column, int Row, Direction direction)
         {
-            EqualFruitsCount equalFruitsCount = GetEqualFruitsCountStartingAt(Column, Row);
-            MatchStrategy matchStrategy = matchStrategies.GetMostValuableMatch(equalFruitsCount);
-            Fruit fruit = _boardGrid.BoardFruitArray[Column, Row];
+            Vector2Int movementDirection = MovementDirection.GetDirectionCoordinates(direction);
+            Vector2Int selectedFruitPosition = new(Column, Row);
+            Vector2Int swappedFruitPosition = new(Column + movementDirection.x, Row + movementDirection.y);
 
-            if (matchStrategy == null)
+            SwapFruits(selectedFruitPosition.x, selectedFruitPosition.y, swappedFruitPosition.x, swappedFruitPosition.y);
+            TryMatchFruits();
+        }
+
+        private void SwapFruits(int selectedFruitColumn, int selectedFruitRow, int swappedFruitColumn, int swappedFruitRow)
+        {
+            Fruit selectedFruit = _boardGrid.BoardFruitArray[selectedFruitColumn, selectedFruitRow];
+            Fruit swappedFruit = _boardGrid.BoardFruitArray[swappedFruitColumn, swappedFruitRow];
+
+            lastSwappedItems = new Fruit[] { selectedFruit, swappedFruit };
+
+            _boardGrid.BoardFruitArray[selectedFruit.Column, selectedFruit.Row] = swappedFruit;
+            _boardGrid.BoardFruitArray[swappedFruit.Column, selectedFruit.Row] = selectedFruit;
+
+            Vector3 selectedFruitPosition = _boardGrid.GetFruitPosition(selectedFruitColumn, selectedFruitRow);
+            Vector3 swappedFruitPosition = _boardGrid.GetFruitPosition(swappedFruitColumn, swappedFruitRow);
+
+            selectedFruit.UpdatePosition(swappedFruitColumn, swappedFruitRow, swappedFruitPosition);
+            swappedFruit.UpdatePosition(selectedFruitColumn, selectedFruitRow, selectedFruitPosition);
+
+        }
+
+        public void TryMatchFruits()
+        {
+            bool matched = false;
+
+            do
             {
-                AnimateItemWrongAttempt(fruit, direction);
-            }
-            else
-            {
-                ExecuteMatch(fruit, equalFruitsCount, matchStrategy);
-            }
-        }
+                matched = false;
+                List<Fruit> fruitsToMatch = new List<Fruit>();
 
-        private EqualFruitsCount GetEqualFruitsCountStartingAt(int Column, int Row)
-        {
-            EqualFruitsCount equalFruitsCount = new();
-            FruitType fruitType = _boardGrid.BoardFruitArray[Column, Row].FruitID.FruitType;
-
-            equalFruitsCount.horizontal += GetFruitsCountIn(Column, Row, fruitType, columnDirection: -1, rowDirection: 0);
-            equalFruitsCount.horizontal += GetFruitsCountIn(Column, Row, fruitType, columnDirection: 1, rowDirection: 0);
-            equalFruitsCount.vertical += GetFruitsCountIn(Column, Row, fruitType, columnDirection: 0, rowDirection: -1);
-            equalFruitsCount.vertical += GetFruitsCountIn(Column, Row, fruitType, columnDirection: 0, rowDirection: 1);
-
-            return equalFruitsCount;
-        }
-
-        private int GetFruitsCountIn(int startColumn, int startRow,
-        FruitType selectedFruitType, int columnDirection, int rowDirection)
-        {
-            int amountOfFruits = 0;
-
-            int currentColumn = startColumn + columnDirection;
-            int currentRow = startRow + rowDirection;
-
-            while (IsValidPosition(currentColumn, currentRow) &&
-            _boardGrid.BoardFruitArray[currentColumn, currentRow].FruitID.FruitType == selectedFruitType)
-            {
-                amountOfFruits++;
-                currentColumn += columnDirection;
-                currentColumn += rowDirection;
-
-                Fruit fruit = _boardGrid.BoardFruitArray[currentColumn, currentRow];
-                EqualFruits.Add(fruit);
-            }
-
-            return amountOfFruits;
-        }
-
-        private bool IsValidPosition(int column, int row)
-        {
-            return column >= 0 && column < _boardGrid.Columns && row >= 0 && row < _boardGrid.Rows;
-        }
-
-        private void AnimateItemWrongAttempt(Fruit fruit, Direction direction)
-        {
-            Vector2Int Coordinates = MovementDirection.GetDirectionCoordinates(direction);
-
-            int currentColumn = fruit.Column;
-            int currentRow = fruit.Row;
-
-            int trialColumn = currentColumn + Coordinates.x;
-            int trialRow = currentRow + Coordinates.y;
-            Fruit trialFruit = _boardGrid.BoardFruitArray[trialColumn, trialRow];
-
-            Vector3 fruitPosition = _boardGrid.GetFruitPosition(currentColumn, currentRow);
-            Vector3 trialPosition = _boardGrid.GetFruitPosition(trialColumn, trialRow);
-
-            float duration = 0.25f;
-
-            Sequence sequenceAnimation = DOTween.Sequence();
-            sequenceAnimation.Append(fruit.transform.DOMove(trialPosition, duration));
-            sequenceAnimation.Join(trialFruit.transform.DOMove(fruitPosition, duration));
-            sequenceAnimation.Append(fruit.transform.DOMove(fruitPosition, duration));
-            sequenceAnimation.Join(trialFruit.transform.DOMove(trialPosition, duration));
-        }
-
-        private void ExecuteMatch(Fruit initialMatchFruit, EqualFruitsCount equalFruitsCount, MatchStrategy matchStrategy)
-        {
-            int totalVerticalFruits = equalFruitsCount.vertical;
-            int totalHorizontalFruits = equalFruitsCount.horizontal;
-
-            int verticalMatches = matchStrategy.GetSumVerticalMatches(totalVerticalFruits);
-            int horizontalMatches = matchStrategy.GetSumHorizontalMatches(totalHorizontalFruits);
-
-            List<Fruit> MatchFruits = new() { initialMatchFruit };
-
-            for (int i = 0; i < verticalMatches; i++)
-            {
-                if (EqualFruits[i].Column == initialMatchFruit.Column)
+                for (int i = 0; i < _boardGrid.Columns; i++)
                 {
-                    verticalMatches--;
-                    MatchFruits.Add(EqualFruits[i]);
+                    for (int j = 0; j < _boardGrid.Rows; j++)
+                    {
+                        CheckFruitMatch(i, j, 1, 0, fruitsToMatch);
+                        CheckFruitMatch(i, j, 0, 1, fruitsToMatch);
+                    }
+                }
+
+                if (fruitsToMatch.Count >= 3)
+                {
+                    matched = true;
+                    foreach (Fruit fruit in fruitsToMatch)
+                    {
+                        fruit.Vanish();
+                        lastMovementResultInMatch = true;
+                    }
+                }
+
+            } while (matched);
+        }
+
+        private void CheckFruitMatch(int startColumn, int startRow, int stepX, int stepY, List<Fruit> fruitsToMatch)
+        {
+            List<Fruit> sequence = new List<Fruit>();
+            FruitType? currentFruitType = null;
+
+            for (int i = startColumn, j = startRow; i < _boardGrid.Columns && j < _boardGrid.Rows; i += stepX, j += stepY)
+            {
+                Fruit fruit = _boardGrid.BoardFruitArray[i, j];
+
+                if (fruit == null)
+                {
+                    sequence.Clear();
+                    currentFruitType = null;
+                }
+                else if (!currentFruitType.HasValue || currentFruitType == fruit.FruitID.FruitType)
+                {
+                    sequence.Add(fruit);
+                    currentFruitType = fruit.FruitID.FruitType;
+                }
+                else
+                {
+                    if (sequence.Count >= 3)
+                    {
+                        fruitsToMatch.AddRange(sequence);
+                    }
+                    sequence.Clear();
+                    sequence.Add(fruit);
+                    currentFruitType = fruit.FruitID.FruitType;
                 }
             }
 
-            for (int i = 0; i < horizontalMatches; i++)
+            if (sequence.Count >= 3)
             {
-                if (EqualFruits[i].Row == initialMatchFruit.Row)
-                {
-                    horizontalMatches--;
-                    MatchFruits.Add(EqualFruits[i]);
-                }
-            }
-
-            foreach (Fruit fruit in MatchFruits)
-            {
-                fruit.Vanish();
+                fruitsToMatch.AddRange(sequence);
             }
         }
-    }
-
-    public class EqualFruitsCount
-    {
-        public int horizontal = 1;
-        public int vertical = 1;
     }
 }

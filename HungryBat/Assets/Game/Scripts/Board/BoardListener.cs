@@ -25,7 +25,7 @@ namespace Board
             Direction lastMoveDirection = boardItem.LastMovementDirection;
             boardItem.OnItemMoved.AddListener((Column, Row, lastMoveDirection) =>
             {
-                _boardMatcher.TryMatchFruit(Column, Row, lastMoveDirection);
+                _boardMatcher.MoveFruit(Column, Row, lastMoveDirection);
             });
         }
 

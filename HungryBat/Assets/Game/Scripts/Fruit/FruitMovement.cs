@@ -1,7 +1,5 @@
 using UnityEngine;
 using ScriptableVariable;
-using UnityEngine.Events;
-using Board;
 
 namespace BoardItem
 {

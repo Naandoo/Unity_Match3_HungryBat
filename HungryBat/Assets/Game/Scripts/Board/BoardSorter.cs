@@ -6,6 +6,7 @@ namespace Board
     public class BoardSorter : MonoBehaviour
     {
         [SerializeField] private BoardGrid _boardGrid;
+        [SerializeField] private BoardMatcher _boardMatcher;
         private int BoardRowBound => _boardGrid.Rows;
 
         public void OnReleasedItem(int emptyColumn, int emptyRow)
@@ -48,6 +49,8 @@ namespace Board
                     _boardGrid.GenerateBoardFruit(column, row: i);
                 }
             }
+
+            _boardMatcher.TryMatchFruits();
         }
 
         public bool IsEmptyBoardItem(int column, int row)

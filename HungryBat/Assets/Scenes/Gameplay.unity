@@ -398,7 +398,7 @@ GameObject:
   - component: {fileID: 339019171}
   m_Layer: 0
   m_Name: Camera
-  m_TagString: Untagged
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1018,6 +1018,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _boardGrid: {fileID: 455438041}
+  _boardMatcher: {fileID: 455438045}
 --- !u!114 &455438044
 MonoBehaviour:
   m_ObjectHideFlags: 0
