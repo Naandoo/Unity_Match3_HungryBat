@@ -1,5 +1,5 @@
 using UnityEngine;
-using BoardItem;
+using FruitItem;
 
 namespace Board
 {

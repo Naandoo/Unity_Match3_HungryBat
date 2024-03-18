@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace BoardItem
+namespace FruitItem
 {
     public static class MovementDirection
     {

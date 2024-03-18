@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using BoardItem;
+using FruitItem;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "LevelFruits", menuName = "Level/LevelFruits", order = 1)]

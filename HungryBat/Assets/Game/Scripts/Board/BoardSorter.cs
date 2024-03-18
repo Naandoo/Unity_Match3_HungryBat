@@ -1,5 +1,7 @@
 using UnityEngine;
-using BoardItem;
+using FruitItem;
+using System.Collections;
+using Unity.VisualScripting;
 
 namespace Board
 {
@@ -7,50 +9,70 @@ namespace Board
     {
         [SerializeField] private BoardGrid _boardGrid;
         [SerializeField] private BoardMatcher _boardMatcher;
-        private int BoardRowBound => _boardGrid.Rows;
 
-        public void OnReleasedItem(int emptyColumn, int emptyRow)
+        public void SortBoard()
         {
-            SortColumnStartingAt(emptyColumn, emptyRow);
+            for (int i = 0; i < _boardGrid.Columns; i++)
+            {
+                int emptyItemsInColumn = 0;
+
+                for (int j = 0; j < _boardGrid.Rows; j++)
+                {
+                    if (!_boardGrid.HasTileAt(i, j)) continue;
+                    if (IsEmptyBoardItem(i, j))
+                    {
+                        emptyItemsInColumn += 1;
+                    }
+                    else
+                    {
+                        Fruit fruit = _boardGrid.BoardFruitArray[i, j];
+                        MoveItem(fruit, emptyItemsInColumn, Direction.Down);
+                    }
+                }
+
+                FillEmptySpacesInBoard(column: i, emptyItemsInColumn);
+            }
         }
 
-        private void SortColumnStartingAt(int emptyColumn, int emptyRow)
+        private void FillEmptySpacesInBoard(int column, int emptyItems)
         {
-            int emptySpaces = 0;
-            int lastKnownEmptyColumn = emptyColumn;
-            int lastKnownEmptyRow = emptyRow;
+            int initialRow = _boardGrid.Rows - emptyItems;
 
-            for (int i = emptyRow; i < BoardRowBound; i++)
+            for (int i = initialRow; i < _boardGrid.Rows; i++)
             {
-                if (!_boardGrid.HasTileAt(emptyColumn, i)) continue;
-                if (IsEmptyBoardItem(emptyColumn, i))
+                int newRow;
+                if (!_boardGrid.HasTileAt(column, i))
                 {
-                    emptySpaces += 1;
+                    newRow = i - 1;
                 }
-                else
-                {
-                    Fruit boardItem = _boardGrid.BoardFruitArray[emptyColumn, i];
-                    MoveItem(boardItem, emptySpaces, Direction.Down);
-
-                    lastKnownEmptyRow = i;
-                    lastKnownEmptyColumn = emptyColumn;
-                }
+                else newRow = i;
+                _boardGrid.GenerateBoardFruit(column, newRow);
             }
 
-            CheckEmptyStartingAt(lastKnownEmptyColumn, lastKnownEmptyRow);
+            _boardMatcher.TryMatchFruits(matchWithMovement: false);
         }
-
-        public void CheckEmptyStartingAt(int column, int row)
+        private void MoveItem(Fruit boardFruit, int distance, Direction direction)
         {
-            for (int i = row; i < _boardGrid.Rows; i++)
+            int Column = boardFruit.Column;
+            int Row = boardFruit.Row;
+
+            switch (direction)
             {
-                if (IsEmptyBoardItem(column, row))
-                {
-                    _boardGrid.GenerateBoardFruit(column, row: i);
-                }
+                case Direction.Up:
+                    Row = Mathf.Clamp(Row += distance, 0, _boardGrid.Rows);
+                    break;
+                case Direction.Down:
+                    Row = Mathf.Clamp(Row -= distance, 0, _boardGrid.Rows);
+                    break;
+                case Direction.Right:
+                    Column = Mathf.Clamp(Column += distance, 0, _boardGrid.Columns);
+                    break;
+                case Direction.Left:
+                    Column = Mathf.Clamp(Column -= distance, 0, _boardGrid.Columns);
+                    break;
             }
 
-            _boardMatcher.TryMatchFruits();
+            StartCoroutine(UpdateFruitPosition(boardFruit, Column, Row));
         }
 
         public bool IsEmptyBoardItem(int column, int row)
@@ -59,40 +81,23 @@ namespace Board
             return IsEmpty;
         }
 
-        private void MoveItem(Fruit boardFruit, int distance, Direction direction)
+
+
+        private IEnumerator UpdateFruitPosition(Fruit boardFruit, int newColumn, int newRow)
         {
-            int newColumn = boardFruit.Column;
-            int newRow = boardFruit.Row;
-
-            switch (direction)
-            {
-                case Direction.Up:
-                    newRow += distance;
-                    break;
-                case Direction.Down:
-                    newRow -= distance;
-                    break;
-                case Direction.Right:
-                    newColumn += distance;
-                    break;
-                case Direction.Left:
-                    newColumn -= distance;
-                    break;
-            }
-
             Vector3 newPosition = _boardGrid.GetFruitPosition(newColumn, newRow);
-            UpdateFruitPosition(boardFruit, newColumn, newRow, newPosition);
+            _boardGrid.BoardFruitArray[newColumn, newRow] = boardFruit;
+
+            yield return StartCoroutine(boardFruit.UpdatePosition(newColumn, newRow, newPosition));
         }
 
-        public void UpdateFruitPosition(Fruit boardFruit, int newColumn, int newRow, Vector3 itemPosition)
+        public IEnumerator SwapFruitPositions(Vector2Int firstFruitPlacement, Vector2Int secondFruitPlacement)
         {
-            int oldColumn = boardFruit.Column;
-            int oldRow = boardFruit.Row;
+            Fruit firstFruit = _boardGrid.BoardFruitArray[firstFruitPlacement.x, firstFruitPlacement.y];
+            Fruit secondFruit = _boardGrid.BoardFruitArray[secondFruitPlacement.x, secondFruitPlacement.y];
 
-            _boardGrid.BoardFruitArray[newColumn, newRow] = boardFruit;
-            boardFruit.UpdatePosition(newColumn, newRow, itemPosition);
-
-            _boardGrid.ReleaseFruit(oldColumn, oldRow);
+            StartCoroutine(UpdateFruitPosition(firstFruit, secondFruitPlacement.x, secondFruitPlacement.y));
+            yield return StartCoroutine(UpdateFruitPosition(secondFruit, firstFruitPlacement.x, firstFruitPlacement.y));
         }
     }
 }

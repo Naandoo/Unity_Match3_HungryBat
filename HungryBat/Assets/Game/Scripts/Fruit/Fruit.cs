@@ -1,24 +1,24 @@
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.Events;
+using System.Collections;
 
-namespace BoardItem
+namespace FruitItem
 {
     public class Fruit : MonoBehaviour
     {
+        [SerializeField] private SpriteRenderer _spriteRenderer;
         private FruitID _fruitID;
         private int _column;
         private int _row;
-        private const float _moveDuration = 0.5f;
-        [SerializeField] private SpriteRenderer _spriteRenderer;
-        private Direction _lastMovementDirection;
+        private const float _moveDuration = 0.3f;
+        private Tween moveTween;
 
         public int Column { get => _column; private set { } }
         public int Row { get => _row; private set { } }
         public FruitID FruitID { get => _fruitID; private set { } }
         public ItemVanishEvent OnItemVanish = new();
         public ItemMovedEvent OnItemMoved = new();
-        public Direction LastMovementDirection { get => _lastMovementDirection; private set { } }
 
         public void SetFruitID(FruitID fruitID)
         {
@@ -26,22 +26,18 @@ namespace BoardItem
             UpdateVisual();
         }
 
-        public void SetMovementDirection(Direction direction)
-        {
-            _lastMovementDirection = direction;
-        }
-
-        public void UpdatePosition(int Column, int Row, Vector3 itemPosition)
+        public IEnumerator UpdatePosition(int Column, int Row, Vector3 itemPosition)
         {
             _column = Column;
             _row = Row;
 
-            Move(itemPosition);
+            yield return StartCoroutine(Move(itemPosition));
         }
 
-        private void Move(Vector3 itemPosition)
+        private IEnumerator Move(Vector3 itemPosition)
         {
-            transform.DOMove(itemPosition, _moveDuration);
+            moveTween = transform.DOMove(itemPosition, _moveDuration);
+            yield return moveTween.WaitForCompletion();
         }
 
         public void Vanish()

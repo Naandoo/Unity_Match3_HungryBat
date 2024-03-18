@@ -1,73 +1,75 @@
 using UnityEngine;
-using BoardItem;
+using FruitItem;
 using System.Collections.Generic;
-using System.Linq;
+using System.Collections;
+using Unity.VisualScripting;
 
 namespace Board
 {
     public class BoardMatcher : MonoBehaviour
     {
         [SerializeField] private BoardGrid _boardGrid;
-        private Fruit[] lastSwappedItems;
-        private bool lastMovementResultInMatch = false;
+        [SerializeField] private BoardSorter _boardSorter;
+        private Vector2Int[] swappedItemsPlacement;
 
-        public void MoveFruit(int Column, int Row, Direction direction)
+        public IEnumerator MoveFruit(int Column, int Row, Direction direction)
         {
             Vector2Int movementDirection = MovementDirection.GetDirectionCoordinates(direction);
+
             Vector2Int selectedFruitPosition = new(Column, Row);
             Vector2Int swappedFruitPosition = new(Column + movementDirection.x, Row + movementDirection.y);
 
-            SwapFruits(selectedFruitPosition.x, selectedFruitPosition.y, swappedFruitPosition.x, swappedFruitPosition.y);
-            TryMatchFruits();
+            if (!_boardGrid.HasTileAt(swappedFruitPosition.x, swappedFruitPosition.y)) yield break;
+
+            yield return StartCoroutine(SwapFruits(selectedFruitPosition, swappedFruitPosition));
+            TryMatchFruits(matchWithMovement: true);
         }
 
-        private void SwapFruits(int selectedFruitColumn, int selectedFruitRow, int swappedFruitColumn, int swappedFruitRow)
+        private IEnumerator SwapFruits(Vector2Int firstFruitPlacement, Vector2Int secondFruitPlacement)
         {
-            Fruit selectedFruit = _boardGrid.BoardFruitArray[selectedFruitColumn, selectedFruitRow];
-            Fruit swappedFruit = _boardGrid.BoardFruitArray[swappedFruitColumn, swappedFruitRow];
+            Fruit selectedFruit = _boardGrid.BoardFruitArray[firstFruitPlacement.x, firstFruitPlacement.y];
+            Fruit swappedFruit = _boardGrid.BoardFruitArray[secondFruitPlacement.x, secondFruitPlacement.y];
 
-            lastSwappedItems = new Fruit[] { selectedFruit, swappedFruit };
-
-            _boardGrid.BoardFruitArray[selectedFruit.Column, selectedFruit.Row] = swappedFruit;
-            _boardGrid.BoardFruitArray[swappedFruit.Column, selectedFruit.Row] = selectedFruit;
-
-            Vector3 selectedFruitPosition = _boardGrid.GetFruitPosition(selectedFruitColumn, selectedFruitRow);
-            Vector3 swappedFruitPosition = _boardGrid.GetFruitPosition(swappedFruitColumn, swappedFruitRow);
-
-            selectedFruit.UpdatePosition(swappedFruitColumn, swappedFruitRow, swappedFruitPosition);
-            swappedFruit.UpdatePosition(selectedFruitColumn, selectedFruitRow, selectedFruitPosition);
-
-        }
-
-        public void TryMatchFruits()
-        {
-            bool matched = false;
-
-            do
+            swappedItemsPlacement = new Vector2Int[]
             {
-                matched = false;
-                List<Fruit> fruitsToMatch = new List<Fruit>();
+                new (selectedFruit.Column, selectedFruit.Row),
+                new (swappedFruit.Column, swappedFruit.Row),
+            };
 
-                for (int i = 0; i < _boardGrid.Columns; i++)
+            yield return StartCoroutine(_boardSorter.SwapFruitPositions(swappedItemsPlacement[0], swappedItemsPlacement[1]));
+        }
+
+        public void TryMatchFruits(bool matchWithMovement)
+        {
+            List<Fruit> fruitsToMatch = new();
+
+            for (int i = 0; i < _boardGrid.Columns; i++)
+            {
+                for (int j = 0; j < _boardGrid.Rows; j++)
                 {
-                    for (int j = 0; j < _boardGrid.Rows; j++)
-                    {
-                        CheckFruitMatch(i, j, 1, 0, fruitsToMatch);
-                        CheckFruitMatch(i, j, 0, 1, fruitsToMatch);
-                    }
+                    CheckFruitMatch(i, j, 1, 0, fruitsToMatch);
+                    CheckFruitMatch(i, j, 0, 1, fruitsToMatch);
                 }
+            }
 
-                if (fruitsToMatch.Count >= 3)
+            if (fruitsToMatch.Count >= 3)
+            {
+                foreach (Fruit fruit in fruitsToMatch)
                 {
-                    matched = true;
-                    foreach (Fruit fruit in fruitsToMatch)
-                    {
-                        fruit.Vanish();
-                        lastMovementResultInMatch = true;
-                    }
+                    fruit.Vanish();
                 }
+            }
+            else if (fruitsToMatch.Count <= 3 && matchWithMovement)
+            {
+                StartCoroutine(SwapFruits(swappedItemsPlacement[1], swappedItemsPlacement[0]));
+                return;
+            }
+            else
+            {
+                return;
+            }
 
-            } while (matched);
+            _boardSorter.SortBoard();
         }
 
         private void CheckFruitMatch(int startColumn, int startRow, int stepX, int stepY, List<Fruit> fruitsToMatch)

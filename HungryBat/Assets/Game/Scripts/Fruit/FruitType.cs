@@ -1,4 +1,4 @@
-namespace BoardItem
+namespace FruitItem
 {
     public enum FruitType
     {

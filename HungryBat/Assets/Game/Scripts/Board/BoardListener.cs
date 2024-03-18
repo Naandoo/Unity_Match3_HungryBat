@@ -1,5 +1,5 @@
 using UnityEngine;
-using BoardItem;
+using FruitItem;
 
 namespace Board
 {
@@ -19,13 +19,12 @@ namespace Board
             {
                 _boardGrid.ReleaseFruit(Column, Row);
                 _boardFruitPool.OnReleasedFruit(boardItem);
-                _boardSorter.OnReleasedItem(Column, Row);
+                // _boardSorter.OnReleasedItem(Column, Row);
             });
 
-            Direction lastMoveDirection = boardItem.LastMovementDirection;
             boardItem.OnItemMoved.AddListener((Column, Row, lastMoveDirection) =>
             {
-                _boardMatcher.MoveFruit(Column, Row, lastMoveDirection);
+                StartCoroutine(_boardMatcher.MoveFruit(Column, Row, lastMoveDirection));
             });
         }
 

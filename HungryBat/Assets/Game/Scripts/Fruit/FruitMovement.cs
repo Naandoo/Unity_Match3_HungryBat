@@ -1,7 +1,7 @@
 using UnityEngine;
 using ScriptableVariable;
 
-namespace BoardItem
+namespace FruitItem
 {
     public class FruitMovement : MonoBehaviour
     {

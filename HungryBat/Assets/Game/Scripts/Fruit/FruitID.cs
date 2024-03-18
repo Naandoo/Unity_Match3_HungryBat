@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace BoardItem
+namespace FruitItem
 {
     [CreateAssetMenu(fileName = "FruitID", menuName = "Scriptables/Fruit", order = 1)]
     public class FruitID : ScriptableObject
