@@ -72,6 +72,7 @@ namespace Board
             _boardSorter.SortBoard();
         }
 
+        //We must optimize this code because we are nesting two double foreach loops
         private void CheckFruitMatch(int startColumn, int startRow, int stepX, int stepY, List<Fruit> fruitsToMatch)
         {
             List<Fruit> sequence = new List<Fruit>();
@@ -81,7 +82,7 @@ namespace Board
             {
                 Fruit fruit = _boardGrid.BoardFruitArray[i, j];
 
-                if (fruit == null)
+                if (fruit == null) //Should we consider to add the check for tile inside the if?
                 {
                     sequence.Clear();
                     currentFruitType = null;

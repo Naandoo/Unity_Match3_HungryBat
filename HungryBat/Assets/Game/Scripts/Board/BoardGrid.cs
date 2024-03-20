@@ -2,8 +2,6 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using FruitItem;
 using ScriptableVariable;
-using DG.Tweening;
-using UnityEngine.UIElements;
 
 namespace Board
 {
@@ -14,9 +12,9 @@ namespace Board
         [SerializeField] private BoardListener _boardListener;
         [SerializeField] private Vector3Variable _boardCellSize;
         [SerializeField] private BoardMatcher _boardMatcher;
-
         private const float _fruitOffset = 0.25f;
         private Fruit[,] _boardFruitArray;
+
         public int Columns { get => _boardTilemap.size.x; private set { } }
         public int Rows { get => _boardTilemap.size.y; private set { } }
         public Fruit[,] BoardFruitArray { get => _boardFruitArray; private set { } }
@@ -50,6 +48,12 @@ namespace Board
 
             _boardCellSize.Value = _boardTilemap.cellSize;
             _boardMatcher.TryMatchFruits(matchWithMovement: false);
+        }
+
+        public bool HasTileAt(int column, int row)
+        {
+            Vector3Int placement = GetCellPosition(column, row);
+            return _boardTilemap.HasTile(placement);
         }
 
         private Vector3Int GetCellPosition(int column, int row)
@@ -86,12 +90,6 @@ namespace Board
         public void ReleaseFruit(int column, int row)
         {
             _boardFruitArray[column, row] = null;
-        }
-
-        public bool HasTileAt(int column, int row)
-        {
-            Vector3Int placement = GetCellPosition(column, row);
-            return _boardTilemap.HasTile(placement);
         }
     }
 }

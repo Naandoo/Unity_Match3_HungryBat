@@ -6,7 +6,6 @@ namespace Board
     public class BoardListener : MonoBehaviour
     {
         [SerializeField] private BoardGrid _boardGrid;
-        [SerializeField] private BoardSorter _boardSorter;
         [SerializeField] private BoardFruitPool _boardFruitPool;
         [SerializeField] private BoardMatcher _boardMatcher;
 
@@ -15,17 +14,22 @@ namespace Board
             int Column = boardItem.Column;
             int Row = boardItem.Row;
 
-            boardItem.OnItemVanish.AddListener((Column, Row) =>
+            if (boardItem.OnItemVanish.GetPersistentEventCount() == 0)
             {
-                _boardGrid.ReleaseFruit(Column, Row);
-                _boardFruitPool.OnReleasedFruit(boardItem);
-                // _boardSorter.OnReleasedItem(Column, Row);
-            });
+                boardItem.OnItemVanish.AddListener((Column, Row) =>
+                {
+                    _boardGrid.ReleaseFruit(Column, Row);
+                    _boardFruitPool.OnReleasedFruit(boardItem);
+                });
+            }
 
-            boardItem.OnItemMoved.AddListener((Column, Row, lastMoveDirection) =>
+            if (boardItem.OnItemMoved.GetPersistentEventCount() == 0)
             {
-                StartCoroutine(_boardMatcher.MoveFruit(Column, Row, lastMoveDirection));
-            });
+                boardItem.OnItemMoved.AddListener((Column, Row, lastMoveDirection) =>
+                {
+                    StartCoroutine(_boardMatcher.MoveFruit(Column, Row, lastMoveDirection));
+                });
+            }
         }
 
         public void UnsubscribeEventsIn(Fruit boardItem)

@@ -1,7 +1,6 @@
 using UnityEngine;
 using FruitItem;
 using System.Collections;
-using Unity.VisualScripting;
 
 namespace Board
 {
@@ -34,23 +33,12 @@ namespace Board
             }
         }
 
-        private void FillEmptySpacesInBoard(int column, int emptyItems)
+        public bool IsEmptyBoardItem(int column, int row)
         {
-            int initialRow = _boardGrid.Rows - emptyItems;
-
-            for (int i = initialRow; i < _boardGrid.Rows; i++)
-            {
-                int newRow;
-                if (!_boardGrid.HasTileAt(column, i))
-                {
-                    newRow = i - 1;
-                }
-                else newRow = i;
-                _boardGrid.GenerateBoardFruit(column, newRow);
-            }
-
-            _boardMatcher.TryMatchFruits(matchWithMovement: false);
+            bool IsEmpty = _boardGrid.BoardFruitArray[column, row] == null;
+            return IsEmpty;
         }
+
         private void MoveItem(Fruit boardFruit, int distance, Direction direction)
         {
             int Column = boardFruit.Column;
@@ -59,29 +47,21 @@ namespace Board
             switch (direction)
             {
                 case Direction.Up:
-                    Row = Mathf.Clamp(Row += distance, 0, _boardGrid.Rows);
+                    Row += distance;
                     break;
                 case Direction.Down:
-                    Row = Mathf.Clamp(Row -= distance, 0, _boardGrid.Rows);
+                    Row -= distance;
                     break;
                 case Direction.Right:
-                    Column = Mathf.Clamp(Column += distance, 0, _boardGrid.Columns);
+                    Column += distance;
                     break;
                 case Direction.Left:
-                    Column = Mathf.Clamp(Column -= distance, 0, _boardGrid.Columns);
+                    Column -= distance;
                     break;
             }
 
             StartCoroutine(UpdateFruitPosition(boardFruit, Column, Row));
         }
-
-        public bool IsEmptyBoardItem(int column, int row)
-        {
-            bool IsEmpty = _boardGrid.BoardFruitArray[column, row] == null;
-            return IsEmpty;
-        }
-
-
 
         private IEnumerator UpdateFruitPosition(Fruit boardFruit, int newColumn, int newRow)
         {
@@ -91,6 +71,44 @@ namespace Board
             yield return StartCoroutine(boardFruit.UpdatePosition(newColumn, newRow, newPosition));
         }
 
+        private void FillEmptySpacesInBoard(int column, int emptyItems)
+        {
+            int initialRow = GetRowsInColumn(column, out int firstRowIndex) - emptyItems;
+
+            for (int i = initialRow + firstRowIndex; i < _boardGrid.Rows; i++)
+            {
+                if (!_boardGrid.HasTileAt(column, i)) continue;
+                _boardGrid.GenerateBoardFruit(column, i);
+            }
+
+            _boardMatcher.TryMatchFruits(matchWithMovement: false);
+        }
+
+        private int GetRowsInColumn(int column, out int firstRowIndex)
+        {
+            int amountOfEmptyTiles = 0;
+            bool foundFirstRowIndex = false;
+            firstRowIndex = 0;
+
+            for (int i = 0; i < _boardGrid.Rows; i++)
+            {
+                if (!_boardGrid.HasTileAt(column, i))
+                {
+                    amountOfEmptyTiles++;
+                }
+                else
+                {
+                    if (!foundFirstRowIndex)
+                    {
+                        firstRowIndex = i;
+                        foundFirstRowIndex = true;
+                    }
+                }
+            }
+
+            int amountOfRowsInColumn = _boardGrid.Rows - amountOfEmptyTiles;
+            return amountOfRowsInColumn;
+        }
         public IEnumerator SwapFruitPositions(Vector2Int firstFruitPlacement, Vector2Int secondFruitPlacement)
         {
             Fruit firstFruit = _boardGrid.BoardFruitArray[firstFruitPlacement.x, firstFruitPlacement.y];
