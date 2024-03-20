@@ -83,6 +83,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spriteRenderer: {fileID: 1393836646070208606}
+  _fruitMovementDuration: {fileID: 11400000, guid: d17780e96eae719498254f4863de518a, type: 2}
 --- !u!114 &6221593413680666022
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -2,7 +2,6 @@ using UnityEngine;
 using FruitItem;
 using System.Collections.Generic;
 using System.Collections;
-using Unity.VisualScripting;
 
 namespace Board
 {
@@ -10,8 +9,14 @@ namespace Board
     {
         [SerializeField] private BoardGrid _boardGrid;
         [SerializeField] private BoardSorter _boardSorter;
+        [SerializeField] private BoardState _boardState;
+
         private Vector2Int[] swappedItemsPlacement;
 
+        private void Update()
+        {
+            print(_boardState.State);
+        }
         public IEnumerator MoveFruit(int Column, int Row, Direction direction)
         {
             Vector2Int movementDirection = MovementDirection.GetDirectionCoordinates(direction);
@@ -27,6 +32,7 @@ namespace Board
 
         private IEnumerator SwapFruits(Vector2Int firstFruitPlacement, Vector2Int secondFruitPlacement)
         {
+
             Fruit selectedFruit = _boardGrid.BoardFruitArray[firstFruitPlacement.x, firstFruitPlacement.y];
             Fruit swappedFruit = _boardGrid.BoardFruitArray[secondFruitPlacement.x, secondFruitPlacement.y];
 
@@ -42,6 +48,7 @@ namespace Board
         public void TryMatchFruits(bool matchWithMovement)
         {
             List<Fruit> fruitsToMatch = new();
+            _boardState.State = State.Matching;
 
             for (int i = 0; i < _boardGrid.Columns; i++)
             {
@@ -66,6 +73,8 @@ namespace Board
             }
             else
             {
+                print("no matches");
+                _boardState.State = State.Common;
                 return;
             }
 

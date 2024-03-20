@@ -8,9 +8,12 @@ namespace Board
     {
         [SerializeField] private BoardGrid _boardGrid;
         [SerializeField] private BoardMatcher _boardMatcher;
+        [SerializeField] private BoardState _boardState;
 
         public void SortBoard()
         {
+            _boardState.State = State.Sorting;
+
             for (int i = 0; i < _boardGrid.Columns; i++)
             {
                 int emptyItemsInColumn = 0;
@@ -29,7 +32,7 @@ namespace Board
                     }
                 }
 
-                FillEmptySpacesInBoard(column: i, emptyItemsInColumn);
+                StartCoroutine(FillEmptySpacesInBoard(column: i, emptyItemsInColumn));
             }
         }
 
@@ -71,7 +74,7 @@ namespace Board
             yield return StartCoroutine(boardFruit.UpdatePosition(newColumn, newRow, newPosition));
         }
 
-        private void FillEmptySpacesInBoard(int column, int emptyItems)
+        private IEnumerator FillEmptySpacesInBoard(int column, int emptyItems)
         {
             int initialRow = GetRowsInColumn(column, out int firstRowIndex) - emptyItems;
 
@@ -81,6 +84,7 @@ namespace Board
                 _boardGrid.GenerateBoardFruit(column, i);
             }
 
+            yield return new WaitForSeconds(0.6f);
             _boardMatcher.TryMatchFruits(matchWithMovement: false);
         }
 
@@ -111,11 +115,15 @@ namespace Board
         }
         public IEnumerator SwapFruitPositions(Vector2Int firstFruitPlacement, Vector2Int secondFruitPlacement)
         {
+            _boardState.State = State.Moving;
+
             Fruit firstFruit = _boardGrid.BoardFruitArray[firstFruitPlacement.x, firstFruitPlacement.y];
             Fruit secondFruit = _boardGrid.BoardFruitArray[secondFruitPlacement.x, secondFruitPlacement.y];
 
             StartCoroutine(UpdateFruitPosition(firstFruit, secondFruitPlacement.x, secondFruitPlacement.y));
             yield return StartCoroutine(UpdateFruitPosition(secondFruit, firstFruitPlacement.x, firstFruitPlacement.y));
+
+            _boardState.State = State.Common;
         }
     }
 }

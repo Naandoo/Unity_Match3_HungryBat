@@ -8,6 +8,7 @@ namespace Board
         [SerializeField] private BoardGrid _boardGrid;
         [SerializeField] private BoardFruitPool _boardFruitPool;
         [SerializeField] private BoardMatcher _boardMatcher;
+        [SerializeField] private BoardState _boardState;
 
         public void SubscribeEventsIn(Fruit boardItem)
         {
@@ -27,7 +28,10 @@ namespace Board
             {
                 boardItem.OnItemMoved.AddListener((Column, Row, lastMoveDirection) =>
                 {
-                    StartCoroutine(_boardMatcher.MoveFruit(Column, Row, lastMoveDirection));
+                    if (_boardState.State == State.Common)
+                    {
+                        StartCoroutine(_boardMatcher.MoveFruit(Column, Row, lastMoveDirection));
+                    }
                 });
             }
         }
