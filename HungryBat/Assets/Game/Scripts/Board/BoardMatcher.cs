@@ -80,9 +80,11 @@ namespace Board
 
             for (int i = startColumn, j = startRow; i < _boardGrid.Columns && j < _boardGrid.Rows; i += stepX, j += stepY)
             {
+                if (!_boardGrid.HasTileAt(i, j)) continue;
+
                 Fruit fruit = _boardGrid.BoardFruitArray[i, j];
 
-                if (fruit == null) //Should we consider to add the check for tile inside the if?
+                if (fruit == null)
                 {
                     sequence.Clear();
                     currentFruitType = null;

@@ -1,5 +1,6 @@
 using UnityEngine;
 using FruitItem;
+using DG.Tweening;
 
 namespace Board
 {
@@ -14,6 +15,7 @@ namespace Board
         public void Initialize(int poolSize)
         {
             _poolSystem = new PoolSystem<Fruit>(_boardFruit, poolSize, transform);
+            DOTween.SetTweensCapacity(200, 200);
         }
 
         public Fruit GetRandomFruit()

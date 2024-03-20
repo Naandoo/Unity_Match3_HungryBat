@@ -12,7 +12,6 @@ namespace FruitItem
         private int _column;
         private int _row;
         private const float _moveDuration = 0.3f;
-        private Tween moveTween;
 
         public int Column { get => _column; private set { } }
         public int Row { get => _row; private set { } }
@@ -36,7 +35,7 @@ namespace FruitItem
 
         private IEnumerator Move(Vector3 itemPosition)
         {
-            moveTween = transform.DOMove(itemPosition, _moveDuration);
+            Tween moveTween = transform.DOMove(itemPosition, _moveDuration);
             yield return moveTween.WaitForCompletion();
         }
 
