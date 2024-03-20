@@ -48,7 +48,6 @@ namespace Board
         public void TryMatchFruits(bool matchWithMovement)
         {
             List<Fruit> fruitsToMatch = new();
-            _boardState.State = State.Matching;
 
             for (int i = 0; i < _boardGrid.Columns; i++)
             {
@@ -69,11 +68,11 @@ namespace Board
             else if (fruitsToMatch.Count <= 3 && matchWithMovement)
             {
                 StartCoroutine(SwapFruits(swappedItemsPlacement[1], swappedItemsPlacement[0]));
+                _boardState.State = State.Common;
                 return;
             }
             else
             {
-                print("no matches");
                 _boardState.State = State.Common;
                 return;
             }

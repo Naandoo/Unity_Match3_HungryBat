@@ -122,8 +122,6 @@ namespace Board
 
             StartCoroutine(UpdateFruitPosition(firstFruit, secondFruitPlacement.x, secondFruitPlacement.y));
             yield return StartCoroutine(UpdateFruitPosition(secondFruit, firstFruitPlacement.x, firstFruitPlacement.y));
-
-            _boardState.State = State.Common;
         }
     }
 }

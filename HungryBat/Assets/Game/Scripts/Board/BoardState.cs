@@ -9,7 +9,6 @@ public class BoardState : MonoBehaviour
 public enum State
 {
     Moving,
-    Matching,
     Sorting,
     Common,
 }
