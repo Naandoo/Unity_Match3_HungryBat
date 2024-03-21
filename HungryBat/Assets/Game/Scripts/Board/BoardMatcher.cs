@@ -10,12 +10,23 @@ namespace Board
         [SerializeField] private BoardGrid _boardGrid;
         [SerializeField] private BoardSorter _boardSorter;
         [SerializeField] private BoardState _boardState;
+        [SerializeField] private BoardAuthenticator _boardAuthenticator;
 
         private Vector2Int[] swappedItemsPlacement;
 
         private void Update()
         {
-            print(_boardState.State);
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                bool hasMatch;
+                List<Fruit> matches;
+                hasMatch = _boardAuthenticator.VerifyAvailableMatches(_boardGrid.BoardFruitArray, out matches);
+
+                foreach (Fruit fruit in matches)
+                {
+                    fruit.transform.localScale *= 1.05f;
+                }
+            }
         }
         public IEnumerator MoveFruit(int Column, int Row, Direction direction)
         {
@@ -32,7 +43,6 @@ namespace Board
 
         private IEnumerator SwapFruits(Vector2Int firstFruitPlacement, Vector2Int secondFruitPlacement)
         {
-
             Fruit selectedFruit = _boardGrid.BoardFruitArray[firstFruitPlacement.x, firstFruitPlacement.y];
             Fruit swappedFruit = _boardGrid.BoardFruitArray[secondFruitPlacement.x, secondFruitPlacement.y];
 
@@ -53,8 +63,8 @@ namespace Board
             {
                 for (int j = 0; j < _boardGrid.Rows; j++)
                 {
-                    CheckFruitMatch(i, j, 1, 0, fruitsToMatch);
-                    CheckFruitMatch(i, j, 0, 1, fruitsToMatch);
+                    fruitsToMatch.AddRange(GetBoardMatch(i, j, 1, 0));
+                    fruitsToMatch.AddRange(GetBoardMatch(i, j, 0, 1));
                 }
             }
 
@@ -80,44 +90,12 @@ namespace Board
             _boardSorter.SortBoard();
         }
 
-        //We must optimize this code because we are nesting two double foreach loops
-        private void CheckFruitMatch(int startColumn, int startRow, int stepX, int stepY, List<Fruit> fruitsToMatch)
+        private List<Fruit> GetBoardMatch(int startColumn, int startRow, int stepX, int stepY)
         {
-            List<Fruit> sequence = new List<Fruit>();
-            FruitType? currentFruitType = null;
+            List<Fruit> matches = new();
+            matches = _boardAuthenticator.GetFruitMatch(startColumn, startRow, stepX, stepY, _boardGrid.BoardFruitArray);
 
-            for (int i = startColumn, j = startRow; i < _boardGrid.Columns && j < _boardGrid.Rows; i += stepX, j += stepY)
-            {
-                if (!_boardGrid.HasTileAt(i, j)) continue;
-
-                Fruit fruit = _boardGrid.BoardFruitArray[i, j];
-
-                if (fruit == null)
-                {
-                    sequence.Clear();
-                    currentFruitType = null;
-                }
-                else if (!currentFruitType.HasValue || currentFruitType == fruit.FruitID.FruitType)
-                {
-                    sequence.Add(fruit);
-                    currentFruitType = fruit.FruitID.FruitType;
-                }
-                else
-                {
-                    if (sequence.Count >= 3)
-                    {
-                        fruitsToMatch.AddRange(sequence);
-                    }
-                    sequence.Clear();
-                    sequence.Add(fruit);
-                    currentFruitType = fruit.FruitID.FruitType;
-                }
-            }
-
-            if (sequence.Count >= 3)
-            {
-                fruitsToMatch.AddRange(sequence);
-            }
+            return matches;
         }
     }
 }

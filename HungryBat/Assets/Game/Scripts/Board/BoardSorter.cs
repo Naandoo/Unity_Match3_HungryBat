@@ -84,7 +84,7 @@ namespace Board
                 _boardGrid.GenerateBoardFruit(column, i);
             }
 
-            yield return new WaitForSeconds(0.6f);
+            yield return new WaitForSeconds(0.6f); // TODO: Consider catching the correctly time, instead of a magic number
             _boardMatcher.TryMatchFruits(matchWithMovement: false);
         }
 
