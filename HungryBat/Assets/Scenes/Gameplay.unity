@@ -992,6 +992,7 @@ MonoBehaviour:
   _boardListener: {fileID: 455438042}
   _boardCellSize: {fileID: 11400000, guid: 877eb2d29576932459701d2cbc9567df, type: 2}
   _boardMatcher: {fileID: 455438045}
+  _boardAuthenticator: {fileID: 455438047}
 --- !u!114 &455438042
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1023,6 +1024,7 @@ MonoBehaviour:
   _boardGrid: {fileID: 455438041}
   _boardMatcher: {fileID: 455438045}
   _boardState: {fileID: 455438046}
+  _boardAuthenticator: {fileID: 455438047}
 --- !u!114 &455438044
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1054,6 +1056,9 @@ MonoBehaviour:
   _boardSorter: {fileID: 455438043}
   _boardState: {fileID: 455438046}
   _boardAuthenticator: {fileID: 455438047}
+  OnBoardFinishMovement:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &455438046
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1079,6 +1084,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _boardGrid: {fileID: 455438041}
+  _boardSorter: {fileID: 455438043}
 --- !u!1 &611484870
 GameObject:
   m_ObjectHideFlags: 0
