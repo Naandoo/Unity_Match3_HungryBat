@@ -77,8 +77,8 @@ namespace Board
             {
                 for (int j = 0; j < _boardGrid.Rows; j++)
                 {
-                    matchesFound.AddRange(GetFruitMatch(i, j, 1, 0, tempBoardFruit));
-                    matchesFound.AddRange(GetFruitMatch(i, j, 0, 1, tempBoardFruit));
+                    // matchesFound.AddRange(GetFruitMatch(i, j, 1, 0, tempBoardFruit));
+                    // matchesFound.AddRange(GetFruitMatch(i, j, 0, 1, tempBoardFruit));
                 }
             }
 
@@ -89,51 +89,6 @@ namespace Board
                     matches.Add(fruitFound);
                 }
             }
-            return matches;
-        }
-
-        public List<Fruit> GetFruitMatch(int startColumn, int startRow, int stepX, int stepY, Fruit[,] boardFruit)
-        {
-            List<Fruit> sequence = new();
-            List<Fruit> matches = new();
-
-            FruitType? currentFruitType = null;
-
-            for (int i = startColumn, j = startRow; i >= 0 && i < boardFruit.GetLength(0) && j >= 0 && j < boardFruit.GetLength(1); i += stepX, j += stepY)
-            {
-                if (!_boardGrid.HasTileAt(i, j)) continue;
-
-                Fruit fruit = boardFruit[i, j];
-
-                if (fruit == null)
-                {
-                    sequence.Clear();
-                    currentFruitType = null;
-                    continue;
-                }
-
-                if (!currentFruitType.HasValue || currentFruitType == fruit.FruitID.FruitType)
-                {
-                    sequence.Add(fruit);
-                    currentFruitType = fruit.FruitID.FruitType;
-
-                    if (sequence.Count >= 3)
-                    {
-                        if (sequence.Count > matches.Count)
-                        {
-                            matches.Clear();
-                            matches.AddRange(sequence);
-                        }
-                    }
-                }
-                else
-                {
-                    sequence.Clear();
-                    sequence.Add(fruit);
-                    currentFruitType = fruit.FruitID.FruitType;
-                }
-            }
-
             return matches;
         }
     }
