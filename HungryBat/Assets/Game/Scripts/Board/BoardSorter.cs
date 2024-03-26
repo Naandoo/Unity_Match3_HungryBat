@@ -8,11 +8,10 @@ namespace Board
     {
         [SerializeField] private BoardGrid _boardGrid;
         [SerializeField] private BoardMatcher _boardMatcher;
-        [SerializeField] private BoardState _boardState;
 
         public IEnumerator SortBoard()
         {
-            _boardState.State = State.Sorting;
+            BoardState.Instance.SetState(State.Sorting);
 
             for (int i = 0; i < _boardGrid.Columns; i++)
             {
@@ -115,7 +114,7 @@ namespace Board
         }
         public IEnumerator SwapFruitPositions(Vector2Int firstFruitPlacement, Vector2Int secondFruitPlacement)
         {
-            _boardState.State = State.Moving;
+            BoardState.Instance.SetState(State.Moving);
 
             Fruit firstFruit = _boardGrid.BoardFruitArray[firstFruitPlacement.x, firstFruitPlacement.y];
             Fruit secondFruit = _boardGrid.BoardFruitArray[secondFruitPlacement.x, secondFruitPlacement.y];

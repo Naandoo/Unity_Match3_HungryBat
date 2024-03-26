@@ -112,7 +112,8 @@ namespace Board
 
         public void CheckShuffleNeed()
         {
-            if (!_boardAuthenticator.ContainsAvailableMatches(BoardFruitArray, out List<Fruit> matches))
+            //solve the contains available match faking news
+            if (!_boardAuthenticator.ContainsAvailableMatches())
             {
                 foreach (Fruit fruit in _boardFruitArray)
                 {

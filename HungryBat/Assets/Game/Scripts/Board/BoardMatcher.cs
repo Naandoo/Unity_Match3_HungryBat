@@ -12,7 +12,6 @@ namespace Board
         [SerializeField] private BoardGrid _boardGrid;
         [SerializeField] private BoardSorter _boardSorter;
         [SerializeField] private BoardAuthenticator _boardAuthenticator;
-        [SerializeField] private BoardState _boardState;
         private int _boardColumns;
         private int _boardRows;
         private Vector2Int[] _swappedItemsPlacement;
@@ -22,14 +21,6 @@ namespace Board
         {
             _boardColumns = _boardGrid.Columns;
             _boardRows = _boardGrid.Rows;
-        }
-
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                OnBoardFinishMovement.Invoke();
-            }
         }
 
         public IEnumerator MoveFruit(int column, int row, Direction direction)
@@ -82,12 +73,12 @@ namespace Board
             else if (fruitsToMatch.Count <= 3 && matchWithMovement)
             {
                 StartCoroutine(SwapFruits(_swappedItemsPlacement[1], _swappedItemsPlacement[0]));
-                _boardState.State = State.Common;
+                BoardState.Instance.SetState(State.Common);
                 return;
             }
             else
             {
-                _boardState.State = State.Common;
+                BoardState.Instance.SetState(State.Common);
                 OnBoardFinishMovement.Invoke();
                 return;
             }

@@ -7,12 +7,12 @@ namespace Board
 {
     public class BoardAuthenticator : MonoBehaviour
     {
-        [SerializeField] BoardGrid _boardGrid;
-        [SerializeField] BoardMatcher _boardMatcher;
+        [SerializeField] private BoardGrid _boardGrid;
+        [SerializeField] private BoardMatcher _boardMatcher;
 
-        public bool ContainsAvailableMatches(Fruit[,] boardFruits, out List<Fruit> match)
+        public bool ContainsAvailableMatches()
         {
-            match = new List<Fruit>();
+            List<Fruit> match = new();
 
             for (int i = 0; i < _boardGrid.Columns; i++)
             {
@@ -22,7 +22,6 @@ namespace Board
 
                     Fruit fruit = _boardGrid.BoardFruitArray[i, j];
                     List<Fruit> matchPossibility = FindBestMatchFromSimulatedPossibilities(fruit);
-
                     if (matchPossibility.Count >= match.Count)
                     {
                         match = matchPossibility;
@@ -30,12 +29,17 @@ namespace Board
                 }
             }
 
+            if (match.Count >= 3)
+            {
+                SaveFruitsForTip(match);
+            }
+
             return match.Count >= 3;
         }
 
         private List<Fruit> FindBestMatchFromSimulatedPossibilities(Fruit fruit)
         {
-            List<Fruit> bestMatch = new List<Fruit>();
+            List<Fruit> bestMatch = new();
 
             foreach (Direction direction in Enum.GetValues(typeof(Direction)))
             {
@@ -51,7 +55,7 @@ namespace Board
 
         private List<Fruit> SimulateMovement(Fruit fruit, Direction direction)
         {
-            List<Fruit> matches = new List<Fruit>();
+            List<Fruit> matches = new();
 
             Vector2Int movementDirection = MovementDirection.GetDirectionCoordinates(direction);
             int newColumn = fruit.Column + movementDirection.x;
@@ -74,12 +78,20 @@ namespace Board
 
         private List<Fruit> GetMatchesFromCell(int column, int row, Fruit[,] boardFruit)
         {
-            List<Fruit> matches = new List<Fruit>();
+            List<Fruit> matches = new();
 
             matches.AddRange(_boardMatcher.GetFruitMatch(column, row, 1, 0, boardFruit));
             matches.AddRange(_boardMatcher.GetFruitMatch(column, row, 0, 1, boardFruit));
 
             return matches;
+        }
+
+        private void SaveFruitsForTip(List<Fruit> fruits)
+        {
+            foreach (Fruit fruit in fruits)
+            {
+                StartCoroutine(fruit.Tip());
+            }
         }
     }
 }

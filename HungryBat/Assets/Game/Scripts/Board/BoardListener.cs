@@ -8,7 +8,6 @@ namespace Board
         [SerializeField] private BoardGrid _boardGrid;
         [SerializeField] private BoardFruitPool _boardFruitPool;
         [SerializeField] private BoardMatcher _boardMatcher;
-        [SerializeField] private BoardState _boardState;
 
         private void Awake()
         {
@@ -36,7 +35,7 @@ namespace Board
             {
                 boardItem.OnItemMoved.AddListener((Column, Row, lastMoveDirection) =>
                 {
-                    if (_boardState.State == State.Common)
+                    if (BoardState.Instance.State == State.Common)
                     {
                         StartCoroutine(_boardMatcher.MoveFruit(Column, Row, lastMoveDirection));
                     }
