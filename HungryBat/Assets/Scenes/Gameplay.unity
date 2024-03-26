@@ -1052,8 +1052,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _boardGrid: {fileID: 455438041}
   _boardSorter: {fileID: 455438043}
-  _boardState: {fileID: 455438046}
   _boardAuthenticator: {fileID: 455438047}
+  _boardState: {fileID: 455438046}
 --- !u!114 &455438046
 MonoBehaviour:
   m_ObjectHideFlags: 0

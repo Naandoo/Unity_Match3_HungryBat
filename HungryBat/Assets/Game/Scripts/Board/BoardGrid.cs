@@ -91,5 +91,20 @@ namespace Board
         {
             _boardFruitArray[column, row] = null;
         }
+
+        public Fruit[,] CloneBoardFruitArray()
+        {
+            Fruit[,] clone = new Fruit[Columns, Rows];
+
+            for (int i = 0; i < Columns; i++)
+            {
+                for (int j = 0; j < Rows; j++)
+                {
+                    clone[i, j] = BoardFruitArray[i, j];
+                }
+            }
+
+            return clone;
+        }
     }
 }

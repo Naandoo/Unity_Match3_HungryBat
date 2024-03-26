@@ -8,20 +8,21 @@ namespace Board
     public class BoardAuthenticator : MonoBehaviour
     {
         [SerializeField] BoardGrid _boardGrid;
+        [SerializeField] BoardMatcher _boardMatcher;
 
         public bool VerifyAvailableMatches(Fruit[,] boardFruits, out List<Fruit> match)
         {
             match = new List<Fruit>();
 
-            for (int i = 0; i < boardFruits.GetLength(0); i++)
+            for (int i = 0; i < _boardGrid.Columns; i++)
             {
-                for (int j = 0; j < boardFruits.GetLength(1); j++)
+                for (int j = 0; j < _boardGrid.Rows; j++)
                 {
                     if (!_boardGrid.HasTileAt(i, j)) continue;
 
                     Fruit fruit = _boardGrid.BoardFruitArray[i, j];
-
                     List<Fruit> matchPossibility = FindBestMatchFromSimulatedPossibilities(fruit);
+
                     if (matchPossibility.Count >= match.Count)
                     {
                         match = matchPossibility;
@@ -32,63 +33,52 @@ namespace Board
             return match.Count >= 3;
         }
 
-
         private List<Fruit> FindBestMatchFromSimulatedPossibilities(Fruit fruit)
         {
-            List<Fruit> matchMovingUp = SimulateMovement(fruit, Direction.Up);
-            List<Fruit> matchMovingDown = SimulateMovement(fruit, Direction.Down);
-            List<Fruit> matchMovingLeft = SimulateMovement(fruit, Direction.Left);
-            List<Fruit> matchMovingRight = SimulateMovement(fruit, Direction.Right);
+            List<Fruit> bestMatch = new List<Fruit>();
 
-            List<Fruit> bestMatch = matchMovingUp;
-
-            if (matchMovingDown.Count > bestMatch.Count) bestMatch = matchMovingDown;
-            if (matchMovingLeft.Count > bestMatch.Count) bestMatch = matchMovingLeft;
-            if (matchMovingRight.Count > bestMatch.Count) bestMatch = matchMovingRight;
+            foreach (Direction direction in Enum.GetValues(typeof(Direction)))
+            {
+                List<Fruit> match = SimulateMovement(fruit, direction);
+                if (match.Count > bestMatch.Count)
+                {
+                    bestMatch = match;
+                }
+            }
 
             return bestMatch;
-
         }
 
         private List<Fruit> SimulateMovement(Fruit fruit, Direction direction)
         {
-            Fruit[,] tempBoardFruit = new Fruit[_boardGrid.Columns, _boardGrid.Rows];
-            Array.Copy(_boardGrid.BoardFruitArray, tempBoardFruit, _boardGrid.BoardFruitArray.Length);
-
-            List<Fruit> matches = new();
-
-            int Column = fruit.Column;
-            int Row = fruit.Row;
+            List<Fruit> matches = new List<Fruit>();
 
             Vector2Int movementDirection = MovementDirection.GetDirectionCoordinates(direction);
-            Vector2Int selectedFruitPosition = new(Column, Row);
-            Vector2Int swappedFruitPosition = new(Column + movementDirection.x, Row + movementDirection.y);
+            int newColumn = fruit.Column + movementDirection.x;
+            int newRow = fruit.Row + movementDirection.y;
 
-            if (!_boardGrid.HasTileAt(swappedFruitPosition.x, swappedFruitPosition.y)) return matches;
+            if (!_boardGrid.HasTileAt(newColumn, newRow)) return matches;
 
-            Fruit selectedFruit = tempBoardFruit[selectedFruitPosition.x, selectedFruitPosition.y];
-            Fruit swappedFruit = tempBoardFruit[swappedFruitPosition.x, swappedFruitPosition.y];
+            Fruit[,] tempBoardFruit = _boardGrid.CloneBoardFruitArray();
 
-            tempBoardFruit[swappedFruitPosition.x, swappedFruitPosition.y] = selectedFruit;
-            tempBoardFruit[selectedFruitPosition.x, selectedFruitPosition.y] = swappedFruit;
+            Fruit selectedFruit = tempBoardFruit[fruit.Column, fruit.Row];
+            Fruit swappedFruit = tempBoardFruit[newColumn, newRow];
 
-            List<Fruit> matchesFound = new();
-            for (int i = 0; i < _boardGrid.Columns; i++)
-            {
-                for (int j = 0; j < _boardGrid.Rows; j++)
-                {
-                    // matchesFound.AddRange(GetFruitMatch(i, j, 1, 0, tempBoardFruit));
-                    // matchesFound.AddRange(GetFruitMatch(i, j, 0, 1, tempBoardFruit));
-                }
-            }
+            tempBoardFruit[newColumn, newRow] = selectedFruit;
+            tempBoardFruit[fruit.Column, fruit.Row] = swappedFruit;
 
-            foreach (Fruit fruitFound in matchesFound)
-            {
-                if (!matches.Contains(fruitFound))
-                {
-                    matches.Add(fruitFound);
-                }
-            }
+            matches.AddRange(GetMatchesFromCell(newColumn, newRow, tempBoardFruit));
+
+            return matches;
+        }
+
+        private List<Fruit> GetMatchesFromCell(int column, int row, Fruit[,] boardFruit)
+        {
+            List<Fruit> matches = new List<Fruit>();
+
+            matches.AddRange(_boardMatcher.GetFruitMatch(column, row, 1, 0, boardFruit));
+            matches.AddRange(_boardMatcher.GetFruitMatch(column, row, 0, 1, boardFruit));
+
             return matches;
         }
     }

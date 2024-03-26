@@ -106,7 +106,7 @@ namespace Board
             return GetFruitMatch(startColumn, startRow, stepX, stepY, _boardGrid.BoardFruitArray);
         }
 
-        private List<Fruit> GetFruitMatch(int startColumn, int startRow, int stepX, int stepY, Fruit[,] boardFruit)
+        public List<Fruit> GetFruitMatch(int startColumn, int startRow, int stepX, int stepY, Fruit[,] boardFruit)
         {
             List<Fruit> matches = new();
             List<Fruit> sequence = new();
