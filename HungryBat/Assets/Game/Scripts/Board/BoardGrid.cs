@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using FruitItem;
 using ScriptableVariable;
+using System.Collections.Generic;
 
 namespace Board
 {
@@ -12,6 +13,7 @@ namespace Board
         [SerializeField] private BoardListener _boardListener;
         [SerializeField] private Vector3Variable _boardCellSize;
         [SerializeField] private BoardMatcher _boardMatcher;
+        [SerializeField] private BoardAuthenticator _boardAuthenticator;
         private const float _fruitOffset = 0.25f;
         private Fruit[,] _boardFruitArray;
 
@@ -48,6 +50,7 @@ namespace Board
 
             _boardCellSize.Value = _boardTilemap.cellSize;
             _boardMatcher.TryMatchFruits(matchWithMovement: false);
+
         }
 
         public bool HasTileAt(int column, int row)
@@ -105,6 +108,20 @@ namespace Board
             }
 
             return clone;
+        }
+
+        public void CheckShuffleNeed()
+        {
+            if (!_boardAuthenticator.ContainsAvailableMatches(BoardFruitArray, out List<Fruit> matches))
+            {
+                foreach (Fruit fruit in _boardFruitArray)
+                {
+                    if (fruit == null) continue;
+                    _boardFruitPool.OnReleasedFruit(fruit);
+                }
+
+                CreateBoard();
+            }
         }
     }
 }

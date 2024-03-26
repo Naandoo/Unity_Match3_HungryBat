@@ -10,7 +10,7 @@ namespace Board
         [SerializeField] BoardGrid _boardGrid;
         [SerializeField] BoardMatcher _boardMatcher;
 
-        public bool VerifyAvailableMatches(Fruit[,] boardFruits, out List<Fruit> match)
+        public bool ContainsAvailableMatches(Fruit[,] boardFruits, out List<Fruit> match)
         {
             match = new List<Fruit>();
 

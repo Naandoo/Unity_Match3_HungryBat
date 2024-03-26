@@ -2,7 +2,7 @@ using UnityEngine;
 using FruitItem;
 using System.Collections.Generic;
 using System.Collections;
-using Board;
+using UnityEngine.Events;
 
 namespace Board
 {
@@ -15,8 +15,8 @@ namespace Board
         [SerializeField] private BoardState _boardState;
         private int _boardColumns;
         private int _boardRows;
-
         private Vector2Int[] _swappedItemsPlacement;
+        public UnityEvent OnBoardFinishMovement;
 
         private void Awake()
         {
@@ -28,14 +28,7 @@ namespace Board
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                bool hasMatch;
-                List<Fruit> matches;
-                hasMatch = _boardAuthenticator.VerifyAvailableMatches(_boardGrid.BoardFruitArray, out matches);
-
-                foreach (Fruit fruit in matches)
-                {
-                    fruit.transform.localScale *= 1.05f;
-                }
+                OnBoardFinishMovement.Invoke();
             }
         }
 
@@ -43,8 +36,8 @@ namespace Board
         {
             Vector2Int movementDirection = MovementDirection.GetDirectionCoordinates(direction);
 
-            Vector2Int selectedFruitPosition = new Vector2Int(column, row);
-            Vector2Int swappedFruitPosition = new Vector2Int(column + movementDirection.x, row + movementDirection.y);
+            Vector2Int selectedFruitPosition = new(column, row);
+            Vector2Int swappedFruitPosition = new(column + movementDirection.x, row + movementDirection.y);
 
             if (!_boardGrid.HasTileAt(swappedFruitPosition.x, swappedFruitPosition.y)) yield break;
 
@@ -59,8 +52,8 @@ namespace Board
 
             _swappedItemsPlacement = new Vector2Int[]
             {
-                new Vector2Int(selectedFruit.Column, selectedFruit.Row),
-                new Vector2Int(swappedFruit.Column, swappedFruit.Row),
+                new (selectedFruit.Column, selectedFruit.Row),
+                new (swappedFruit.Column, swappedFruit.Row),
             };
 
             yield return StartCoroutine(_boardSorter.SwapFruitPositions(_swappedItemsPlacement[0], _swappedItemsPlacement[1]));
@@ -95,10 +88,11 @@ namespace Board
             else
             {
                 _boardState.State = State.Common;
+                OnBoardFinishMovement.Invoke();
                 return;
             }
 
-            _boardSorter.SortBoard();
+            StartCoroutine(_boardSorter.SortBoard());
         }
 
         private List<Fruit> GetBoardMatch(int startColumn, int startRow, int stepX, int stepY)

@@ -10,7 +10,7 @@ namespace Board
         [SerializeField] private BoardMatcher _boardMatcher;
         [SerializeField] private BoardState _boardState;
 
-        public void SortBoard()
+        public IEnumerator SortBoard()
         {
             _boardState.State = State.Sorting;
 
@@ -32,8 +32,11 @@ namespace Board
                     }
                 }
 
-                StartCoroutine(FillEmptySpacesInBoard(column: i, emptyItemsInColumn));
+                FillEmptySpacesInBoard(column: i, emptyItemsInColumn);
             }
+
+            yield return new WaitForSeconds(0.6f); // TODO: Consider catching the correctly time, instead of a magic number
+            _boardMatcher.TryMatchFruits(matchWithMovement: false);
         }
 
         public bool IsEmptyBoardItem(int column, int row)
@@ -74,7 +77,7 @@ namespace Board
             yield return StartCoroutine(boardFruit.UpdatePosition(newColumn, newRow, newPosition));
         }
 
-        private IEnumerator FillEmptySpacesInBoard(int column, int emptyItems)
+        private void FillEmptySpacesInBoard(int column, int emptyItems)
         {
             int initialRow = GetRowsInColumn(column, out int firstRowIndex) - emptyItems;
 
@@ -83,9 +86,6 @@ namespace Board
                 if (!_boardGrid.HasTileAt(column, i)) continue;
                 _boardGrid.GenerateBoardFruit(column, i);
             }
-
-            yield return new WaitForSeconds(0.6f); // TODO: Consider catching the correctly time, instead of a magic number
-            _boardMatcher.TryMatchFruits(matchWithMovement: false);
         }
 
         private int GetRowsInColumn(int column, out int firstRowIndex)

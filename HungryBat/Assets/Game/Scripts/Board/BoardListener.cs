@@ -10,6 +10,14 @@ namespace Board
         [SerializeField] private BoardMatcher _boardMatcher;
         [SerializeField] private BoardState _boardState;
 
+        private void Awake()
+        {
+            _boardMatcher.OnBoardFinishMovement.AddListener(() =>
+          {
+              _boardGrid.CheckShuffleNeed();
+          });
+        }
+
         public void SubscribeEventsIn(Fruit boardItem)
         {
             int Column = boardItem.Column;
