@@ -12,7 +12,6 @@ namespace Board
         [SerializeField] private BoardListener _boardListener;
         [SerializeField] private Vector3Variable _boardCellSize;
         [SerializeField] private BoardMatcher _boardMatcher;
-        [SerializeField] private BoardAuthenticator _boardAuthenticator;
         private const float _fruitOffset = 0.25f;
         private Fruit[,] _boardFruitArray;
 
@@ -32,14 +31,6 @@ namespace Board
             _boardFruitPool.Initialize(poolSize);
         }
 
-        ///continue from fixing the memory usage in this method to make sure that is working
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                CheckShuffleNeed();
-            }
-        }
         private void CreateBoard()
         {
             _boardFruitArray = new Fruit[Columns, Rows];
@@ -56,21 +47,7 @@ namespace Board
             }
 
             _boardCellSize.Value = _boardTilemap.cellSize;
-            _boardMatcher.MatchFruits(matchWithMovement: false);
-        }
-
-        public void CheckShuffleNeed()
-        {
-            if (!_boardAuthenticator.ContainsAvailableMatches(BoardFruitArray))
-            {
-                foreach (Fruit fruit in _boardFruitArray)
-                {
-                    if (fruit == null) continue;
-                    _boardFruitPool.OnReleasedFruit(fruit);
-                }
-
-                CreateBoard();
-            }
+            _boardMatcher.TryMatchFruits(matchWithMovement: false);
         }
 
         public bool HasTileAt(int column, int row)

@@ -1,7 +1,6 @@
 using UnityEngine;
 using FruitItem;
 using System.Collections;
-using System.Collections.Generic;
 
 namespace Board
 {
@@ -10,10 +9,8 @@ namespace Board
         [SerializeField] private BoardGrid _boardGrid;
         [SerializeField] private BoardMatcher _boardMatcher;
         [SerializeField] private BoardState _boardState;
-        [SerializeField] private BoardAuthenticator _boardAuthenticator;
-        private WaitForSeconds timeToMatchFruits = new(0.6f);
 
-        public IEnumerator SortBoard()
+        public void SortBoard()
         {
             _boardState.State = State.Sorting;
 
@@ -35,11 +32,8 @@ namespace Board
                     }
                 }
 
-                FillEmptySpacesInBoard(column: i, emptyItemsInColumn);
+                StartCoroutine(FillEmptySpacesInBoard(column: i, emptyItemsInColumn));
             }
-
-            yield return timeToMatchFruits; // TODO: Consider catching the correctly time, instead of a magic number
-            _boardMatcher.MatchFruits(matchWithMovement: false);
         }
 
         public bool IsEmptyBoardItem(int column, int row)
@@ -80,7 +74,7 @@ namespace Board
             yield return StartCoroutine(boardFruit.UpdatePosition(newColumn, newRow, newPosition));
         }
 
-        private void FillEmptySpacesInBoard(int column, int emptyItems)
+        private IEnumerator FillEmptySpacesInBoard(int column, int emptyItems)
         {
             int initialRow = GetRowsInColumn(column, out int firstRowIndex) - emptyItems;
 
@@ -89,6 +83,9 @@ namespace Board
                 if (!_boardGrid.HasTileAt(column, i)) continue;
                 _boardGrid.GenerateBoardFruit(column, i);
             }
+
+            yield return new WaitForSeconds(0.6f); // TODO: Consider catching the correctly time, instead of a magic number
+            _boardMatcher.TryMatchFruits(matchWithMovement: false);
         }
 
         private int GetRowsInColumn(int column, out int firstRowIndex)
@@ -116,7 +113,6 @@ namespace Board
             int amountOfRowsInColumn = _boardGrid.Rows - amountOfEmptyTiles;
             return amountOfRowsInColumn;
         }
-
         public IEnumerator SwapFruitPositions(Vector2Int firstFruitPlacement, Vector2Int secondFruitPlacement)
         {
             _boardState.State = State.Moving;

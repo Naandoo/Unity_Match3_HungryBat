@@ -2,8 +2,6 @@ using UnityEngine;
 using FruitItem;
 using System.Collections.Generic;
 using System.Collections;
-using UnityEngine.Events;
-using System;
 
 namespace Board
 {
@@ -15,8 +13,21 @@ namespace Board
         [SerializeField] private BoardAuthenticator _boardAuthenticator;
 
         private Vector2Int[] swappedItemsPlacement;
-        public UnityEvent OnBoardFinishMovement;
 
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                bool hasMatch;
+                List<Fruit> matches;
+                hasMatch = _boardAuthenticator.VerifyAvailableMatches(_boardGrid.BoardFruitArray, out matches);
+
+                foreach (Fruit fruit in matches)
+                {
+                    fruit.transform.localScale *= 1.05f;
+                }
+            }
+        }
         public IEnumerator MoveFruit(int Column, int Row, Direction direction)
         {
             Vector2Int movementDirection = MovementDirection.GetDirectionCoordinates(direction);
@@ -27,7 +38,7 @@ namespace Board
             if (!_boardGrid.HasTileAt(swappedFruitPosition.x, swappedFruitPosition.y)) yield break;
 
             yield return StartCoroutine(SwapFruits(selectedFruitPosition, swappedFruitPosition));
-            MatchFruits(matchWithMovement: true);
+            TryMatchFruits(matchWithMovement: true);
         }
 
         private IEnumerator SwapFruits(Vector2Int firstFruitPlacement, Vector2Int secondFruitPlacement)
@@ -44,21 +55,25 @@ namespace Board
             yield return StartCoroutine(_boardSorter.SwapFruitPositions(swappedItemsPlacement[0], swappedItemsPlacement[1]));
         }
 
-        public void MatchFruits(bool matchWithMovement)
+        public void TryMatchFruits(bool matchWithMovement)
         {
-            Match fruitsToMatch = new();
+            List<Fruit> fruitsToMatch = new();
 
             for (int i = 0; i < _boardGrid.Columns; i++)
             {
                 for (int j = 0; j < _boardGrid.Rows; j++)
                 {
-                    fruitsToMatch.Clone(GetBoardMatch(i, j));
+                    fruitsToMatch.AddRange(GetBoardMatch(i, j, 1, 0));
+                    fruitsToMatch.AddRange(GetBoardMatch(i, j, 0, 1));
                 }
             }
 
             if (fruitsToMatch.Count >= 3)
             {
-                MatchFruits(fruitsToMatch);
+                foreach (Fruit fruit in fruitsToMatch)
+                {
+                    fruit.Vanish();
+                }
             }
             else if (fruitsToMatch.Count <= 3 && matchWithMovement)
             {
@@ -69,43 +84,18 @@ namespace Board
             else
             {
                 _boardState.State = State.Common;
-                // OnBoardFinishMovement.Invoke();
                 return;
             }
 
-            StartCoroutine(_boardSorter.SortBoard());
+            _boardSorter.SortBoard();
         }
 
-        private Match GetBoardMatch(int startColumn, int startRow)
+        private List<Fruit> GetBoardMatch(int startColumn, int startRow, int stepX, int stepY)
         {
-            Match matches = _boardAuthenticator.GetFruitMatch(startColumn, startRow, _boardGrid.BoardFruitArray);
+            List<Fruit> matches = new();
+            matches = _boardAuthenticator.GetFruitMatch(startColumn, startRow, stepX, stepY, _boardGrid.BoardFruitArray);
 
             return matches;
-        }
-
-        private void MatchFruits(Match match)
-        {
-            Fruit[,] boardFruit = _boardGrid.BoardFruitArray;
-            Vector2Int startingPosition = match.StartingPosition;
-
-            for (int i = 0; i < match.LeftCount; i++)
-            {
-                boardFruit[startingPosition.x - i, startingPosition.y].Vanish();
-            }
-            for (int i = 0; i < match.RightCount; i++)
-            {
-                boardFruit[startingPosition.x + i, startingPosition.y].Vanish();
-            }
-            for (int i = 0; i < match.AboveCount; i++)
-            {
-                boardFruit[startingPosition.x, startingPosition.y + i].Vanish();
-            }
-            for (int i = 0; i < match.BelowCount; i++)
-            {
-                boardFruit[startingPosition.x, startingPosition.y - i].Vanish();
-            }
-
-            boardFruit[startingPosition.x, startingPosition.y].Vanish();
         }
     }
 }
