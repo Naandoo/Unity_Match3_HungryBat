@@ -27,27 +27,15 @@ namespace FruitItem
         private void OnEnable()
         {
             _initialScale = transform.localScale;
-            BoardState.Instance.AddListenerOnStateChange(FinishTipRoutine);
         }
 
-        public void FinishTipRoutine()
+        public void EndTipRoutine()
         {
-            if (BoardState.Instance.State != State.Common)
+            if (tweenTip.IsActive())
             {
-                KillTipRoutine();
+                transform.localScale = _initialScale;
+                tweenTip.Kill();
             }
-        }
-
-        private void KillTipRoutine()
-        {
-            StopCoroutine(Tip());
-            transform.localScale = _initialScale;
-            tweenTip.Kill();
-        }
-
-        private void OnDisable()
-        {
-            KillTipRoutine();
         }
 
         public void SetFruitID(FruitID fruitID)
@@ -72,11 +60,15 @@ namespace FruitItem
             yield return moveTween.WaitForCompletion();
         }
 
-        public void Vanish() => OnItemVanish?.Invoke(_column, _row);
-
-        public IEnumerator Tip()
+        public void Vanish()
         {
-            yield return tipSeconds;
+            EndTipRoutine();
+            OnItemVanish?.Invoke(_column, _row);
+        }
+
+        public void Tip()
+        {
+            if (BoardState.Instance.State != State.Common) return;
             tweenTip = transform.DOScale(new Vector3(1.15f, 1.15f, 1.15f), 0.7f).SetLoops(-1, LoopType.Yoyo);
         }
 

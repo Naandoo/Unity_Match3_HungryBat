@@ -9,8 +9,7 @@ namespace Board
         private BoardState() { }
         public static BoardState Instance { get; private set; }
         public State State { get; private set; }
-        private readonly StateChangedEvent onStateChange = new();
-        private readonly List<UnityAction> subscribedActions = new();
+        public readonly StateChangedEvent onStateChange = new();
 
         private void Awake()
         {
@@ -30,17 +29,6 @@ namespace Board
         {
             State = state;
             onStateChange.Invoke(state);
-        }
-
-        public void AddListenerOnStateChange(UnityAction action)
-        {
-            if (!subscribedActions.Contains(action))
-            {
-                onStateChange.AddListener((State) =>
-                {
-                    action();
-                });
-            }
         }
 
         private void OnDestroy()

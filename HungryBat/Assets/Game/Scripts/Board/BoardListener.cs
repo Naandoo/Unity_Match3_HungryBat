@@ -17,23 +17,23 @@ namespace Board
           });
         }
 
-        public void SubscribeEventsIn(Fruit boardItem)
+        public void SubscribeEventsIn(Fruit fruit)
         {
-            int Column = boardItem.Column;
-            int Row = boardItem.Row;
+            int Column = fruit.Column;
+            int Row = fruit.Row;
 
-            if (boardItem.OnItemVanish.GetPersistentEventCount() == 0)
+            if (fruit.OnItemVanish.GetPersistentEventCount() == 0)
             {
-                boardItem.OnItemVanish.AddListener((Column, Row) =>
+                fruit.OnItemVanish.AddListener((Column, Row) =>
                 {
                     _boardGrid.ReleaseFruit(Column, Row);
-                    _boardFruitPool.OnReleasedFruit(boardItem);
+                    _boardFruitPool.OnReleasedFruit(fruit);
                 });
             }
 
-            if (boardItem.OnItemMoved.GetPersistentEventCount() == 0)
+            if (fruit.OnItemMoved.GetPersistentEventCount() == 0)
             {
-                boardItem.OnItemMoved.AddListener((Column, Row, lastMoveDirection) =>
+                fruit.OnItemMoved.AddListener((Column, Row, lastMoveDirection) =>
                 {
                     if (BoardState.Instance.State == State.Common)
                     {
@@ -41,12 +41,24 @@ namespace Board
                     }
                 });
             }
+
+            if (fruit.OnItemMoved.GetPersistentEventCount() == 0)
+            {
+                BoardState.Instance.onStateChange.AddListener((state) =>
+                {
+                    fruit.EndTipRoutine();
+                });
+            }
         }
 
-        public void UnsubscribeEventsIn(Fruit boardItem)
+        public void UnsubscribeEventsIn(Fruit fruit)
         {
-            boardItem.OnItemVanish.RemoveAllListeners();
-            boardItem.OnItemMoved.RemoveAllListeners();
+            fruit.OnItemVanish.RemoveAllListeners();
+            fruit.OnItemMoved.RemoveAllListeners();
+            BoardState.Instance.onStateChange.RemoveListener((state) =>
+            {
+                fruit.EndTipRoutine();
+            });
         }
     }
 }

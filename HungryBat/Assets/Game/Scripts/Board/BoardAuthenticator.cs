@@ -9,10 +9,11 @@ namespace Board
     {
         [SerializeField] private BoardGrid _boardGrid;
         [SerializeField] private BoardMatcher _boardMatcher;
+        private List<Fruit> lastFruitsSavedForTip = new();
 
         public bool ContainsAvailableMatches()
         {
-            List<Fruit> bestMatch = new();
+            List<Fruit> match = new();
 
             for (int i = 0; i < _boardGrid.Columns; i++)
             {
@@ -23,26 +24,36 @@ namespace Board
                     Fruit fruit = _boardGrid.BoardFruitArray[i, j];
                     List<Fruit> matchPossibility = FindBestMatchFromSimulatedPossibilities(fruit);
 
-                    if (matchPossibility.Count > bestMatch.Count)
+                    if (matchPossibility.Count > match.Count)
                     {
-                        bestMatch = matchPossibility;
+                        match = matchPossibility;
                     }
                 }
             }
 
-            if (bestMatch.Count >= 3)
-            {
-                SaveFruitsForTip(bestMatch);
-            }
-
-            return bestMatch.Count >= 3;
+            VerifyTipAvailability(match);
+            return match.Count >= 3;
         }
 
-        private void SaveFruitsForTip(List<Fruit> fruits)
+        private void VerifyTipAvailability(List<Fruit> match)
         {
-            foreach (Fruit fruit in fruits)
+            if (match.Count >= 3)
             {
-                StartCoroutine(fruit.Tip());
+                if (IsInvoking(nameof(SaveFruitsForTip)))
+                {
+                    CancelInvoke(nameof(SaveFruitsForTip));
+                }
+
+                lastFruitsSavedForTip.Clear();
+                lastFruitsSavedForTip.AddRange(match);
+                Invoke(nameof(SaveFruitsForTip), 3f);
+            }
+        }
+        private void SaveFruitsForTip()
+        {
+            foreach (Fruit fruit in lastFruitsSavedForTip)
+            {
+                fruit.Tip();
             }
         }
 
