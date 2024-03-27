@@ -113,7 +113,7 @@ namespace Board
                     {
                         if (sequence.Count > matches.Count)
                         {
-                            matches.Clear();
+                            // matches.Clear();
                             matches.AddRange(sequence);
                         }
                     }

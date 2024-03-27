@@ -95,6 +95,7 @@ namespace Board
             _boardFruitArray[column, row] = null;
         }
 
+        //I think this method is creating a board that points to the fruits of the other board, check if it is a problem after
         public Fruit[,] CloneBoardFruitArray()
         {
             Fruit[,] clone = new Fruit[Columns, Rows];
@@ -112,7 +113,6 @@ namespace Board
 
         public void CheckShuffleNeed()
         {
-            //solve the contains available match faking news
             if (!_boardAuthenticator.ContainsAvailableMatches())
             {
                 foreach (Fruit fruit in _boardFruitArray)

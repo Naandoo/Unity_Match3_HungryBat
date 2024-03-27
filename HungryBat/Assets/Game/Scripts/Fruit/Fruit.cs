@@ -80,6 +80,7 @@ namespace FruitItem
             tweenTip = transform.DOScale(new Vector3(1.15f, 1.15f, 1.15f), 0.7f).SetLoops(-1, LoopType.Yoyo);
 
         }
+
     }
 
     public class ItemVanishEvent : UnityEvent<int, int> { }
