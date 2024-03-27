@@ -133,6 +133,7 @@ namespace Board
             }
         }
 
+
         private void CheckFruit(Fruit fruit, List<Fruit> matches, List<Fruit> sequence)
         {
             if (fruit == null || !fruit.gameObject.activeSelf) return;

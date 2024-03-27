@@ -13,7 +13,7 @@ namespace FruitItem
         private int _column;
         private int _row;
         private const float _moveDuration = 0.3f;
-        private const float _secondsToStartTip = 1f;
+        private const float _secondsToStartTip = 3f;
         private readonly WaitForSeconds tipSeconds = new(_secondsToStartTip);
         private Vector3 _initialScale;
         private Tween tweenTip;
@@ -78,7 +78,6 @@ namespace FruitItem
         {
             yield return tipSeconds;
             tweenTip = transform.DOScale(new Vector3(1.15f, 1.15f, 1.15f), 0.7f).SetLoops(-1, LoopType.Yoyo);
-
         }
 
     }

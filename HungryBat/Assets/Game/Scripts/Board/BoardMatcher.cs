@@ -73,6 +73,7 @@ namespace Board
             else if (fruitsToMatch.Count <= 3 && matchWithMovement)
             {
                 StartCoroutine(SwapFruits(_swappedItemsPlacement[1], _swappedItemsPlacement[0]));
+                OnBoardFinishMovement.Invoke();
                 BoardState.Instance.SetState(State.Common);
                 return;
             }
@@ -113,7 +114,6 @@ namespace Board
                     {
                         if (sequence.Count > matches.Count)
                         {
-                            // matches.Clear();
                             matches.AddRange(sequence);
                         }
                     }
