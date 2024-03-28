@@ -42,6 +42,7 @@ namespace Board
         Moving,
         Sorting,
         Common,
+        WaitingAction,
     }
 
     public class StateChangedEvent : UnityEvent<State> { }

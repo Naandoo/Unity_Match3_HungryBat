@@ -1,19 +1,22 @@
 using UnityEngine;
 using ScriptableVariable;
+using UnityEngine.Events;
 
 namespace FruitItem
 {
-    public class FruitMovement : MonoBehaviour
+    public class FruitSelection : MonoBehaviour
     {
         [SerializeField] private Fruit _fruit;
         [SerializeField] private Vector3Variable _cellBoardSize;
         private Vector3 _inputInitialPosition;
         private Vector3 _inputFinalPosition;
         private bool _selected;
+        public SelectedFruit onSelectedFruit = new();
 
         private void OnMouseDown()
         {
             _selected = true;
+            onSelectedFruit?.Invoke(_fruit);
             _inputInitialPosition = GetWorldMousePosition();
         }
 
@@ -63,7 +66,6 @@ namespace FruitItem
             }
         }
 
-
         private void OnMouseUp()
         {
             _selected = false;
@@ -96,7 +98,8 @@ namespace FruitItem
 
             return Direction.Undefined;
         }
+
     }
 
-
+    public class SelectedFruit : UnityEvent<Fruit> { }
 }
