@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d52ccfb3ade83e74888d1e13990a4675, type: 3}
   m_Name: Bomb
   m_EditorClassIdentifier: 
+  Name: Bomb
   Description: Explode a square of fruits, selecting one to serve as the center of
     the explosion.

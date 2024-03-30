@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c55b3aa630651e04187ea5725dd25102, type: 3}
   m_Name: Lightning
   m_EditorClassIdentifier: 
+  Name: Lightning
   Description: Strike every single fruit on the board that matches the selected fruit.

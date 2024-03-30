@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25462441d58d97b45851a87a57470ded, type: 3}
   m_Name: Potion
   m_EditorClassIdentifier: 
+  Name: Potion
   Description: Transform 15 random fruits on the board into the same type as the
     selected one.
