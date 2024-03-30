@@ -11,12 +11,11 @@ namespace FruitItem
         private Vector3 _inputInitialPosition;
         private Vector3 _inputFinalPosition;
         private bool _selected;
-        public SelectedFruit onSelectedFruit = new();
 
         private void OnMouseDown()
         {
             _selected = true;
-            onSelectedFruit?.Invoke(_fruit);
+            _fruit.onSelectedFruit?.Invoke(_fruit);
             _inputInitialPosition = GetWorldMousePosition();
         }
 
@@ -100,6 +99,4 @@ namespace FruitItem
         }
 
     }
-
-    public class SelectedFruit : UnityEvent<Fruit> { }
 }

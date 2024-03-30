@@ -14,7 +14,6 @@ namespace FruitItem
         private int _row;
         private const float _moveDuration = 0.3f;
         private const float _secondsToStartTip = 3f;
-        private readonly WaitForSeconds tipSeconds = new(_secondsToStartTip);
         private Vector3 _initialScale;
         private Tween tweenTip;
 
@@ -23,6 +22,7 @@ namespace FruitItem
         public FruitID FruitID { get => _fruitID; private set { } }
         public ItemVanishEvent OnItemVanish = new();
         public ItemMovedEvent OnItemMoved = new();
+        public SelectedFruit onSelectedFruit = new();
 
         private void OnEnable()
         {
@@ -77,4 +77,6 @@ namespace FruitItem
     public class ItemVanishEvent : UnityEvent<int, int> { }
 
     public class ItemMovedEvent : UnityEvent<int, int, Direction> { }
+
+    public class SelectedFruit : UnityEvent<Fruit> { }
 }

@@ -1,5 +1,6 @@
 using UnityEngine;
 using FruitItem;
+using Skill;
 
 namespace Board
 {
@@ -8,6 +9,7 @@ namespace Board
         [SerializeField] private BoardGrid _boardGrid;
         [SerializeField] private BoardFruitPool _boardFruitPool;
         [SerializeField] private BoardMatcher _boardMatcher;
+        [SerializeField] private SkillManager _skillManager;
 
         private void Awake()
         {
@@ -49,12 +51,23 @@ namespace Board
                     fruit.EndTipRoutine();
                 });
             }
+
+            if (fruit.onSelectedFruit.GetPersistentEventCount() == 0)
+            {
+                fruit.onSelectedFruit.AddListener((fruit) =>
+                {
+                    StartCoroutine(_skillManager.CheckSkillState(fruit));
+                });
+            }
+
         }
 
         public void UnsubscribeEventsIn(Fruit fruit)
         {
             fruit.OnItemVanish.RemoveAllListeners();
             fruit.OnItemMoved.RemoveAllListeners();
+            fruit.onSelectedFruit.RemoveAllListeners();
+
             BoardState.Instance.onStateChange.RemoveListener((state) =>
             {
                 fruit.EndTipRoutine();
