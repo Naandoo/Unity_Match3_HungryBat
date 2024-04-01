@@ -2,20 +2,35 @@ using UnityEngine;
 using FruitItem;
 using System;
 
-namespace Level
+namespace LevelData
 {
     [CreateAssetMenu(fileName = "Level", menuName = "Level/Scriptables/Level")]
     public class Level : ScriptableObject
     {
         public int Number;
-        public int MovementAmount;
-        public Goal firstGoal, secondGoal, thirdGoal;
+        public int Moves;
+        public Goal FirstGoal, SecondGoal, ThirdGoal;
+        public Obstacles Obstacles;
+        public SkillsAvailability SkillsAvailability;
     }
 
     [Serializable]
-    public class Goal
+    public struct Goal
     {
-        public int amount;
-        public FruitID fruitID;
+        public int Amount;
+        public FruitID FruitID;
+    }
+
+    [Serializable]
+    public struct Obstacles
+    {
+        public FruitID FirstFruitObstacle, SecondFruitObstacle;
+    }
+
+    [Serializable]
+    public struct SkillsAvailability
+    {
+        public int BombsAmount, PotionAmount, LightningAmount; // TODO: Update the skills by increase per level in manager
+
     }
 }

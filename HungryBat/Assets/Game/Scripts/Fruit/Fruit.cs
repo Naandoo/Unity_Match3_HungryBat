@@ -44,7 +44,7 @@ namespace FruitItem
             UpdateVisual();
         }
 
-        private void UpdateVisual() => _spriteRenderer.sprite = _fruitID.Sprite;
+        private void UpdateVisual() => _spriteRenderer.sprite = _fruitID.FruitSprite;
 
         public IEnumerator UpdatePosition(int Column, int Row, Vector3 itemPosition)
         {

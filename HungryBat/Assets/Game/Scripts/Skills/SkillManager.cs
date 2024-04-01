@@ -46,6 +46,7 @@ namespace Skill
             _skillNameUI.text = selectedSkill.Name;
             _skillDescriptionUI.text = selectedSkill.Description;
         }
+
         public void CancelSkillUse()
         {
             _skillUI.enabled = false;

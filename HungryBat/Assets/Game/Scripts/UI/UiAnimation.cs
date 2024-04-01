@@ -1,5 +1,6 @@
 using UnityEngine;
 using DG.Tweening;
+using System.Collections;
 
 namespace Game.UI
 {
@@ -12,12 +13,7 @@ namespace Game.UI
         [SerializeField] private Transform _starProgress;
         [SerializeField] private Transform _score;
 
-        private void Start()
-        {
-            InitializeLevelAnimations();
-        }
-
-        public void InitializeLevelAnimations()
+        public IEnumerator InitializeLevelAnimations()
         {
             Sequence sequence = DOTween.Sequence();
             sequence.Append(AnimateMoves());
@@ -28,6 +24,7 @@ namespace Game.UI
             sequence.Append(AnimateSkills());
 
             sequence.Play();
+            yield return sequence.WaitForCompletion();
         }
 
         private Tween AnimateMoves()

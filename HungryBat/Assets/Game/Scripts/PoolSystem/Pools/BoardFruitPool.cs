@@ -1,6 +1,7 @@
 using UnityEngine;
 using FruitItem;
 using DG.Tweening;
+using LevelData;
 
 namespace Board
 {
@@ -24,6 +25,7 @@ namespace Board
             fruit.SetFruitID(_levelFruits.GetRandomFruitID());
             return fruit;
         }
+
         public void OnReleasedFruit(Fruit fruit)
         {
             _boardListener.UnsubscribeEventsIn(fruit);

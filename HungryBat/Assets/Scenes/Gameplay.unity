@@ -394,6 +394,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3978834846635153694, guid: 6b467705b3d1990478adfbce4c0043eb, type: 3}
   m_PrefabInstance: {fileID: 334481967}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &240182310 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2039201561804083969, guid: 6b467705b3d1990478adfbce4c0043eb, type: 3}
+  m_PrefabInstance: {fileID: 1916894938}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &300007502
 GameObject:
   m_ObjectHideFlags: 0
@@ -2043,6 +2054,17 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &858048645 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2039201561804083969, guid: 6b467705b3d1990478adfbce4c0043eb, type: 3}
+  m_PrefabInstance: {fileID: 334481967}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &880794225
 GameObject:
   m_ObjectHideFlags: 0
@@ -2813,6 +2835,7 @@ GameObject:
   - component: {fileID: 1369777080}
   - component: {fileID: 1369777079}
   - component: {fileID: 1369777081}
+  - component: {fileID: 1369777082}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -2865,8 +2888,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e8545c90a005124d9274c0a10c3e4a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levels: []
+  levels:
+  - {fileID: 11400000, guid: 5405505f37d0bcc419ba7a1a4657a19b, type: 2}
   levelFruits: {fileID: 11400000, guid: 98d790dad2c167845a7ea24b158e587e, type: 2}
+--- !u!114 &1369777082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1369777078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f95d47100b25d3419ab476961dd77cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _boardFruitPool: {fileID: 455438044}
+  _uiAnimation: {fileID: 1805342089}
+  _boardGrid: {fileID: 455438041}
+  _levelManager: {fileID: 1369777081}
+  _levelUIData: {fileID: 1805342090}
 --- !u!1001 &1442349658
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3645,6 +3686,17 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &1570859647 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3978834845824921835, guid: 6b467705b3d1990478adfbce4c0043eb, type: 3}
+  m_PrefabInstance: {fileID: 2098919915}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1598912475
 GameObject:
   m_ObjectHideFlags: 0
@@ -4052,6 +4104,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1607733283}
   m_CullTransparentMesh: 1
+--- !u!114 &1694545118 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3978834845824921835, guid: 6b467705b3d1990478adfbce4c0043eb, type: 3}
+  m_PrefabInstance: {fileID: 334481967}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1696345575
 GameObject:
   m_ObjectHideFlags: 0
@@ -4175,6 +4238,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1805342088}
   - component: {fileID: 1805342089}
+  - component: {fileID: 1805342090}
   m_Layer: 0
   m_Name: UI
   m_TagString: Untagged
@@ -4217,6 +4281,26 @@ MonoBehaviour:
   _skills: {fileID: 1982705200}
   _starProgress: {fileID: 1199857520}
   _score: {fileID: 812172415}
+--- !u!114 &1805342090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1805342087}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4edfe813dc01b64fac43ac3d4ca491b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _levelMoves: {fileID: 1602081435}
+  _firstGoalFruitIcon: {fileID: 240182310}
+  _secondGoalFruitIcon: {fileID: 858048645}
+  _thirdGoalFruitIcon: {fileID: 2060702585}
+  _firstGoalAmount: {fileID: 1855331200}
+  _secondGoalAmount: {fileID: 1694545118}
+  _thirdGoalAmount: {fileID: 1570859647}
+  _levelManager: {fileID: 1369777081}
 --- !u!1 &1828436167
 GameObject:
   m_ObjectHideFlags: 0
@@ -4351,6 +4435,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1828436167}
   m_CullTransparentMesh: 1
+--- !u!114 &1855331200 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3978834845824921835, guid: 6b467705b3d1990478adfbce4c0043eb, type: 3}
+  m_PrefabInstance: {fileID: 1916894938}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1860455884
 GameObject:
   m_ObjectHideFlags: 0
@@ -5576,6 +5671,17 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &2060702585 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2039201561804083969, guid: 6b467705b3d1990478adfbce4c0043eb, type: 3}
+  m_PrefabInstance: {fileID: 2098919915}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2062860592
 GameObject:
   m_ObjectHideFlags: 0

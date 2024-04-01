@@ -21,19 +21,13 @@ namespace Board
         public int Rows { get => _boardTilemap.size.y; private set { } }
         public Fruit[,] BoardFruitArray { get => _boardFruitArray; private set { } }
 
-        private void Start()
-        {
-            InitializePool();
-            CreateBoard();
-        }
+        // private void Start()
+        // {
+        // InitializePool();
+        // CreateBoard();
+        // }
 
-        private void InitializePool()
-        {
-            int poolSize = _boardTilemap.size.x * _boardTilemap.size.y;
-            _boardFruitPool.Initialize(poolSize);
-        }
-
-        private void CreateBoard()
+        public void CreateBoard()
         {
             _boardFruitArray = new Fruit[Columns, Rows];
 
@@ -95,7 +89,7 @@ namespace Board
             _boardFruitArray[column, row] = null;
         }
 
-        //I think this method is creating a board that points to the fruits of the other board, check if it is a problem after
+        //TODO: I think this method is creating a board that points to the fruits of the other board, check if it is a problem after
         public Fruit[,] CloneBoardFruitArray()
         {
             Fruit[,] clone = new Fruit[Columns, Rows];

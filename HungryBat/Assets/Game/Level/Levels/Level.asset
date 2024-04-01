@@ -12,14 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f36154086c2e1d147a6f2ce7d6255475, type: 3}
   m_Name: Level
   m_EditorClassIdentifier: 
-  Number: 0
-  MovementAmount: 0
-  firstGoal:
-    amount: 0
-    fruitID: {fileID: 0}
-  secondGoal:
-    amount: 0
-    fruitID: {fileID: 0}
-  thirdGoal:
-    amount: 0
-    fruitID: {fileID: 0}
+  Number: 1
+  Moves: 5
+  FirstGoal:
+    Amount: 5
+    FruitID: {fileID: 11400000, guid: 434633b82e424744f85ac7120c1b42f0, type: 2}
+  SecondGoal:
+    Amount: 5
+    FruitID: {fileID: 11400000, guid: 37f5d8a68cc0f6c49a144ddcba004dc2, type: 2}
+  ThirdGoal:
+    Amount: 5
+    FruitID: {fileID: 11400000, guid: 61245b29c3bcbf74bb58b130cb930a93, type: 2}
+  Obstacles:
+    FirstFruitObstacle: {fileID: 11400000, guid: 0971677f619e6554e8ec2854867139f2, type: 2}
+    SecondFruitObstacle: {fileID: 11400000, guid: 8bed8ef240fd8d3418075c107d119d29, type: 2}
+  BombsAmount: 0
+  PotionAmount: 0
+  LightningAmount: 0

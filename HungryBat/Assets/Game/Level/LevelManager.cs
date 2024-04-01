@@ -2,13 +2,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using FruitItem;
 
-namespace Level
+namespace LevelData
 {
     public class LevelManager : MonoBehaviour
     {
         [SerializeField] private List<Level> levels = new();
-        [SerializeField] private LevelFruits levelFruits = new();
-        private Dictionary<int, Level> levelDictionary = new();
+        [SerializeField] private LevelFruits levelFruits;
+        private Dictionary<int, Level> levelDictionary;
 
         private void Awake()
         {
@@ -17,14 +17,18 @@ namespace Level
 
         private void InitializeDictionary()
         {
+            levelDictionary = new();
+
             for (int i = 0; i < levels.Count; i++)
             {
-                levelDictionary.Add(i, levels[i]);
+                levelDictionary.Add(i + 1, levels[i]);
             }
         }
 
-        private Level GetCurrentLevel(int number)
+        public Level GetCurrentLevel()
         {
+            int number = PlayerPrefs.GetInt("savedLevel", 1);
+
             if (levelDictionary.ContainsKey(number))
             {
                 return levelDictionary[number];
@@ -36,17 +40,19 @@ namespace Level
             }
         }
 
-        //TODO: Design a system that starts in the game manager and call the methods in order to initiate the level.
-        private void UpdateLevelScriptable(Level level)
+        public void UpdateLevelScriptable(Level level)
         {
             List<FruitID> availableFruitsInLevel = new()
             {
-                level.firstGoal.fruitID,
-                level.secondGoal.fruitID,
-                level.thirdGoal.fruitID,
+                level.FirstGoal.FruitID,
+                level.SecondGoal.FruitID,
+                level.ThirdGoal.FruitID,
+                level.Obstacles.FirstFruitObstacle,
+                level.Obstacles.SecondFruitObstacle,
             };
 
             levelFruits.SetAvailableFruits(availableFruitsInLevel);
         }
+
     }
 }
