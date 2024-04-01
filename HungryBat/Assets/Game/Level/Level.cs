@@ -30,7 +30,7 @@ namespace LevelData
     [Serializable]
     public struct SkillsAvailability
     {
-        public int BombsAmount, PotionAmount, LightningAmount; // TODO: Update the skills by increase per level in manager
-
+        // TODO: Update the skills related to the availability in the current level.
+        public int BombsAmount, PotionAmount, LightningAmount;
     }
 }

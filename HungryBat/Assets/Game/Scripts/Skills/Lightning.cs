@@ -10,7 +10,8 @@ namespace Skill
     {
         public override IEnumerator Execute(Fruit selectedFruit, Fruit[,] boardFruit)
         {
-            yield return new WaitForSeconds(1f); //TODO: substitute this for the needed time to execute animations
+            //TODO: substitute this for the needed time to execute animations when create it
+            yield return new WaitForSeconds(1f);
             Strike(GetAllFruitsOfType(selectedFruit, boardFruit));
         }
 

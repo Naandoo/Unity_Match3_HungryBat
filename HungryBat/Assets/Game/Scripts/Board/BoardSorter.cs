@@ -34,7 +34,9 @@ namespace Board
                 FillEmptySpacesInBoard(column: i, emptyItemsInColumn);
             }
 
-            yield return new WaitForSeconds(0.6f); // TODO: Consider catching the correctly time, instead of a magic number
+            // TODO: Change the logic to wait for the movement and not a magic number.
+            // TODO: Create the waitforseconds outside of the method to avoid unnecessary GC allocation.
+            yield return new WaitForSeconds(0.6f);
             _boardMatcher.TryMatchFruits(matchWithMovement: false);
         }
 

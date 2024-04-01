@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using FruitItem;
 using ScriptableVariable;
-using System.Collections.Generic;
 
 namespace Board
 {
@@ -20,12 +19,6 @@ namespace Board
         public int Columns { get => _boardTilemap.size.x; private set { } }
         public int Rows { get => _boardTilemap.size.y; private set { } }
         public Fruit[,] BoardFruitArray { get => _boardFruitArray; private set { } }
-
-        // private void Start()
-        // {
-        // InitializePool();
-        // CreateBoard();
-        // }
 
         public void CreateBoard()
         {
@@ -89,7 +82,6 @@ namespace Board
             _boardFruitArray[column, row] = null;
         }
 
-        //TODO: I think this method is creating a board that points to the fruits of the other board, check if it is a problem after
         public Fruit[,] CloneBoardFruitArray()
         {
             Fruit[,] clone = new Fruit[Columns, Rows];

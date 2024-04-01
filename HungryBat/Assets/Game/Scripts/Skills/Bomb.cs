@@ -8,12 +8,13 @@ namespace Skill
     [CreateAssetMenu(fileName = "Bomb", menuName = "Skills/Bomb")]
     public class Bomb : Skill
     {
-        private const int squareRange = 3; // TODO: Consider changing the logic of explosion to embrace other possibilities
+        private const int squareRange = 3;
         private int halfRange = squareRange / 2;
 
         public override IEnumerator Execute(Fruit selectedFruit, Fruit[,] boardFruit)
         {
-            yield return new WaitForSeconds(1f); //TODO: substitute this for the needed time to execute animations
+            //TODO: substitute this for the needed time to execute animations when create it
+            yield return new WaitForSeconds(1f);
             Explode(GetFruitsInRange(selectedFruit, boardFruit));
         }
 

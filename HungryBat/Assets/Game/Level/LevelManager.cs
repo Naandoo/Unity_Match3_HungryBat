@@ -35,7 +35,8 @@ namespace LevelData
             }
             else
             {
-                print("Doesn't contain level"); //TODO: Add a scream thanking the player for play and restart the with a button
+                //TODO: Add a scream thanking the player for play and restart the with a button
+                print("Doesn't contain level");
                 return null;
             }
         }
