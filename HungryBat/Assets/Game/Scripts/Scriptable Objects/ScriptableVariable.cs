@@ -13,7 +13,7 @@ namespace ScriptableVariable
         [SerializeField] protected T _initialValue;
         private readonly List<Object> _listenersObjects = new List<Object>();
         private Action<T> _onValueChanged;
-        [SerializeField] private ResetType _resetOn = ResetType.SceneLoaded;
+        [SerializeField] private ResetType _resetOn = ResetType.ApplicationStarts;
         public event Action<T> OnValueChanged
         {
             add

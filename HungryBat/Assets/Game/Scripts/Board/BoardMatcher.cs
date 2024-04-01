@@ -58,8 +58,24 @@ namespace Board
             {
                 for (int j = 0; j < _boardRows; j++)
                 {
-                    fruitsToMatch.AddRange(GetBoardMatch(i, j, 1, 0));
-                    fruitsToMatch.AddRange(GetBoardMatch(i, j, 0, 1));
+                    List<Fruit> horizontalMatch = GetBoardMatch(i, j, 1, 0);
+                    List<Fruit> verticalMatch = GetBoardMatch(i, j, 0, 1);
+
+                    foreach (Fruit fruit in horizontalMatch)
+                    {
+                        if (!fruitsToMatch.Contains(fruit))
+                        {
+                            fruitsToMatch.Add(fruit);
+                        }
+                    }
+
+                    foreach (Fruit fruit in verticalMatch)
+                    {
+                        if (!fruitsToMatch.Contains(fruit))
+                        {
+                            fruitsToMatch.Add(fruit);
+                        }
+                    }
                 }
             }
 
@@ -69,6 +85,10 @@ namespace Board
                 {
                     fruit.Vanish();
                 }
+
+                GameEvents.Instance.OnFruitsExplodedEvent.Invoke(fruitsToMatch);
+                if (matchWithMovement) GameEvents.Instance.OnFruitMovedEvent.Invoke();
+
             }
             else if (fruitsToMatch.Count <= 3 && matchWithMovement)
             {

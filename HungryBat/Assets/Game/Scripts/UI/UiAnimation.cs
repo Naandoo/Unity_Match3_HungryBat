@@ -1,6 +1,7 @@
 using UnityEngine;
 using DG.Tweening;
 using System.Collections;
+using UnityEngine.UI;
 
 namespace Game.UI
 {
@@ -12,22 +13,37 @@ namespace Game.UI
         [SerializeField] private Transform _skills;
         [SerializeField] private Transform _starProgress;
         [SerializeField] private Transform _score;
+        [SerializeField] private Slider _starSlider;
+        [SerializeField] private Image[] _stars;
 
         public IEnumerator InitializeLevelAnimations()
         {
+            ResetStarsTransform();
+            ResetSlider();
+
             Sequence sequence = DOTween.Sequence();
-            sequence.Append(AnimateMoves());
-            sequence.Append(AnimateStarProgress());
-            sequence.Append(AnimateScore());
-            sequence.Append(AnimateBat());
-            sequence.Append(AnimateGoal());
-            sequence.Append(AnimateSkills());
+            sequence.Append(AnimateMovesAppearing());
+            sequence.Append(AnimateStarProgressAppearing());
+            sequence.Append(AnimateScoreAppearing());
+            sequence.Append(AnimateBatAppearing());
+            sequence.Append(AnimateGoalAppearing());
+            sequence.Append(AnimateSkillsAppearing());
 
             sequence.Play();
             yield return sequence.WaitForCompletion();
         }
 
-        private Tween AnimateMoves()
+        private void ResetStarsTransform()
+        {
+            foreach (Image image in _stars)
+            {
+                image.transform.localScale = Vector2.zero;
+            }
+        }
+
+        private void ResetSlider() => _starSlider.value = 0f;
+
+        private Tween AnimateMovesAppearing()
         {
             Vector3 finalPosition = _moves.localPosition;
             int initialDistance = 200;
@@ -39,7 +55,7 @@ namespace Game.UI
             return MoveToPosition(_moves, initialPosition, finalPosition, duration);
         }
 
-        private Tween AnimateStarProgress()
+        private Tween AnimateStarProgressAppearing()
         {
             Vector3 finalPosition = _starProgress.localPosition;
             int initialDistance = 100;
@@ -51,13 +67,13 @@ namespace Game.UI
             return MoveToPosition(_starProgress, initialPosition, finalPosition, duration);
         }
 
-        private Tween AnimateScore()
+        private Tween AnimateScoreAppearing()
         {
             float duration = 0.25f;
             return PopAnimation(_score, duration);
         }
 
-        private Tween AnimateBat()
+        private Tween AnimateBatAppearing()
         {
             Vector3 finalPosition = _bat.localPosition;
             int initialDistance = 250;
@@ -68,13 +84,13 @@ namespace Game.UI
             return MoveToPosition(_bat, initialPosition, finalPosition, duration);
         }
 
-        private Tween AnimateGoal()
+        private Tween AnimateGoalAppearing()
         {
             float duration = 0.5f;
             return PopAnimation(_goal, duration);
         }
 
-        private Tween AnimateSkills()
+        private Tween AnimateSkillsAppearing()
         {
             Vector3 finalPosition = _skills.localPosition;
             int initialDistance = 600;
@@ -97,6 +113,18 @@ namespace Game.UI
         {
             transform.localPosition = initialPosition;
             return transform.DOLocalMove(finalPosition, duration);
+        }
+
+        public void AnimateSliderIncreasing(float currentValue)
+        {
+            float slidingTime = 0.25f;
+            _starSlider.DOValue(currentValue, slidingTime);
+        }
+
+        public void AnimateStarAppearing(int index)
+        {
+            float scalingTime = 0.25f;
+            _stars[index].transform.DOScale(Vector2.one, scalingTime).SetEase(Ease.OutBounce);
         }
     }
 }

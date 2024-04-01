@@ -1,4 +1,7 @@
+using Controllers;
+using Game.UI;
 using LevelData;
+using ScriptableVariable;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,16 +12,24 @@ public class LevelUIData : MonoBehaviour
     [SerializeField] private Image _firstGoalFruitIcon, _secondGoalFruitIcon, _thirdGoalFruitIcon;
     [SerializeField] private TMP_Text _firstGoalAmount, _secondGoalAmount, _thirdGoalAmount;
     [SerializeField] private LevelManager _levelManager;
+    [SerializeField] private GameManager _gameManager;
+    [SerializeField] private Slider _starSlider;
+    [SerializeField] private UiAnimation _UIAnimation;
+    [SerializeField] private IntVariable _score;
+    [SerializeField] private IntVariable _levelStars;
+    [SerializeField] private IntVariable _moves;
 
     public void UpdateUILevelData()
     {
         Level currentLevel = _levelManager.GetCurrentLevel();
         UpdateMoves(currentLevel);
         UpdateGoal(currentLevel);
+        SetSliderMaxValue();
+        ResetLevelStars();
+        ResetScore();
     }
 
-    private void UpdateMoves(Level currentLevel) => _levelMoves.text = currentLevel.Moves.ToString();
-
+    private void UpdateMoves(Level currentLevel) => _moves.Value = currentLevel.Moves;
     private void UpdateGoal(Level currentLevel)
     {
         Goal firstGoalID = currentLevel.FirstGoal;
@@ -32,5 +43,28 @@ public class LevelUIData : MonoBehaviour
         Goal thirdGoalID = currentLevel.ThirdGoal;
         _thirdGoalFruitIcon.sprite = thirdGoalID.FruitID.FruitSprite;
         _thirdGoalAmount.text = thirdGoalID.Amount.ToString();
+    }
+
+    private void SetSliderMaxValue() => _starSlider.maxValue = _gameManager.GetHighestScore();
+    private void ResetLevelStars() => _levelStars.Value = 0;
+    private void ResetScore() => _score.Value = 0;
+    public void CalculateScore(bool isGoalFruit)
+    {
+        if (isGoalFruit) _score.Value += GameManager.GoalFruitPoints;
+        else _score.Value += GameManager.CommonFruitPoints;
+
+        UpdateStarPercentage();
+    }
+
+    public void UpdateStarPercentage()
+    {
+        float starPercentage = _gameManager.GetHighestScore() / _score.Value / 100f;
+        _UIAnimation.AnimateSliderIncreasing(starPercentage);
+
+        if (starPercentage <= GameManager.FirstStarPercentage) _levelStars.Value = 1;
+        else if (starPercentage <= GameManager.SecondStarPercentage) _levelStars.Value = 2;
+        else _levelStars.Value = 3;
+
+        _UIAnimation.AnimateStarAppearing(index: _levelStars.Value - 1);
     }
 }

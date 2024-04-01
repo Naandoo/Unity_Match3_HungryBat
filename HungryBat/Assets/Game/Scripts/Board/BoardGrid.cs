@@ -10,7 +10,7 @@ namespace Board
     {
         [SerializeField] private Tilemap _boardTilemap;
         [SerializeField] private BoardFruitPool _boardFruitPool;
-        [SerializeField] private BoardListener _boardListener;
+        [SerializeField] private BoardSubscriber _boardListener;
         [SerializeField] private Vector3Variable _boardCellSize;
         [SerializeField] private BoardMatcher _boardMatcher;
         [SerializeField] private BoardAuthenticator _boardAuthenticator;

@@ -53,6 +53,5 @@ namespace LevelData
 
             levelFruits.SetAvailableFruits(availableFruitsInLevel);
         }
-
     }
 }

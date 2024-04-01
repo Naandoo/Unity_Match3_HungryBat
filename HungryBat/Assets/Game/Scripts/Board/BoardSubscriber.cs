@@ -1,15 +1,17 @@
 using UnityEngine;
 using FruitItem;
 using Skill;
+using ScriptableVariable;
 
 namespace Board
 {
-    public class BoardListener : MonoBehaviour
+    public class BoardSubscriber : MonoBehaviour
     {
         [SerializeField] private BoardGrid _boardGrid;
         [SerializeField] private BoardFruitPool _boardFruitPool;
         [SerializeField] private BoardMatcher _boardMatcher;
         [SerializeField] private SkillManager _skillManager;
+        [SerializeField] private IntVariable _movesAmount;
 
         private void Awake()
         {
@@ -37,7 +39,7 @@ namespace Board
             {
                 fruit.OnItemMoved.AddListener((Column, Row, lastMoveDirection) =>
                 {
-                    if (BoardState.Instance.State == State.Common)
+                    if (BoardState.Instance.State == State.Common && _movesAmount.Value > 0)
                     {
                         StartCoroutine(_boardMatcher.MoveFruit(Column, Row, lastMoveDirection));
                     }

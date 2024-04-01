@@ -8,7 +8,7 @@ namespace Board
     public class BoardFruitPool : MonoBehaviour
     {
         [SerializeField] private Fruit _boardFruit;
-        [SerializeField] private BoardListener _boardListener;
+        [SerializeField] private BoardSubscriber _boardListener;
         [SerializeField] private LevelFruits _levelFruits;
         private PoolSystem<Fruit> _poolSystem;
         public PoolSystem<Fruit> PoolSystem { get => _poolSystem; private set { } }
