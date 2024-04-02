@@ -1,7 +1,7 @@
 # HungryBat
 
 > [!IMPORTANT]
-> This project is still in development. Below you'll find the features that are currently included and the ones that will be included soon. By the end of the project, I'll release a video of the gameplay and also the playable game on Itch.io.
+> This project is still in development. Below you'll find the features that are currently included and the ones that will be included soon. By the end of the project, I'll release a video of the gameplay and also the playable game on Itch.io. I'll also include a section to credit the artist that created the assets in the project.
 
 ## Features ##
  - Tilemap
