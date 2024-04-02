@@ -31,7 +31,7 @@
   - Feedbacks
     - [ ] Game Sounds.
     - [ ] Game VFX.
-    - [ ] Game Animations to ensure smooth animations.
+    - [ ] Game Animations to ensure smooth gameplay.
   - Settings
     - [ ] Pause.
     - [ ] Mute Sounds/Effects.
