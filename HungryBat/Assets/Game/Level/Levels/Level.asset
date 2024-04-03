@@ -15,13 +15,16 @@ MonoBehaviour:
   Number: 1
   Moves: 25
   FirstGoal:
-    Amount: 5
+    ID: 1
+    Amount: 25
     FruitID: {fileID: 11400000, guid: 434633b82e424744f85ac7120c1b42f0, type: 2}
   SecondGoal:
-    Amount: 5
+    ID: 2
+    Amount: 25
     FruitID: {fileID: 11400000, guid: 37f5d8a68cc0f6c49a144ddcba004dc2, type: 2}
   ThirdGoal:
-    Amount: 5
+    ID: 3
+    Amount: 25
     FruitID: {fileID: 11400000, guid: 61245b29c3bcbf74bb58b130cb930a93, type: 2}
   Obstacles:
     FirstFruitObstacle: {fileID: 11400000, guid: 0971677f619e6554e8ec2854867139f2, type: 2}

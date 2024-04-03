@@ -4,14 +4,13 @@ using LevelData;
 using ScriptableVariable;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 public class LevelUIData : MonoBehaviour
 {
     [SerializeField] private TMP_Text _levelMoves;
     [SerializeField] private Image _firstGoalFruitIcon, _secondGoalFruitIcon, _thirdGoalFruitIcon;
-    [SerializeField] private TMP_Text _firstGoalAmount, _secondGoalAmount, _thirdGoalAmount;
+    [SerializeField] private TMP_Text _firstGoalAmountText, _secondGoalAmountText, _thirdGoalAmountText;
     [SerializeField] private LevelManager _levelManager;
     [SerializeField] private GameManager _gameManager;
     [SerializeField] private Slider _starSlider;
@@ -19,37 +18,59 @@ public class LevelUIData : MonoBehaviour
     [SerializeField] private IntVariable _score;
     [SerializeField] private IntVariable _levelStars;
     [SerializeField] private IntVariable _moves;
-
+    private Level currentLevel;
     public void UpdateUILevelData()
     {
-        Level currentLevel = _levelManager.GetCurrentLevel();
+        currentLevel = _levelManager.GetCurrentLevel();
         UpdateMoves(currentLevel);
-        UpdateGoal(currentLevel);
+        SetGoal(currentLevel);
         SetSliderMaxValue();
         ResetLevelStars();
         ResetScore();
     }
 
     private void UpdateMoves(Level currentLevel) => _moves.Value = currentLevel.Moves;
-    private void UpdateGoal(Level currentLevel)
+
+    private void SetGoal(Level currentLevel)
     {
         Goal firstGoalID = currentLevel.FirstGoal;
-        _firstGoalFruitIcon.sprite = firstGoalID.FruitID.FruitSprite;
-        _firstGoalAmount.text = firstGoalID.Amount.ToString();
+        UpdateGoalSprite(firstGoalID, _firstGoalFruitIcon);
+        UpdateGoalText(firstGoalID);
 
         Goal secondGoalID = currentLevel.SecondGoal;
-        _secondGoalFruitIcon.sprite = secondGoalID.FruitID.FruitSprite;
-        _secondGoalAmount.text = secondGoalID.Amount.ToString();
+        UpdateGoalSprite(secondGoalID, _secondGoalFruitIcon);
+        UpdateGoalText(secondGoalID);
 
         Goal thirdGoalID = currentLevel.ThirdGoal;
-        _thirdGoalFruitIcon.sprite = thirdGoalID.FruitID.FruitSprite;
-        _thirdGoalAmount.text = thirdGoalID.Amount.ToString();
+        UpdateGoalSprite(thirdGoalID, _thirdGoalFruitIcon);
+        UpdateGoalText(thirdGoalID);
+    }
+
+    public void UpdateGoalSprite(Goal goal, Image goalIcon) => goalIcon.sprite = goal.FruitID.FruitSprite;
+
+    public void UpdateGoalText(Goal goal)
+    {
+        switch (goal.ID)
+        {
+            case 1:
+                _firstGoalAmountText.text = goal.Amount.ToString();
+                break;
+            case 2:
+                _secondGoalAmountText.text = goal.Amount.ToString();
+                break;
+            case 3:
+                _thirdGoalAmountText.text = goal.Amount.ToString();
+                break;
+            default:
+                return;
+        }
     }
 
     private void SetSliderMaxValue() => _starSlider.maxValue = _gameManager.GetHighestScore();
     private void ResetLevelStars() => _levelStars.Value = 0;
     private void ResetScore() => _score.Value = 0;
-    public void CalculateScore(bool isGoalFruit)
+
+    public void UpdateScore(bool isGoalFruit)
     {
         if (isGoalFruit) _score.Value += GameManager.GoalFruitPoints;
         else _score.Value += GameManager.CommonFruitPoints;
@@ -59,7 +80,7 @@ public class LevelUIData : MonoBehaviour
 
     public void UpdateStarPercentage()
     {
-        float starPercentage = _score.Value / 10f;
+        float starPercentage = _score.Value / 2;
         _UIAnimation.AnimateSliderIncreasing(starPercentage);
 
         if (_starSlider.value >= _gameManager.FirstStarPercentage) _levelStars.Value = 1;

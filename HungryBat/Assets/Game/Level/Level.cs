@@ -17,6 +17,7 @@ namespace LevelData
     [Serializable]
     public struct Goal
     {
+        public int ID;
         public int Amount;
         public FruitID FruitID;
     }

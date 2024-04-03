@@ -3007,6 +3007,9 @@ MonoBehaviour:
   _levelManager: {fileID: 1369777081}
   _score: {fileID: 11400000, guid: 6af3665ee63be0f43bde3a55554f830b, type: 2}
   _levelUIData: {fileID: 1805342090}
+  FirstStarPercentage: 0
+  SecondStarPercentage: 0
+  ThirdStarPercentage: 0
 --- !u!114 &1369777084
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4441,9 +4444,9 @@ MonoBehaviour:
   _firstGoalFruitIcon: {fileID: 240182310}
   _secondGoalFruitIcon: {fileID: 858048645}
   _thirdGoalFruitIcon: {fileID: 2060702585}
-  _firstGoalAmount: {fileID: 1855331200}
-  _secondGoalAmount: {fileID: 1694545118}
-  _thirdGoalAmount: {fileID: 1570859647}
+  _firstGoalAmountText: {fileID: 1855331200}
+  _secondGoalAmountText: {fileID: 1694545118}
+  _thirdGoalAmountText: {fileID: 1570859647}
   _levelManager: {fileID: 1369777081}
   _gameManager: {fileID: 1369777083}
   _starSlider: {fileID: 1199857524}

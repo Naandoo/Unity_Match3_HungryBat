@@ -1,8 +1,9 @@
+using System;
 using System.Collections.Generic;
 using FruitItem;
-using Game.UI;
 using LevelData;
 using ScriptableVariable;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace Controllers
@@ -47,28 +48,35 @@ namespace Controllers
         {
             foreach (Fruit fruit in fruits)
             {
-                Goal? matchGoal = GetMatchGoal(fruit.FruitID.FruitType);
-                if (matchGoal.HasValue)
-                {
-                    Goal goal = matchGoal.Value;
-                    goal.Amount--;
-
-                    _levelUIData.CalculateScore(isGoalFruit: true);
-                }
-
-                _levelUIData.CalculateScore(isGoalFruit: false);
-
+                _levelUIData.UpdateScore(isGoalFruit: TryUpdateGoal(fruit.FruitID.FruitType));
             }
 
             CheckLevelProgression();
         }
 
-        private Goal? GetMatchGoal(FruitType fruitType)
+        private bool TryUpdateGoal(FruitType fruitType)
         {
-            if (fruitType == firstGoalCopy.FruitID.FruitType) return firstGoalCopy;
-            else if (fruitType == secondGoalCopy.FruitID.FruitType) return secondGoalCopy;
-            else if (fruitType == thirdGoalCopy.FruitID.FruitType) return thirdGoalCopy;
-            else return null;
+            if (fruitType == firstGoalCopy.FruitID.FruitType)
+            {
+                int goalNewAmount = Math.Clamp(firstGoalCopy.Amount - 1, 0, firstGoalCopy.Amount);
+                firstGoalCopy.Amount = goalNewAmount;
+                _levelUIData.UpdateGoalText(firstGoalCopy);
+            }
+            else if (fruitType == secondGoalCopy.FruitID.FruitType)
+            {
+                int goalNewAmount = Math.Clamp(secondGoalCopy.Amount - 1, 0, secondGoalCopy.Amount);
+                secondGoalCopy.Amount = goalNewAmount;
+                _levelUIData.UpdateGoalText(secondGoalCopy);
+            }
+            else if (fruitType == thirdGoalCopy.FruitID.FruitType)
+            {
+                int goalNewAmount = Math.Clamp(thirdGoalCopy.Amount - 1, 0, thirdGoalCopy.Amount);
+                thirdGoalCopy.Amount = goalNewAmount;
+                _levelUIData.UpdateGoalText(thirdGoalCopy);
+            }
+            else return false;
+
+            return true;
         }
 
         public void CheckLevelProgression()
