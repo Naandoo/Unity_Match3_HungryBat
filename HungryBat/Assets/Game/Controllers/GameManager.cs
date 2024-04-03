@@ -14,10 +14,11 @@ namespace Controllers
         [SerializeField] private IntVariable _score;
         [SerializeField] private LevelUIData _levelUIData;
         private Goal firstGoalCopy = new(), secondGoalCopy = new(), thirdGoalCopy = new();
-        public const int GoalFruitPoints = 50;
-        public const int CommonFruitPoints = 25;
-        public const float FirstStarPercentage = 0.25f;
-        public const float SecondStarPercentage = 0.6f;
+        public const int GoalFruitPoints = 10;
+        public const int CommonFruitPoints = 5;
+        public float FirstStarPercentage;
+        public float SecondStarPercentage;
+        public float ThirdStarPercentage;
 
         public void CopyLevelGoals(Level currentLevel)
         {
@@ -30,6 +31,8 @@ namespace Controllers
         {
             GameEvents.Instance.OnFruitsExplodedEvent.AddListener(UpdateGoalsOnMatch);
             GameEvents.Instance.OnFruitMovedEvent.AddListener(DecreaseMovements);
+
+            SetStarsGoalPercentage();
         }
 
         private void OnDestroy()
@@ -92,6 +95,13 @@ namespace Controllers
             int highestScore = goalAmountSum * GoalFruitPoints;
 
             return highestScore;
+        }
+
+        private void SetStarsGoalPercentage()
+        {
+            FirstStarPercentage = GetHighestScore() * 0.20f;
+            SecondStarPercentage = GetHighestScore() * 0.50f;
+            ThirdStarPercentage = GetHighestScore() * 1f;
         }
     }
 }

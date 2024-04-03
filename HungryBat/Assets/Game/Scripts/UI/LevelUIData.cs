@@ -4,6 +4,7 @@ using LevelData;
 using ScriptableVariable;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 public class LevelUIData : MonoBehaviour
@@ -58,13 +59,18 @@ public class LevelUIData : MonoBehaviour
 
     public void UpdateStarPercentage()
     {
-        float starPercentage = _gameManager.GetHighestScore() / _score.Value / 100f;
+        float starPercentage = _score.Value / 10f;
         _UIAnimation.AnimateSliderIncreasing(starPercentage);
 
-        if (starPercentage <= GameManager.FirstStarPercentage) _levelStars.Value = 1;
-        else if (starPercentage <= GameManager.SecondStarPercentage) _levelStars.Value = 2;
-        else _levelStars.Value = 3;
+        if (_starSlider.value >= _gameManager.FirstStarPercentage) _levelStars.Value = 1;
 
-        _UIAnimation.AnimateStarAppearing(index: _levelStars.Value - 1);
+        if (_starSlider.value >= _gameManager.SecondStarPercentage) _levelStars.Value = 2;
+
+        if (_starSlider.value >= _gameManager.ThirdStarPercentage) _levelStars.Value = 3;
+
+        if (_levelStars.Value >= 1)
+        {
+            _UIAnimation.AnimateStarAppearing(levelStar: _levelStars.Value);
+        }
     }
 }

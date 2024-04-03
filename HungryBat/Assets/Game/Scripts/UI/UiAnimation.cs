@@ -37,7 +37,7 @@ namespace Game.UI
         {
             foreach (Image image in _stars)
             {
-                image.transform.localScale = Vector2.zero;
+                image.transform.localScale = Vector3.zero;
             }
         }
 
@@ -121,10 +121,13 @@ namespace Game.UI
             _starSlider.DOValue(currentValue, slidingTime);
         }
 
-        public void AnimateStarAppearing(int index)
+        public void AnimateStarAppearing(int levelStar)
         {
+            int index = levelStar - 1;
+            if (_stars[index].transform.localScale == Vector3.one) return;
+
             float scalingTime = 0.25f;
-            _stars[index].transform.DOScale(Vector2.one, scalingTime).SetEase(Ease.OutBounce);
+            _stars[index].transform.DOScale(Vector3.one, scalingTime).SetEase(Ease.OutBounce);
         }
     }
 }
