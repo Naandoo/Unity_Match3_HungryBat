@@ -9,9 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25462441d58d97b45851a87a57470ded, type: 3}
-  m_Name: Potion
+  m_Script: {fileID: 11500000, guid: d52ccfb3ade83e74888d1e13990a4675, type: 3}
+  m_Name: Bomb
   m_EditorClassIdentifier: 
-  Name: Potion
-  Description: Transform 15 random fruits on the board into the same type as the
-    selected one.
+  Name: Bomb
+  CurrentAmount: {fileID: 11400000, guid: 2d14ce96a58ef2a4abc59eaac59a4212, type: 2}
+  Description: Explode a square of fruits, selecting one to serve as the center of
+    the explosion.

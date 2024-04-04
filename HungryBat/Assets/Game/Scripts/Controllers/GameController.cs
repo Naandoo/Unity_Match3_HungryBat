@@ -4,6 +4,7 @@ using Game.UI;
 using LevelData;
 using ScriptableVariable;
 using UnityEngine;
+using Skills;
 
 namespace Controllers
 {
@@ -16,7 +17,8 @@ namespace Controllers
         [SerializeField] private LevelUIData _levelUIData;
         [SerializeField] private GameManager _gameManager;
         [SerializeField] private BoolVariable _isLevelFinished;
-        Level currentLevel;
+        [SerializeField] private Skill _bomb, _potion, _lightning;
+        private Level _currentLevel;
 
         private void Awake()
         {
@@ -40,18 +42,26 @@ namespace Controllers
         {
             _isLevelFinished.Value = false;
             _boardGrid.ClearBoard();
-            currentLevel = _levelManager.GetCurrentLevel();
-            _levelManager.UpdateLevelScriptable(currentLevel);
-            _gameManager.CopyLevelGoals(currentLevel);
+            _currentLevel = _levelManager.GetCurrentLevel();
+            _levelManager.UpdateLevelScriptable(_currentLevel);
+            _gameManager.CopyLevelGoals(_currentLevel);
             _levelUIData.UpdateUILevelData();
+            InitializeLevelSkills();
             yield return StartCoroutine(_uiAnimation.InitializeLevelAnimations());
             _boardGrid.CreateBoard();
         }
 
         public void InitiateNextLevel()
         {
-            PlayerPrefs.SetInt("savedLevel", currentLevel.Number + 1);
+            PlayerPrefs.SetInt("savedLevel", _currentLevel.Number + 1);
             InitiateCurrentLevelRoutine();
+        }
+
+        private void InitializeLevelSkills()
+        {
+            _bomb.CurrentAmount.Value = _currentLevel.SkillsAvailability.BombsAmount;
+            _potion.CurrentAmount.Value = _currentLevel.SkillsAvailability.PotionAmount;
+            _lightning.CurrentAmount.Value = _currentLevel.SkillsAvailability.LightningAmount;
         }
     }
 }

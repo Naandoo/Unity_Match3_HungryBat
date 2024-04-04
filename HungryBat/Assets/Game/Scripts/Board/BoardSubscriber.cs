@@ -1,6 +1,6 @@
 using UnityEngine;
 using FruitItem;
-using Skill;
+using Skills;
 using ScriptableVariable;
 
 namespace Board

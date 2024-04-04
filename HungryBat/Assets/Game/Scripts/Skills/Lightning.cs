@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using FruitItem;
 using UnityEngine;
 
-namespace Skill
+namespace Skills
 {
     [CreateAssetMenu(fileName = "Lightning", menuName = "Skills/Lightning")]
     public class Lightning : Skill
@@ -39,6 +39,8 @@ namespace Skill
             {
                 fruit.Vanish();
             }
+
+            GameEvents.Instance.OnFruitsExplodedEvent.Invoke(fruits);
         }
     }
 }

@@ -1,13 +1,14 @@
 using System.Collections;
 using FruitItem;
+using ScriptableVariable;
 using UnityEngine;
 
-namespace Skill
+namespace Skills
 {
     public abstract class Skill : ScriptableObject
     {
         public string Name;
-        public int CurrentAmount { get; set; } // TODO: Add skills based on level
+        public IntVariable CurrentAmount;
         public string Description;
         public abstract IEnumerator Execute(Fruit selectedFruit, Fruit[,] boardFruit);
     }

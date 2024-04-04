@@ -7,7 +7,7 @@ using ScriptableVariable;
 using TMPro;
 using UnityEngine;
 
-namespace Skill
+namespace Skills
 {
     public class SkillManager : MonoBehaviour
     {
@@ -40,10 +40,13 @@ namespace Skill
 
         public void TriggerSkillMode(Skill skill)
         {
-            BoardState.Instance.SetState(State.WaitingAction);
-            skillState = true;
-            UpdateSkillUI(selectedSkill: skill);
-            selectedSkill = skill;
+            if (skill.CurrentAmount.Value > 0)
+            {
+                BoardState.Instance.SetState(State.WaitingAction);
+                skillState = true;
+                UpdateSkillUI(selectedSkill: skill);
+                selectedSkill = skill;
+            }
         }
 
         public IEnumerator CheckSkillState(Fruit fruit)
@@ -53,7 +56,7 @@ namespace Skill
 
             skillState = false;
 
-            StartCoroutine(ExecuteSkill(selectedSkill, fruit));
+            yield return StartCoroutine(ExecuteSkill(selectedSkill, fruit));
             StartCoroutine(_boardSorter.SortBoard());
             _boardMatcher.TryMatchFruits(matchWithMovement: false);
 

@@ -3,7 +3,7 @@ using UnityEngine;
 using FruitItem;
 using System.Collections.Generic;
 
-namespace Skill
+namespace Skills
 {
     [CreateAssetMenu(fileName = "Bomb", menuName = "Skills/Bomb")]
     public class Bomb : Skill
@@ -24,6 +24,8 @@ namespace Skill
             {
                 fruit.Vanish();
             }
+
+            GameEvents.Instance.OnFruitsExplodedEvent.Invoke(fruits);
         }
 
         private List<Fruit> GetFruitsInRange(Fruit fruit, Fruit[,] boardFruit)

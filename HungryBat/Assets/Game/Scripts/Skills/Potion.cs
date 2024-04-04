@@ -3,7 +3,7 @@ using UnityEngine;
 using FruitItem;
 using System.Collections;
 
-namespace Skill
+namespace Skills
 {
     [CreateAssetMenu(fileName = "Potion", menuName = "Skills/Potion")]
     public class Potion : Skill
