@@ -79,8 +79,10 @@ namespace Board
         private List<Fruit> SimulateMovement(Fruit fruit, Direction direction)
         {
             List<Fruit> matches = new();
-
             Vector2Int movementDirection = MovementDirection.GetDirectionCoordinates(direction);
+
+            if (fruit == null) return null;
+
             int newColumn = fruit.Column + movementDirection.x;
             int newRow = fruit.Row + movementDirection.y;
 

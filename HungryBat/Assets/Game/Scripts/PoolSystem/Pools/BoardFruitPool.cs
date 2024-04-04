@@ -16,7 +16,7 @@ namespace Board
         public void Initialize(int poolSize)
         {
             _poolSystem = new PoolSystem<Fruit>(_boardFruit, poolSize, transform);
-            DOTween.SetTweensCapacity(200, 200);
+            DOTween.SetTweensCapacity(500, 500);
         }
 
         public Fruit GetRandomFruit()

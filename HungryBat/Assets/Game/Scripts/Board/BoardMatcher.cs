@@ -3,7 +3,7 @@ using FruitItem;
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine.Events;
-
+using ScriptableVariable;
 namespace Board
 {
     public class BoardMatcher : MonoBehaviour
@@ -11,6 +11,7 @@ namespace Board
         [SerializeField] private BoardGrid _boardGrid;
         [SerializeField] private BoardSorter _boardSorter;
         [SerializeField] private BoardAuthenticator _boardAuthenticator;
+        [SerializeField] private BoolVariable _isLevelFinished;
         private int _boardColumns;
         private int _boardRows;
         private Vector2Int[] _swappedItemsPlacement;
@@ -86,8 +87,8 @@ namespace Board
                     fruit.Vanish();
                 }
 
-                GameEvents.Instance.OnFruitsExplodedEvent.Invoke(fruitsToMatch);
                 if (matchWithMovement) GameEvents.Instance.OnFruitMovedEvent.Invoke();
+                if (!_isLevelFinished.Value) GameEvents.Instance.OnFruitsExplodedEvent.Invoke(fruitsToMatch);
 
             }
             else if (fruitsToMatch.Count <= 3 && matchWithMovement)

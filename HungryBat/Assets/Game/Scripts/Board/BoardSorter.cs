@@ -30,7 +30,6 @@ namespace Board
                         MoveItem(fruit, emptyItemsInColumn, Direction.Down);
                     }
                 }
-
                 FillEmptySpacesInBoard(column: i, emptyItemsInColumn);
             }
 

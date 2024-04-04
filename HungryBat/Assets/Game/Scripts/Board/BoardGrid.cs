@@ -37,7 +37,6 @@ namespace Board
 
             _boardCellSize.Value = _boardTilemap.cellSize;
             _boardMatcher.TryMatchFruits(matchWithMovement: false);
-
         }
 
         public bool HasTileAt(int column, int row)
@@ -101,13 +100,19 @@ namespace Board
         {
             if (!_boardAuthenticator.ContainsAvailableMatches())
             {
-                foreach (Fruit fruit in _boardFruitArray)
-                {
-                    if (fruit == null) continue;
-                    _boardFruitPool.OnReleasedFruit(fruit);
-                }
-
+                ClearBoard();
                 CreateBoard();
+            }
+        }
+
+        public void ClearBoard()
+        {
+            if (_boardFruitArray == null || _boardFruitArray.Length == 0) return;
+
+            foreach (Fruit fruit in _boardFruitArray)
+            {
+                if (fruit == null) continue;
+                _boardFruitPool.OnReleasedFruit(fruit);
             }
         }
     }

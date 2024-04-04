@@ -27,11 +27,11 @@ namespace LevelData
 
         public Level GetCurrentLevel()
         {
-            int number = PlayerPrefs.GetInt("savedLevel", 1);
+            int levelNumber = PlayerPrefs.GetInt("savedLevel", 1);
 
-            if (levelDictionary.ContainsKey(number))
+            if (levelDictionary.ContainsKey(levelNumber))
             {
-                return levelDictionary[number];
+                return levelDictionary[levelNumber];
             }
             else
             {

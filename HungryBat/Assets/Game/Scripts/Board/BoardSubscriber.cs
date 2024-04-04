@@ -12,7 +12,7 @@ namespace Board
         [SerializeField] private BoardMatcher _boardMatcher;
         [SerializeField] private SkillManager _skillManager;
         [SerializeField] private IntVariable _movesAmount;
-
+        [SerializeField] private BoolVariable _isLevelFinished;
         private void Awake()
         {
             _boardMatcher.OnBoardFinishMovement.AddListener(() =>
@@ -39,7 +39,7 @@ namespace Board
             {
                 fruit.OnItemMoved.AddListener((Column, Row, lastMoveDirection) =>
                 {
-                    if (BoardState.Instance.State == State.Common && _movesAmount.Value > 0)
+                    if (BoardState.Instance.State == State.Common && _movesAmount.Value > 0 && !_isLevelFinished.Value)
                     {
                         StartCoroutine(_boardMatcher.MoveFruit(Column, Row, lastMoveDirection));
                     }

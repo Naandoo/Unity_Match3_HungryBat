@@ -80,7 +80,7 @@ public class LevelUIData : MonoBehaviour
 
     public void UpdateStarPercentage()
     {
-        float starPercentage = _score.Value / 2;
+        float starPercentage = _score.Value;
         _UIAnimation.AnimateSliderIncreasing(starPercentage);
 
         if (_starSlider.value >= _gameManager.FirstStarPercentage) _levelStars.Value = 1;

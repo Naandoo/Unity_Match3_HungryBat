@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using FruitItem;
 using LevelData;
 using ScriptableVariable;
-using Unity.Mathematics;
 using UnityEngine;
 
 namespace Controllers
@@ -14,12 +13,13 @@ namespace Controllers
         [SerializeField] private LevelManager _levelManager;
         [SerializeField] private IntVariable _score;
         [SerializeField] private LevelUIData _levelUIData;
+        [SerializeField] private BoolVariable _isLevelFinished;
         private Goal firstGoalCopy = new(), secondGoalCopy = new(), thirdGoalCopy = new();
         public const int GoalFruitPoints = 10;
         public const int CommonFruitPoints = 5;
-        public float FirstStarPercentage;
-        public float SecondStarPercentage;
-        public float ThirdStarPercentage;
+        public float FirstStarPercentage { get; private set; }
+        public float SecondStarPercentage { get; private set; }
+        public float ThirdStarPercentage { get; private set; }
 
         public void CopyLevelGoals(Level currentLevel)
         {
@@ -42,10 +42,14 @@ namespace Controllers
             GameEvents.Instance.OnFruitMovedEvent.RemoveListener(DecreaseMovements);
         }
 
-        private void DecreaseMovements() => _moveAmount.Value -= 1;
+        private void DecreaseMovements()
+        {
+            _moveAmount.Value -= 1;
+        }
 
         public void UpdateGoalsOnMatch(List<Fruit> fruits)
         {
+
             foreach (Fruit fruit in fruits)
             {
                 _levelUIData.UpdateScore(isGoalFruit: TryUpdateGoal(fruit.FruitID.FruitType));
@@ -81,14 +85,21 @@ namespace Controllers
 
         public void CheckLevelProgression()
         {
-            //TODO: Add a bonus to players that finished with movements remaining
             if (!CompletedGoals() && _moveAmount.Value == 0)
             {
                 GameEvents.Instance.OnLoseEvent.Invoke();
+                _isLevelFinished.Value = true;
+            }
+            if (CompletedGoals() && _moveAmount.Value > 0)
+            {
+                GameEvents.Instance.OnWinWithExtraMovements.Invoke();
+                _isLevelFinished.Value = true;
+
             }
             else if (CompletedGoals())
             {
                 GameEvents.Instance.OnWinEvent.Invoke();
+                _isLevelFinished.Value = true;
             }
         }
 
@@ -97,18 +108,18 @@ namespace Controllers
             return firstGoalCopy.Amount == 0 && secondGoalCopy.Amount == 0 && thirdGoalCopy.Amount == 0;
         }
 
-        public int GetHighestScore()
+        public float GetHighestScore()
         {
-            int goalAmountSum = firstGoalCopy.Amount + secondGoalCopy.Amount + thirdGoalCopy.Amount;
-            int highestScore = goalAmountSum * GoalFruitPoints;
-
+            float goalAmountSum = firstGoalCopy.Amount + secondGoalCopy.Amount + thirdGoalCopy.Amount;
+            float minimumScore = goalAmountSum * GoalFruitPoints;
+            float highestScore = minimumScore * 1.5f;
             return highestScore;
         }
 
         private void SetStarsGoalPercentage()
         {
-            FirstStarPercentage = GetHighestScore() * 0.20f;
-            SecondStarPercentage = GetHighestScore() * 0.50f;
+            FirstStarPercentage = GetHighestScore() * 0.2f;
+            SecondStarPercentage = GetHighestScore() * 0.5f;
             ThirdStarPercentage = GetHighestScore() * 1f;
         }
     }
