@@ -1445,9 +1445,6 @@ MonoBehaviour:
   _boardSorter: {fileID: 455438043}
   _boardAuthenticator: {fileID: 455438047}
   _isLevelFinished: {fileID: 11400000, guid: f8bb3993e6b4ade408f32b8995dabc6d, type: 2}
-  OnBoardFinishMovement:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &455438046
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2788,6 +2785,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levels:
   - {fileID: 11400000, guid: 5405505f37d0bcc419ba7a1a4657a19b, type: 2}
+  - {fileID: 11400000, guid: a4946d6735d79fe439eaaab75b8e9cf9, type: 2}
   levelFruits: {fileID: 11400000, guid: 98d790dad2c167845a7ea24b158e587e, type: 2}
 --- !u!114 &1369777082
 MonoBehaviour:
@@ -2847,6 +2845,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   OnFruitMovedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnBoardFinishMovement:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1001 &1442349658
@@ -7367,6 +7368,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: Controllers.GameController, Assembly-CSharp
         m_MethodName: InitiateCurrentLevelRoutine
         m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2183791557670169964}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

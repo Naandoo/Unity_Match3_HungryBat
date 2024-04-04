@@ -9,6 +9,7 @@ public class GameEvents : MonoBehaviour
     public static GameEvents Instance { get; private set; }
     public UnityEvent OnWinEvent, OnWinWithExtraMovements, OnLoseEvent;
     public UnityEvent OnFruitMovedEvent;
+    public UnityEvent OnBoardFinishMovement;
     public OnFruitsExploded OnFruitsExplodedEvent = new();
 
     private void Awake()

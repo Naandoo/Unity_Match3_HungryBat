@@ -13,12 +13,21 @@ namespace Board
         [SerializeField] private SkillManager _skillManager;
         [SerializeField] private IntVariable _movesAmount;
         [SerializeField] private BoolVariable _isLevelFinished;
-        private void Awake()
+
+        private void Start()
         {
-            _boardMatcher.OnBoardFinishMovement.AddListener(() =>
-          {
-              _boardGrid.CheckShuffleNeed();
-          });
+            GameEvents.Instance.OnBoardFinishMovement.AddListener(() =>
+            {
+                _boardGrid.CheckShuffleNeed();
+            });
+        }
+
+        private void OnDestroy()
+        {
+            GameEvents.Instance.OnBoardFinishMovement.RemoveListener(() =>
+            {
+                _boardGrid.CheckShuffleNeed();
+            });
         }
 
         public void SubscribeEventsIn(Fruit fruit)

@@ -32,7 +32,7 @@ namespace Controllers
         {
             GameEvents.Instance.OnFruitsExplodedEvent.AddListener(UpdateGoalsOnMatch);
             GameEvents.Instance.OnFruitMovedEvent.AddListener(DecreaseMovements);
-
+            GameEvents.Instance.OnBoardFinishMovement.AddListener(CheckLevelProgression);
             SetStarsGoalPercentage();
         }
 
@@ -40,6 +40,7 @@ namespace Controllers
         {
             GameEvents.Instance.OnFruitsExplodedEvent.RemoveListener(UpdateGoalsOnMatch);
             GameEvents.Instance.OnFruitMovedEvent.RemoveListener(DecreaseMovements);
+            GameEvents.Instance.OnBoardFinishMovement.RemoveListener(CheckLevelProgression);
         }
 
         private void DecreaseMovements()
@@ -49,13 +50,10 @@ namespace Controllers
 
         public void UpdateGoalsOnMatch(List<Fruit> fruits)
         {
-
             foreach (Fruit fruit in fruits)
             {
                 _levelUIData.UpdateScore(isGoalFruit: TryUpdateGoal(fruit.FruitID.FruitType));
             }
-
-            CheckLevelProgression();
         }
 
         private bool TryUpdateGoal(FruitType fruitType)

@@ -15,7 +15,6 @@ namespace Board
         private int _boardColumns;
         private int _boardRows;
         private Vector2Int[] _swappedItemsPlacement;
-        public UnityEvent OnBoardFinishMovement;
 
         private void Awake()
         {
@@ -100,7 +99,7 @@ namespace Board
             else
             {
                 BoardState.Instance.SetState(State.Common);
-                OnBoardFinishMovement.Invoke();
+                if (!_isLevelFinished.Value) GameEvents.Instance.OnBoardFinishMovement.Invoke();
                 return;
             }
 
