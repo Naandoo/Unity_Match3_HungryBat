@@ -10,25 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f36154086c2e1d147a6f2ce7d6255475, type: 3}
-  m_Name: Level 2
+  m_Name: Level 9
   m_EditorClassIdentifier: 
-  Number: 2
-  Moves: 15
+  Number: 9
+  Moves: 30
   FirstGoal:
     ID: 1
-    Amount: 12
-    FruitID: {fileID: 11400000, guid: 37f5d8a68cc0f6c49a144ddcba004dc2, type: 2}
+    Amount: 20
+    FruitID: {fileID: 11400000, guid: 434633b82e424744f85ac7120c1b42f0, type: 2}
   SecondGoal:
     ID: 2
-    Amount: 5
-    FruitID: {fileID: 11400000, guid: f5ae2f2b7ef607e4597e835e048fcf6c, type: 2}
+    Amount: 25
+    FruitID: {fileID: 11400000, guid: 37f5d8a68cc0f6c49a144ddcba004dc2, type: 2}
   ThirdGoal:
     ID: 3
-    Amount: 9
+    Amount: 15
     FruitID: {fileID: 11400000, guid: 8bed8ef240fd8d3418075c107d119d29, type: 2}
   Obstacles:
-    FirstFruitObstacle: {fileID: 11400000, guid: 0971677f619e6554e8ec2854867139f2, type: 2}
-    SecondFruitObstacle: {fileID: 11400000, guid: 434633b82e424744f85ac7120c1b42f0, type: 2}
+    FirstFruitObstacle: {fileID: 11400000, guid: f5ae2f2b7ef607e4597e835e048fcf6c, type: 2}
+    SecondFruitObstacle: {fileID: 11400000, guid: 61245b29c3bcbf74bb58b130cb930a93, type: 2}
   SkillsAvailability:
     BombsAmount: 0
     PotionAmount: 0
