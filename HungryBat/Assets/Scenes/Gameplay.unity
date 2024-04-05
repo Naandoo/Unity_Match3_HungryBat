@@ -422,12 +422,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1369777079}
-        m_TargetAssemblyTypeName: Skill.SkillManager, Assembly-CSharp
+        m_TargetAssemblyTypeName: Skills.SkillManager, Assembly-CSharp
         m_MethodName: TriggerSkillMode
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: c789a14ef7f81cd4f97a12706f39aa63, type: 2}
-          m_ObjectArgumentAssemblyTypeName: Skill.Skill, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: Skills.Skill, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1477,7 +1477,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _boardFruit: {fileID: -1766169844454168766, guid: 6681822d38bb9f74ca0f397bbf767f5a, type: 3}
   _boardListener: {fileID: 455438042}
-  _levelFruits: {fileID: 11400000, guid: 98d790dad2c167845a7ea24b158e587e, type: 2}
+  _boardGrid: {fileID: 0}
 --- !u!114 &455438045
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2038,12 +2038,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1369777079}
-        m_TargetAssemblyTypeName: Skill.SkillManager, Assembly-CSharp
+        m_TargetAssemblyTypeName: Skills.SkillManager, Assembly-CSharp
         m_MethodName: TriggerSkillMode
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: 71bbe163d8e9f944cb2d836068845c49, type: 2}
-          m_ObjectArgumentAssemblyTypeName: Skill.Skill, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: Skills.Skill, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -2846,6 +2846,7 @@ MonoBehaviour:
   _skillDescriptionUI: {fileID: 438239887}
   _bomb: {fileID: 11400000, guid: c789a14ef7f81cd4f97a12706f39aa63, type: 2}
   _moves: {fileID: 11400000, guid: 8c197e8bd12e3fa4b937fc03c15f5d83, type: 2}
+  _isLevelFinished: {fileID: 11400000, guid: f8bb3993e6b4ade408f32b8995dabc6d, type: 2}
 --- !u!4 &1369777080
 Transform:
   m_ObjectHideFlags: 0
@@ -2876,7 +2877,20 @@ MonoBehaviour:
   levels:
   - {fileID: 11400000, guid: 5405505f37d0bcc419ba7a1a4657a19b, type: 2}
   - {fileID: 11400000, guid: a4946d6735d79fe439eaaab75b8e9cf9, type: 2}
-  levelFruits: {fileID: 11400000, guid: 98d790dad2c167845a7ea24b158e587e, type: 2}
+  - {fileID: 11400000, guid: 0af5d979e4468c0488225fcd6bb6f273, type: 2}
+  - {fileID: 11400000, guid: 7ac3f1bd2eb173147a926cb02ffc6f3a, type: 2}
+  - {fileID: 11400000, guid: 807c531eb9a350044852ed100cc87ad9, type: 2}
+  - {fileID: 11400000, guid: 6611a868cce0ffe4caba1b9f11cefa74, type: 2}
+  - {fileID: 11400000, guid: 0e28c57a158a7ea47811dccf96d4e5d3, type: 2}
+  - {fileID: 11400000, guid: 2c6e53ceecdf9254e9bd5db2a93d9be4, type: 2}
+  - {fileID: 11400000, guid: d2d735e5aff9d1d4ebe405fe89e4f740, type: 2}
+  - {fileID: 11400000, guid: 250dfd9e6b9162a409fb81eeba12e45f, type: 2}
+  - {fileID: 11400000, guid: 51d4325c53298e443b330eb48bb7cce5, type: 2}
+  - {fileID: 11400000, guid: 079bcae6389fb7e459e4249aa1f4c045, type: 2}
+  - {fileID: 11400000, guid: c20ef8a9fa63a584cb93e6e93dba781a, type: 2}
+  - {fileID: 11400000, guid: d257205d92e4ab245ba6bf426145ecf3, type: 2}
+  - {fileID: 11400000, guid: ea68da85b20b1334183610ae3f4663c3, type: 2}
+  _boardFruitPool: {fileID: 0}
 --- !u!114 &1369777082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3113,12 +3127,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1369777079}
-        m_TargetAssemblyTypeName: Skill.SkillManager, Assembly-CSharp
+        m_TargetAssemblyTypeName: Skills.SkillManager, Assembly-CSharp
         m_MethodName: TriggerSkillMode
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: 0ba5ac83b1ef55c4e903b46b998f723c, type: 2}
-          m_ObjectArgumentAssemblyTypeName: Skill.Skill, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: Skills.Skill, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

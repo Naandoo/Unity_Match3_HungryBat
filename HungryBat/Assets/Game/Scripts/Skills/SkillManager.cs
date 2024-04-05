@@ -19,6 +19,7 @@ namespace Skills
         [SerializeField] private TMP_Text _skillDescriptionUI;
         [SerializeField] private Bomb _bomb;
         [SerializeField] private IntVariable _moves;
+        [SerializeField] private BoolVariable _isLevelFinished;
         private bool skillState;
         private Skill selectedSkill = null;
 
@@ -40,7 +41,7 @@ namespace Skills
 
         public void TriggerSkillMode(Skill skill)
         {
-            if (skill.CurrentAmount.Value > 0)
+            if (skill.CurrentAmount.Value > 0 && !_isLevelFinished.Value)
             {
                 BoardState.Instance.SetState(State.WaitingAction);
                 skillState = true;

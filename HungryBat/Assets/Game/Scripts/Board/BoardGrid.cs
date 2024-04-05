@@ -28,9 +28,9 @@ namespace Board
             {
                 for (int j = 0; j < Rows; j++)
                 {
-                    if (HasTileAt(j, i))
+                    if (HasTileAt(i, j))
                     {
-                        GenerateBoardFruit(j, i);
+                        GenerateBoardFruit(i, j);
                     }
                 }
             }

@@ -1,13 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using FruitItem;
+using Board;
 
 namespace LevelData
 {
     public class LevelManager : MonoBehaviour
     {
         [SerializeField] private List<Level> levels = new();
-        [SerializeField] private LevelFruits levelFruits;
+        [SerializeField] private BoardFruitPool _boardFruitPool;
         private Dictionary<int, Level> levelDictionary;
 
         private void Awake()
@@ -35,9 +36,8 @@ namespace LevelData
             }
             else
             {
-                //TODO: Add a scream thanking the player for play and restart the with a button
-                print("Doesn't contain level");
-                return null;
+                PlayerPrefs.SetInt("savedLevel", 1);
+                return GetCurrentLevel();
             }
         }
 
@@ -52,7 +52,7 @@ namespace LevelData
                 level.Obstacles.SecondFruitObstacle,
             };
 
-            levelFruits.SetAvailableFruits(availableFruitsInLevel);
+            _boardFruitPool.SetAvailableFruits(availableFruitsInLevel);
         }
     }
 }
