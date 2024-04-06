@@ -1431,6 +1431,7 @@ MonoBehaviour:
   _boardCellSize: {fileID: 11400000, guid: 877eb2d29576932459701d2cbc9567df, type: 2}
   _boardMatcher: {fileID: 455438045}
   _boardAuthenticator: {fileID: 455438047}
+  _boardSorter: {fileID: 455438043}
 --- !u!114 &455438042
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1475,9 +1476,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6e85e25a87211d4ebe21d2bf46dc7d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _boardFruit: {fileID: -1766169844454168766, guid: 6681822d38bb9f74ca0f397bbf767f5a, type: 3}
+  _boardFruitObject: {fileID: -1766169844454168766, guid: 6681822d38bb9f74ca0f397bbf767f5a, type: 3}
   _boardListener: {fileID: 455438042}
-  _boardGrid: {fileID: 0}
+  _boardGrid: {fileID: 455438041}
 --- !u!114 &455438045
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2890,7 +2891,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c20ef8a9fa63a584cb93e6e93dba781a, type: 2}
   - {fileID: 11400000, guid: d257205d92e4ab245ba6bf426145ecf3, type: 2}
   - {fileID: 11400000, guid: ea68da85b20b1334183610ae3f4663c3, type: 2}
-  _boardFruitPool: {fileID: 0}
+  _boardFruitPool: {fileID: 455438044}
 --- !u!114 &1369777082
 MonoBehaviour:
   m_ObjectHideFlags: 0

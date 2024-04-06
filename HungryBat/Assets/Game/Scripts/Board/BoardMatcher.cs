@@ -51,33 +51,7 @@ namespace Board
 
         public void TryMatchFruits(bool matchWithMovement)
         {
-            List<Fruit> fruitsToMatch = new();
-
-            //TODO: Check the impact of this algorithm in performance and consider apply changes
-            for (int i = 0; i < _boardColumns; i++)
-            {
-                for (int j = 0; j < _boardRows; j++)
-                {
-                    List<Fruit> horizontalMatch = GetBoardMatch(i, j, 1, 0);
-                    List<Fruit> verticalMatch = GetBoardMatch(i, j, 0, 1);
-
-                    foreach (Fruit fruit in horizontalMatch)
-                    {
-                        if (!fruitsToMatch.Contains(fruit))
-                        {
-                            fruitsToMatch.Add(fruit);
-                        }
-                    }
-
-                    foreach (Fruit fruit in verticalMatch)
-                    {
-                        if (!fruitsToMatch.Contains(fruit))
-                        {
-                            fruitsToMatch.Add(fruit);
-                        }
-                    }
-                }
-            }
+            List<Fruit> fruitsToMatch = GetAllMatchesInBoard();
 
             if (fruitsToMatch.Count >= 3)
             {
@@ -106,6 +80,38 @@ namespace Board
             StartCoroutine(_boardSorter.SortBoard());
         }
 
+        public List<Fruit> GetAllMatchesInBoard()
+        {
+            List<Fruit> fruitsToMatch = new();
+
+            //TODO: Check the impact of this algorithm in performance and consider apply changes
+            for (int i = 0; i < _boardColumns; i++)
+            {
+                for (int j = 0; j < _boardRows; j++)
+                {
+                    List<Fruit> horizontalMatch = GetBoardMatch(i, j, 1, 0);
+                    List<Fruit> verticalMatch = GetBoardMatch(i, j, 0, 1);
+
+                    foreach (Fruit fruit in horizontalMatch)
+                    {
+                        if (!fruitsToMatch.Contains(fruit))
+                        {
+                            fruitsToMatch.Add(fruit);
+                        }
+                    }
+
+                    foreach (Fruit fruit in verticalMatch)
+                    {
+                        if (!fruitsToMatch.Contains(fruit))
+                        {
+                            fruitsToMatch.Add(fruit);
+                        }
+                    }
+                }
+            }
+
+            return fruitsToMatch;
+        }
         private List<Fruit> GetBoardMatch(int startColumn, int startRow, int stepX, int stepY)
         {
             return GetFruitMatch(startColumn, startRow, stepX, stepY, _boardGrid.BoardFruitArray);

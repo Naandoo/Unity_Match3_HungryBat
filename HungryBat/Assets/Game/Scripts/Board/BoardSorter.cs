@@ -84,7 +84,7 @@ namespace Board
             for (int i = initialRow + firstRowIndex; i < _boardGrid.Rows; i++)
             {
                 if (!_boardGrid.HasTileAt(column, i)) continue;
-                _boardGrid.GenerateBoardFruit(column, i);
+                _boardGrid.GenerateBoardFruit(column, i, distinctNeighbor: true);
             }
         }
 
@@ -113,6 +113,7 @@ namespace Board
             int amountOfRowsInColumn = _boardGrid.Rows - amountOfEmptyTiles;
             return amountOfRowsInColumn;
         }
+
         public IEnumerator SwapFruitPositions(Vector2Int firstFruitPlacement, Vector2Int secondFruitPlacement)
         {
             BoardState.Instance.SetState(State.Moving);

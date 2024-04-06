@@ -40,7 +40,7 @@ namespace Board
                 fruit.OnItemVanish.AddListener((Column, Row) =>
                 {
                     _boardGrid.ReleaseFruit(Column, Row);
-                    _boardFruitPool.OnReleasedFruit(fruit);
+                    _boardFruitPool.ReleaseFruit(fruit);
                 });
             }
 

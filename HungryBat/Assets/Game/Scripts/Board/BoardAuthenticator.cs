@@ -165,6 +165,7 @@ namespace Board
                 sequence.Clear();
                 sequence.Add(fruit);
             }
+
         }
     }
 }

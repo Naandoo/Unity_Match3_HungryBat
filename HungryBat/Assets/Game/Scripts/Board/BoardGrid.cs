@@ -2,6 +2,9 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using FruitItem;
 using ScriptableVariable;
+using System.Collections.Generic;
+using Toolbox;
+using System.Collections;
 
 namespace Board
 {
@@ -13,6 +16,7 @@ namespace Board
         [SerializeField] private Vector3Variable _boardCellSize;
         [SerializeField] private BoardMatcher _boardMatcher;
         [SerializeField] private BoardAuthenticator _boardAuthenticator;
+        [SerializeField] private BoardSorter _boardSorter;
         private const float _fruitOffset = 0.25f;
         private Fruit[,] _boardFruitArray;
 
@@ -30,13 +34,26 @@ namespace Board
                 {
                     if (HasTileAt(i, j))
                     {
-                        GenerateBoardFruit(i, j);
+                        GenerateBoardFruit(i, j, distinctNeighbor: false);
                     }
                 }
             }
 
+            RemoveInitialMatches();
             _boardCellSize.Value = _boardTilemap.cellSize;
             _boardMatcher.TryMatchFruits(matchWithMovement: false);
+        }
+
+        private void RemoveInitialMatches()
+        {
+            List<Fruit> initialMatches = _boardMatcher.GetAllMatchesInBoard();
+
+            foreach (Fruit fruit in initialMatches)
+            {
+                _boardFruitPool.ReleaseFruit(fruit);
+                GenerateBoardFruit(fruit.Column, fruit.Row, distinctNeighbor: true);
+            }
+
         }
 
         public bool HasTileAt(int column, int row)
@@ -52,9 +69,9 @@ namespace Board
             return cellPosition;
         }
 
-        public void GenerateBoardFruit(int column, int row)
+        public void GenerateBoardFruit(int column, int row, bool distinctNeighbor)
         {
-            Fruit fruit = _boardFruitPool.GetRandomFruit();
+            Fruit fruit = _boardFruitPool.GetRandomFruit(column, row, distinctNeighbor);
 
             _boardFruitArray[column, row] = fruit;
 
@@ -112,8 +129,17 @@ namespace Board
             foreach (Fruit fruit in _boardFruitArray)
             {
                 if (fruit == null) continue;
-                _boardFruitPool.OnReleasedFruit(fruit);
+                _boardFruitPool.ReleaseFruit(fruit);
             }
+        }
+
+        public Fruit GetFruit(int column, int row)
+        {
+            if (HasTileAt(column, row))
+            {
+                return BoardFruitArray[column, row];
+            }
+            else return null;
         }
     }
 }
