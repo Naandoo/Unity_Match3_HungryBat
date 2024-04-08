@@ -1,7 +1,7 @@
 using Controllers;
 using Game.UI;
 using LevelData;
-using ScriptableVariable;
+using ScriptableVariables;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

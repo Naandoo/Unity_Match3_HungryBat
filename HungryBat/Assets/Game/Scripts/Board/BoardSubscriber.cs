@@ -1,7 +1,8 @@
 using UnityEngine;
 using FruitItem;
 using Skills;
-using ScriptableVariable;
+using ScriptableVariables;
+using Controllers;
 
 namespace Board
 {
@@ -48,10 +49,7 @@ namespace Board
             {
                 fruit.OnItemMoved.AddListener((Column, Row, lastMoveDirection) =>
                 {
-                    if (BoardState.Instance.State == State.Common && _movesAmount.Value > 0 && !_isLevelFinished.Value)
-                    {
-                        StartCoroutine(_boardMatcher.MoveFruit(Column, Row, lastMoveDirection));
-                    }
+                    StartCoroutine(_boardMatcher.MoveFruit(Column, Row, lastMoveDirection));
                 });
             }
 

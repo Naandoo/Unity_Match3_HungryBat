@@ -1,7 +1,7 @@
 using UnityEngine;
 using TMPro;
 
-namespace ScriptableVariable
+namespace ScriptableVariables
 {
     public class IntVariableText : MonoBehaviour
     {

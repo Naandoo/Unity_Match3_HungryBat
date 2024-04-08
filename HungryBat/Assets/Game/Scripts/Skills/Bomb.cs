@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using FruitItem;
 using System.Collections.Generic;
+using Controllers;
 
 namespace Skills
 {

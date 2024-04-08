@@ -83,7 +83,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spriteRenderer: {fileID: 1393836646070208606}
-  _fruitMovementDuration: {fileID: 11400000, guid: d17780e96eae719498254f4863de518a, type: 2}
 --- !u!114 &6221593413680666022
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -98,6 +97,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _fruit: {fileID: -1766169844454168766}
   _cellBoardSize: {fileID: 11400000, guid: 877eb2d29576932459701d2cbc9567df, type: 2}
+  _movesAmount: {fileID: 11400000, guid: 8c197e8bd12e3fa4b937fc03c15f5d83, type: 2}
+  _levelFinished: {fileID: 11400000, guid: f8bb3993e6b4ade408f32b8995dabc6d, type: 2}
+  _gamePaused: {fileID: 11400000, guid: 76e4b4631f6ef2947ab786fae2c19a92, type: 2}
 --- !u!1 &1393836646070208601
 GameObject:
   m_ObjectHideFlags: 0

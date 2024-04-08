@@ -2,6 +2,7 @@ using UnityEngine;
 using DG.Tweening;
 using System.Collections;
 using UnityEngine.UI;
+using ScriptableVariables;
 
 namespace Game.UI
 {
@@ -15,11 +16,21 @@ namespace Game.UI
         [SerializeField] private Transform _score;
         [SerializeField] private Slider _starSlider;
         [SerializeField] private Image[] _stars;
+        [SerializeField] private Transform _soundToggle;
+        [SerializeField] private BoolVariable _soundAvailable;
+        [SerializeField] private Button _restartButton;
+        private Vector3 _soundToggleInitialPosition;
 
-        public IEnumerator InitializeLevelAnimations()
+        private void Awake()
+        {
+            SetInitialPosition();
+        }
+        public IEnumerator InitializeLevelUI()
         {
             ResetStarsTransform();
             ResetSlider();
+            AnimateSoundToggle();
+            _restartButton.interactable = false;
 
             Sequence sequence = DOTween.Sequence();
             sequence.Append(AnimateMovesAppearing());
@@ -31,6 +42,7 @@ namespace Game.UI
 
             sequence.Play();
             yield return sequence.WaitForCompletion();
+            _restartButton.interactable = true;
         }
 
         private void ResetStarsTransform()
@@ -43,6 +55,10 @@ namespace Game.UI
 
         private void ResetSlider() => _starSlider.value = 0f;
 
+        private void SetInitialPosition()
+        {
+            _soundToggleInitialPosition = _soundToggle.transform.position;
+        }
         private Tween AnimateMovesAppearing()
         {
             Vector3 finalPosition = _moves.localPosition;
@@ -128,6 +144,24 @@ namespace Game.UI
 
             float scalingTime = 0.25f;
             _stars[index].transform.DOScale(Vector3.one, scalingTime).SetEase(Ease.OutBounce);
+        }
+
+        public void AnimateSoundToggle()
+        {
+            Vector3 offPosition = _soundToggleInitialPosition + new Vector3(3, 0, 0);
+            Vector3 onPosition = offPosition - new Vector3(3, 0, 0);
+
+            if (_soundAvailable.Value && transform.localPosition != onPosition)
+            {
+                _soundToggle.transform.DOMove(onPosition, 0.25f).SetEase(Ease.OutFlash).SetUpdate(true);
+            }
+            else
+            {
+                if (transform.localPosition != offPosition)
+                {
+                    _soundToggle.transform.DOMove(offPosition, 0.25f).SetEase(Ease.OutFlash).SetUpdate(true);
+                }
+            }
         }
     }
 }

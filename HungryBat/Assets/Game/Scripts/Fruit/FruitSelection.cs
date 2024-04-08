@@ -1,6 +1,7 @@
 using UnityEngine;
-using ScriptableVariable;
+using ScriptableVariables;
 using UnityEngine.Events;
+using Board;
 
 namespace FruitItem
 {
@@ -8,12 +9,17 @@ namespace FruitItem
     {
         [SerializeField] private Fruit _fruit;
         [SerializeField] private Vector3Variable _cellBoardSize;
+        [SerializeField] private IntVariable _movesAmount;
+        [SerializeField] private BoolVariable _levelFinished;
+        [SerializeField] private BoolVariable _gamePaused;
         private Vector3 _inputInitialPosition;
         private Vector3 _inputFinalPosition;
         private bool _selected;
 
         private void OnMouseDown()
         {
+            if (!AbleToInteract()) return;
+
             _selected = true;
             _fruit.onSelectedFruit?.Invoke(_fruit);
             _inputInitialPosition = GetWorldMousePosition();
@@ -21,6 +27,8 @@ namespace FruitItem
 
         private void OnMouseDrag()
         {
+            if (!AbleToInteract()) return;
+
             if (_selected)
             {
                 _inputFinalPosition = GetWorldMousePosition();
@@ -32,6 +40,13 @@ namespace FruitItem
             }
         }
 
+        private bool AbleToInteract()
+        {
+            bool ableToInteract = BoardState.Instance.State == State.Common
+            && _movesAmount.Value > 0 && !_levelFinished.Value && !_gamePaused.Value;
+
+            return ableToInteract;
+        }
         private Vector3 GetWorldMousePosition()
         {
             Vector3 mousePosition = Input.mousePosition;

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using FruitItem;
-using ScriptableVariable;
+using ScriptableVariables;
 using System.Collections.Generic;
 using Toolbox;
 using System.Collections;

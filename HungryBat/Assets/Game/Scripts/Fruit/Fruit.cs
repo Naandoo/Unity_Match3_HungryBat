@@ -13,8 +13,7 @@ namespace FruitItem
         private int _column;
         private int _row;
         private const float _moveDuration = 0.3f;
-        private const float _secondsToStartTip = 3f;
-        private Vector3 _initialScale;
+        private Vector3 _initialScale = Vector3.one;
         private Tween tweenTip;
 
         public int Column { get => _column; private set { } }
@@ -24,17 +23,13 @@ namespace FruitItem
         public ItemMovedEvent OnItemMoved = new();
         public SelectedFruit onSelectedFruit = new();
 
-        private void OnEnable()
-        {
-            _initialScale = transform.localScale;
-        }
 
         public void EndTipRoutine()
         {
             if (tweenTip.IsActive())
             {
-                transform.localScale = _initialScale;
                 tweenTip.Kill();
+                transform.localScale = _initialScale;
             }
         }
 

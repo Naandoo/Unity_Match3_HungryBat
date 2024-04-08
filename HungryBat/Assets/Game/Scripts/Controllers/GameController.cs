@@ -2,7 +2,7 @@ using System.Collections;
 using Board;
 using Game.UI;
 using LevelData;
-using ScriptableVariable;
+using ScriptableVariables;
 using UnityEngine;
 using Skills;
 
@@ -19,6 +19,7 @@ namespace Controllers
         [SerializeField] private BoolVariable _isLevelFinished;
         [SerializeField] private Skill _bomb, _potion, _lightning;
         private Level _currentLevel;
+        private bool _ableToRestartLevel = true;
 
         private void Awake()
         {
@@ -40,15 +41,20 @@ namespace Controllers
 
         public IEnumerator InitiateLevel()
         {
-            _isLevelFinished.Value = false;
-            _boardGrid.ClearBoard();
-            _currentLevel = _levelManager.GetCurrentLevel();
-            _levelManager.UpdateLevelScriptable(_currentLevel);
-            _gameManager.CopyLevelGoals(_currentLevel);
-            _levelUIData.UpdateUILevelData();
-            InitializeLevelSkills();
-            yield return StartCoroutine(_uiAnimation.InitializeLevelAnimations());
-            _boardGrid.CreateBoard();
+            if (_ableToRestartLevel)
+            {
+                _ableToRestartLevel = false;
+                _isLevelFinished.Value = false;
+                _boardGrid.ClearBoard();
+                _currentLevel = _levelManager.GetCurrentLevel();
+                _levelManager.UpdateLevelScriptable(_currentLevel);
+                _gameManager.CopyLevelGoals(_currentLevel);
+                _levelUIData.UpdateUILevelData();
+                InitializeLevelSkills();
+                yield return StartCoroutine(_uiAnimation.InitializeLevelUI());
+                _boardGrid.CreateBoard();
+                _ableToRestartLevel = true;
+            }
         }
 
         public void InitiateNextLevel()

@@ -2,9 +2,8 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Object = UnityEngine.Object;
-using UnityEngine.SceneManagement;
 
-namespace ScriptableVariable
+namespace ScriptableVariables
 {
     [Serializable]
     public class ScriptableVariable<T> : ScriptableObject
@@ -13,7 +12,6 @@ namespace ScriptableVariable
         [SerializeField] protected T _initialValue;
         private readonly List<Object> _listenersObjects = new List<Object>();
         private Action<T> _onValueChanged;
-        [SerializeField] private ResetType _resetOn = ResetType.ApplicationStarts;
         public event Action<T> OnValueChanged
         {
             add
@@ -56,26 +54,6 @@ namespace ScriptableVariable
             PreviousValue = _value;
         }
 
-        private void OnEnable()
-        {
-            if (_resetOn == ResetType.SceneLoaded)
-                SceneManager.sceneLoaded += OnSceneLoaded;
-
-            Reset();
-        }
-
-        private void OnDisable()
-        {
-            if (_resetOn == ResetType.SceneLoaded)
-                SceneManager.sceneLoaded -= OnSceneLoaded;
-        }
-
-        protected virtual void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-        {
-            if (mode == LoadSceneMode.Single)
-                Reset();
-        }
-
         public void Reset()
         {
             _listenersObjects.Clear();
@@ -95,11 +73,5 @@ namespace ScriptableVariable
             ValueChanged();
         }
 #endif
-    }
-
-    public enum ResetType
-    {
-        SceneLoaded,
-        ApplicationStarts,
     }
 }

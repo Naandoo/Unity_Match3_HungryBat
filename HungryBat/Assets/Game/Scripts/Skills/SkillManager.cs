@@ -1,11 +1,10 @@
 using System.Collections;
-using System.Collections.Generic;
 using Board;
-using DG.Tweening;
 using FruitItem;
-using ScriptableVariable;
+using ScriptableVariables;
 using TMPro;
 using UnityEngine;
+using Controllers;
 
 namespace Skills
 {
@@ -56,6 +55,7 @@ namespace Skills
             _skillUI.enabled = false;
 
             skillState = false;
+            selectedSkill.CurrentAmount.Value--;
 
             yield return StartCoroutine(ExecuteSkill(selectedSkill, fruit));
             StartCoroutine(_boardSorter.SortBoard());

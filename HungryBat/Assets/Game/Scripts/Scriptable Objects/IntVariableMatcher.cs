@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace ScriptableVariable
+namespace ScriptableVariables
 {
     public class IntVariableMatcher : MonoBehaviour
     {

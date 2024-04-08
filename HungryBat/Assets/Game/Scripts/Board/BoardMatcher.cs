@@ -2,8 +2,9 @@ using UnityEngine;
 using FruitItem;
 using System.Collections.Generic;
 using System.Collections;
-using UnityEngine.Events;
-using ScriptableVariable;
+using ScriptableVariables;
+using Controllers;
+
 namespace Board
 {
     public class BoardMatcher : MonoBehaviour

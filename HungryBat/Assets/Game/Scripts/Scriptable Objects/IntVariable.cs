@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace ScriptableVariable
+namespace ScriptableVariables
 {
     [CreateAssetMenu(fileName = "IntVariable", menuName = "ScriptableObjects/IntVariable")]
     public class IntVariable : ScriptableVariable<int>

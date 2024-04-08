@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using FruitItem;
 using LevelData;
-using ScriptableVariable;
+using ScriptableVariables;
 using UnityEngine;
 
 namespace Controllers

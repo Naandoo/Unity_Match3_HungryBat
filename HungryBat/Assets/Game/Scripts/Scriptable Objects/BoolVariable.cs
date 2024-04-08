@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace ScriptableVariable
+namespace ScriptableVariables
 {
     [CreateAssetMenu(fileName = "BoolVariable", menuName = "ScriptableObjects/BoolVariable")]
     public class BoolVariable : ScriptableVariable<bool>

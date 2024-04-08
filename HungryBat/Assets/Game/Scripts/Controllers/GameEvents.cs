@@ -3,28 +3,31 @@ using UnityEngine;
 using UnityEngine.Events;
 using System.Collections.Generic;
 
-public class GameEvents : MonoBehaviour
+namespace Controllers
 {
-    private GameEvents() { }
-    public static GameEvents Instance { get; private set; }
-    public UnityEvent OnWinEvent, OnWinWithExtraMovements, OnLoseEvent;
-    public UnityEvent OnFruitMovedEvent;
-    public UnityEvent OnBoardFinishMovement;
-    public OnFruitsExploded OnFruitsExplodedEvent = new();
-
-    private void Awake()
+    public class GameEvents : MonoBehaviour
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            Instance = this;
-        }
+        private GameEvents() { }
+        public static GameEvents Instance { get; private set; }
+        public UnityEvent OnWinEvent, OnWinWithExtraMovements, OnLoseEvent;
+        public UnityEvent OnFruitMovedEvent;
+        public UnityEvent OnBoardFinishMovement;
+        public OnFruitsExploded OnFruitsExplodedEvent = new();
 
-        DontDestroyOnLoad(gameObject);
+        private void Awake()
+        {
+            if (Instance != null && Instance != this)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                Instance = this;
+            }
+
+            DontDestroyOnLoad(gameObject);
+        }
     }
-}
 
-public class OnFruitsExploded : UnityEvent<List<Fruit>> { }
+    public class OnFruitsExploded : UnityEvent<List<Fruit>> { }
+}

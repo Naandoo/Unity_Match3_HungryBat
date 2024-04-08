@@ -1,6 +1,6 @@
 using System.Collections;
 using FruitItem;
-using ScriptableVariable;
+using ScriptableVariables;
 using UnityEngine;
 
 namespace Skills
