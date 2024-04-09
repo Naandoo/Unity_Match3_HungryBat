@@ -9,7 +9,7 @@ namespace Board
         [SerializeField] private BoardGrid _boardGrid;
         [SerializeField] private BoardMatcher _boardMatcher;
 
-        public IEnumerator SortBoard()
+        public void SortBoard()
         {
             BoardState.Instance.SetState(State.Sorting);
 
@@ -35,7 +35,7 @@ namespace Board
 
             // TODO: Change the logic to wait for the movement and not a magic number.
             // TODO: Create the waitforseconds outside of the method to avoid unnecessary GC allocation.
-            yield return new WaitForSeconds(0.6f);
+            // yield return new WaitForSeconds(0.6f);
             _boardMatcher.TryMatchFruits(matchWithMovement: false);
         }
 

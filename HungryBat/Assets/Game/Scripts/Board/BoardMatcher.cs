@@ -78,7 +78,7 @@ namespace Board
                 return;
             }
 
-            StartCoroutine(_boardSorter.SortBoard());
+            _boardSorter.SortBoard();
         }
 
         public List<Fruit> GetAllMatchesInBoard()

@@ -42,7 +42,6 @@ namespace Skills
         {
             if (skill.CurrentAmount.Value > 0 && !_isLevelFinished.Value)
             {
-                BoardState.Instance.SetState(State.WaitingAction);
                 skillState = true;
                 UpdateSkillUI(selectedSkill: skill);
                 selectedSkill = skill;
@@ -58,7 +57,7 @@ namespace Skills
             selectedSkill.CurrentAmount.Value--;
 
             yield return StartCoroutine(ExecuteSkill(selectedSkill, fruit));
-            StartCoroutine(_boardSorter.SortBoard());
+            _boardSorter.SortBoard();
             _boardMatcher.TryMatchFruits(matchWithMovement: false);
 
             selectedSkill = null;
@@ -91,7 +90,7 @@ namespace Skills
             {
                 _moves.Value--;
                 yield return StartCoroutine(ExecuteSkill(_bomb, GetRandomFruit()));
-                yield return StartCoroutine(_boardSorter.SortBoard());
+                _boardSorter.SortBoard();
                 _boardMatcher.TryMatchFruits(matchWithMovement: false);
             }
 
