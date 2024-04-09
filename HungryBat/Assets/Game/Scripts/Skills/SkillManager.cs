@@ -57,7 +57,7 @@ namespace Skills
             selectedSkill.CurrentAmount.Value--;
 
             yield return StartCoroutine(ExecuteSkill(selectedSkill, fruit));
-            _boardSorter.SortBoard();
+            StartCoroutine(_boardSorter.SortBoard());
             _boardMatcher.TryMatchFruits(matchWithMovement: false);
 
             selectedSkill = null;
@@ -90,7 +90,7 @@ namespace Skills
             {
                 _moves.Value--;
                 yield return StartCoroutine(ExecuteSkill(_bomb, GetRandomFruit()));
-                _boardSorter.SortBoard();
+                StartCoroutine(_boardSorter.SortBoard());
                 _boardMatcher.TryMatchFruits(matchWithMovement: false);
             }
 

@@ -1,6 +1,7 @@
 using UnityEngine;
 using FruitItem;
 using System.Collections;
+using ScriptableVariables;
 
 namespace Board
 {
@@ -8,8 +9,15 @@ namespace Board
     {
         [SerializeField] private BoardGrid _boardGrid;
         [SerializeField] private BoardMatcher _boardMatcher;
+        [SerializeField] private FloatVariable _fruitMovementTime;
+        private WaitForSeconds secondsToMatch;
 
-        public void SortBoard()
+        private void Awake()
+        {
+            secondsToMatch = new(_fruitMovementTime.Value + 0.1f);
+        }
+
+        public IEnumerator SortBoard()
         {
             BoardState.Instance.SetState(State.Sorting);
 
@@ -33,9 +41,7 @@ namespace Board
                 FillEmptySpacesInBoard(column: i, emptyItemsInColumn);
             }
 
-            // TODO: Change the logic to wait for the movement and not a magic number.
-            // TODO: Create the waitforseconds outside of the method to avoid unnecessary GC allocation.
-            // yield return new WaitForSeconds(0.6f);
+            yield return secondsToMatch;
             _boardMatcher.TryMatchFruits(matchWithMovement: false);
         }
 

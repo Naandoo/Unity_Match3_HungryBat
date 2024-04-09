@@ -12,6 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e618c2e9491b287469ab84099ddf229c, type: 3}
   m_Name: Fruit Movement Duration
   m_EditorClassIdentifier: 
-  _value: 0
-  _initialValue: 0
-  _resetOn: 0
+  _value: 0.3
+  _initialValue: 0.3

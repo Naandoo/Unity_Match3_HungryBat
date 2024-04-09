@@ -1464,6 +1464,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _boardGrid: {fileID: 455438041}
   _boardMatcher: {fileID: 455438045}
+  _fruitMovementTime: {fileID: 11400000, guid: d17780e96eae719498254f4863de518a, type: 2}
 --- !u!114 &455438044
 MonoBehaviour:
   m_ObjectHideFlags: 0

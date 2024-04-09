@@ -3,16 +3,17 @@ using DG.Tweening;
 using UnityEngine.Events;
 using System.Collections;
 using Board;
+using ScriptableVariables;
 
 namespace FruitItem
 {
     public class Fruit : MonoBehaviour
     {
         [SerializeField] private SpriteRenderer _spriteRenderer;
+        [SerializeField] private FloatVariable _fruitMovementTime;
         private FruitID _fruitID;
         private int _column;
         private int _row;
-        private const float _moveDuration = 0.3f;
         private Vector3 _initialScale = Vector3.one;
         private Tween tweenTip;
 
@@ -51,7 +52,7 @@ namespace FruitItem
 
         private IEnumerator Move(Vector3 itemPosition)
         {
-            Tween moveTween = transform.DOMove(itemPosition, _moveDuration);
+            Tween moveTween = transform.DOMove(itemPosition, _fruitMovementTime.Value);
             yield return moveTween.WaitForCompletion();
         }
 
