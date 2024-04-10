@@ -3290,15 +3290,15 @@ MonoBehaviour:
   _fruitColorDictionary:
     fruitColors:
     - FruitType: 0
-      Color: {r: 1, g: 0, b: 0, a: 0.49019608}
+      Color: {r: 0.9622642, g: 0.24964403, b: 0.24964403, a: 0.49019608}
     - FruitType: 1
       Color: {r: 1, g: 0.9149882, b: 0, a: 0.49019608}
     - FruitType: 2
-      Color: {r: 0.19423497, g: 0.16019939, b: 0.754717, a: 0.49019608}
+      Color: {r: 0, g: 0.54709053, b: 0.9716981, a: 0.49019608}
     - FruitType: 3
-      Color: {r: 0.5092134, g: 0.1251335, b: 0.7169812, a: 0.49019608}
+      Color: {r: 0.64689815, g: 0.39520293, b: 0.7830189, a: 0.49019608}
     - FruitType: 4
-      Color: {r: 0.8113208, g: 0.46222734, b: 0.13394445, a: 0.49019608}
+      Color: {r: 0.9811321, g: 0.6097448, b: 0.26379493, a: 0.49019608}
     - FruitType: 5
       Color: {r: 0.43054944, g: 0.9056604, b: 0.38020647, a: 0.49019608}
     - FruitType: 6
@@ -3332,6 +3332,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _audioSource: {fileID: 1526224563}
+  _soundDelay: 0.1
+  _pitchDelay: 0.4
+  _pitchIncreaseAmount: 0.1
 --- !u!82 &1526224563
 AudioSource:
   m_ObjectHideFlags: 0

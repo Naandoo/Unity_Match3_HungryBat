@@ -58,7 +58,7 @@ namespace FruitItem
 
         public void Vanish()
         {
-            FruitEffects.Instance.PlayExplosionFeedback(transform.position, FruitID.FruitType);
+            FruitEffects.Instance.PlayExplosionParticle(transform.position, FruitID.FruitType);
             EndTipRoutine();
             OnItemVanish?.Invoke(_column, _row);
         }

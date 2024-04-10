@@ -2,6 +2,7 @@ using UnityEngine;
 using FruitItem;
 using System.Collections.Generic;
 using System;
+using Controllers;
 
 public class FruitEffects : MonoBehaviour
 {
@@ -27,20 +28,34 @@ public class FruitEffects : MonoBehaviour
         InitializeVariables();
     }
 
+    private void Start()
+    {
+        GameEvents.Instance.OnFruitsExplodedEvent.AddListener(PlayExplosionSound);
+    }
+
+    private void OnDestroy()
+    {
+        GameEvents.Instance.OnFruitsExplodedEvent.RemoveListener(PlayExplosionSound);
+    }
+
     private void InitializeVariables()
     {
         _fruitColorDictionary.InitializeDictionary();
         _explosionEffectPool = new(_explosionEffectPrefab, 64, this.transform);
     }
 
-    public void PlayExplosionFeedback(Vector3 position, FruitType fruitType)
+    public void PlayExplosionParticle(Vector3 position, FruitType fruitType)
     {
         ParticleSystem explosionFeedback = _explosionEffectPool.Get();
         explosionFeedback.transform.position = position;
         UpdateParticleColor(explosionFeedback, fruitType);
 
         explosionFeedback.Play();
-        GameSounds.Instance.OnValidPlay(_explosionFruitSFX);
+    }
+
+    private void PlayExplosionSound(List<Fruit> fruits)
+    {
+        GameSounds.Instance.OnValidPlay(_explosionFruitSFX, enablePitchVariation: true);
     }
 
     private void UpdateParticleColor(ParticleSystem particleSystem, FruitType fruitType)
