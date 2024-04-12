@@ -4,6 +4,7 @@ using UnityEngine.Events;
 using System.Collections;
 using Board;
 using ScriptableVariables;
+using Effects;
 
 namespace FruitItem
 {

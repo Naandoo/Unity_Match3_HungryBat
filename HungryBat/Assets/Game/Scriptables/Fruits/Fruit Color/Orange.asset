@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FruitType: 4
   Color: {r: 1, g: 0.49685895, b: 0, a: 0.49019608}
-  EssenceColor: {r: 1, g: 0.49803922, b: 0, a: 1}
+  EssenceColor: {r: 0.6981132, g: 0.34768778, b: 0, a: 1}

@@ -1,10 +1,12 @@
 using UnityEngine;
-using FruitItem;
 using System.Collections.Generic;
 using System;
 using Controllers;
+using System.Collections;
+using FruitItem;
+using DG.Tweening;
 
-namespace FruitItem
+namespace Effects
 {
     public class FruitEffects : MonoBehaviour
     {
@@ -13,6 +15,7 @@ namespace FruitItem
         [SerializeField] private FruitColorDictionary _fruitColorDictionary;
         [SerializeField] private AudioClip _explosionFruitSFX;
         [SerializeField] private Transform _particleCollector;
+        [SerializeField] private Transform _batTransform;
         private PoolSystem<ParticleSystem> _explosionEffectPool;
         private PoolSystem<ParticleSystem> _essenceEffectPool;
         private FruitEffects() { }
@@ -36,11 +39,13 @@ namespace FruitItem
         private void Start()
         {
             GameEvents.Instance.OnFruitsExplodedEvent.AddListener(PlayExplosionSound);
+            GameEvents.Instance.onFruitReachedBat.AddListener(BatAnimationOnFruitEaten);
         }
 
         private void OnDestroy()
         {
             GameEvents.Instance.OnFruitsExplodedEvent.RemoveListener(PlayExplosionSound);
+            GameEvents.Instance.onFruitReachedBat.RemoveListener(BatAnimationOnFruitEaten);
         }
 
         private void InitializeVariables()
@@ -68,8 +73,13 @@ namespace FruitItem
             Color essenceColor = _fruitColorDictionary.dictionary[fruitType].EssenceColor;
             Color mainColor = _fruitColorDictionary.dictionary[fruitType].Color;
 
-            ParticleSystem.MainModule main = essenceFeedback.main;
-            main.startColor = essenceColor;
+            ParticleSystem[] particleSystems = essenceFeedback.GetComponentsInChildren<ParticleSystem>();
+
+            foreach (ParticleSystem particle in particleSystems)
+            {
+                ParticleSystem.MainModule main = particle.main;
+                main.startColor = essenceColor;
+            }
 
             ParticleSystem.TrailModule trail = essenceFeedback.trails;
             trail.colorOverLifetime = new ParticleSystem.MinMaxGradient(mainColor);
@@ -78,6 +88,14 @@ namespace FruitItem
             ParticleSystem.TriggerModule triggerModule = essenceFeedback.trigger;
             triggerModule.AddCollider(_particleCollector);
             essenceFeedback.Play();
+            StartCoroutine(TriggerExternalForces(essenceFeedback));
+        }
+
+        private IEnumerator TriggerExternalForces(ParticleSystem particle)
+        {
+            yield return new WaitForSeconds(0.5f);
+            ParticleSystem.ExternalForcesModule externalForces = particle.externalForces;
+            externalForces.multiplier = 1;
         }
 
         private void PlayExplosionSound(List<Fruit> fruits)
@@ -96,6 +114,11 @@ namespace FruitItem
                 ParticleSystem.MainModule main = particle.main;
                 main.startColor = particleColor;
             }
+        }
+
+        private void BatAnimationOnFruitEaten()
+        {
+            _batTransform.DOShakePosition(0.5f, strength: 3);
         }
     }
 

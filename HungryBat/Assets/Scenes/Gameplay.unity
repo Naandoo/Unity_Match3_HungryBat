@@ -1704,9 +1704,9 @@ ParticleSystemForceField:
   m_Parameters:
     m_Shape: 0
     m_StartRange: 0
-    m_EndRange: 1550.6
+    m_EndRange: 2243
     m_Length: 1
-    m_GravityFocus: 1
+    m_GravityFocus: 0
     m_RotationRandomness: {x: 0, y: 0}
     m_DirectionCurveX:
       serializedVersion: 2
@@ -1870,7 +1870,7 @@ ParticleSystemForceField:
     m_GravityCurve:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 17
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -1885,13 +1885,13 @@ ParticleSystemForceField:
           inWeight: 0
           outWeight: 0
         - serializedVersion: 3
-          time: 7.0246906
-          value: 14.933587
-          inSlope: 2
-          outSlope: 2
+          time: 0.0025024414
+          value: 13.359253
+          inSlope: 22.517338
+          outSlope: 22.517338
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0
+          inWeight: 0.037041817
           outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
@@ -1923,7 +1923,7 @@ ParticleSystemForceField:
     m_RotationSpeedCurve:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 10
+      scalar: 0
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -2029,7 +2029,7 @@ ParticleSystemForceField:
     m_DragCurve:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 10
+      scalar: 0
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -2136,7 +2136,7 @@ ParticleSystemForceField:
     m_VectorFieldAttractionCurve:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 1
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -2186,8 +2186,8 @@ ParticleSystemForceField:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-    m_MultiplyDragByParticleSize: 0
-    m_MultiplyDragByParticleVelocity: 0
+    m_MultiplyDragByParticleSize: 1
+    m_MultiplyDragByParticleVelocity: 1
 --- !u!58 &679593656
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -2220,9 +2220,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -20.2, y: 0}
+  m_Offset: {x: -9, y: 17.1}
   serializedVersion: 2
-  m_Radius: 177.4
+  m_Radius: 61.1
 --- !u!1 &724524002
 GameObject:
   m_ObjectHideFlags: 0
@@ -3603,6 +3603,9 @@ MonoBehaviour:
   OnBoardFinishMovement:
     m_PersistentCalls:
       m_Calls: []
+  onFruitReachedBat:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1369777085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3943,6 +3946,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 611fa1093c256c249aff1cf186a477b3, type: 2}
   _explosionFruitSFX: {fileID: 8300000, guid: 1fcfd83e3d859db4585f34930d88477c, type: 3}
   _particleCollector: {fileID: 679593654}
+  _batTransform: {fileID: 1496481774}
 --- !u!4 &1526224561
 Transform:
   m_ObjectHideFlags: 0

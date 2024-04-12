@@ -13,6 +13,7 @@ namespace Controllers
         public UnityEvent OnFruitMovedEvent;
         public UnityEvent OnBoardFinishMovement;
         public OnFruitsExploded OnFruitsExplodedEvent = new();
+        public UnityEvent onFruitReachedBat;
 
         private void Awake()
         {

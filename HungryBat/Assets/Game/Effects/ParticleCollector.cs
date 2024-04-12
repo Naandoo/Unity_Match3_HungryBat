@@ -1,22 +1,37 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using DG.Tweening;
+using Controllers;
 
-public class ParticleCollector : MonoBehaviour
+namespace Effects
 {
-    [SerializeField] ParticleSystem particle;
-    private List<ParticleSystem.Particle> particles = new();
-
-    private void OnParticleTrigger()
+    public class ParticleCollector : MonoBehaviour
     {
-        int triggeredParticles = particle.GetTriggerParticles(ParticleSystemTriggerEventType.Enter, particles);
+        [SerializeField] private ParticleSystem _particle;
+        [SerializeField] private ParticleSystem _ringParticle;
 
-        for (int i = 0; i < triggeredParticles; i++)
+        private List<ParticleSystem.Particle> _particles = new();
+
+        private void OnParticleTrigger()
         {
-            ParticleSystem.Particle newParticle = particles[i];
-            newParticle.remainingLifetime = 0;
-            particles[i] = newParticle;
-        }
+            int triggeredParticles = _particle.GetTriggerParticles(ParticleSystemTriggerEventType.Enter, _particles);
 
-        particle.SetTriggerParticles(ParticleSystemTriggerEventType.Enter, particles);
+            for (int i = 0; i < triggeredParticles; i++)
+            {
+                ParticleSystem.Particle newParticle = _particles[i];
+                ParticleSystem.ExternalForcesModule externalForces = _particle.externalForces;
+                externalForces.multiplier = 0;
+                newParticle.remainingLifetime = 0;
+                _particles[i] = newParticle;
+
+                _ringParticle.transform.position = newParticle.position;
+                _ringParticle.Play();
+            }
+
+            _particle.SetTriggerParticles(ParticleSystemTriggerEventType.Enter, _particles);
+
+            GameEvents.Instance.onFruitReachedBat.Invoke();
+        }
     }
 }
