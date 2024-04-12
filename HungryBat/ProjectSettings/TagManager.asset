@@ -50,9 +50,12 @@ TagManager:
   - name: Fruits
     uniqueID: 1628530307
     locked: 0
-  - name: UI
-    uniqueID: 1961707165
+  - name: Skill Objects
+    uniqueID: 1167810739
     locked: 0
   - name: Particles
     uniqueID: 2024906231
+    locked: 0
+  - name: UI
+    uniqueID: 1961707165
     locked: 0
