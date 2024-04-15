@@ -15,3 +15,4 @@ MonoBehaviour:
   Name: Lightning
   CurrentAmount: {fileID: 11400000, guid: 2f7e6addade86e1438ff0ab9e291b69d, type: 2}
   Description: Strike every single fruit on the board that matches the selected fruit.
+  _thunderboltObject: {fileID: -1370431688669914364, guid: 818b672e5cb9f084a8ed1362833981fd, type: 3}

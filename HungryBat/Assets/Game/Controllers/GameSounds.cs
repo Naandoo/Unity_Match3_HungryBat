@@ -3,7 +3,8 @@ using System.Collections.Generic;
 
 public class GameSounds : MonoBehaviour
 {
-    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private AudioSource _audioSourceWithoutPitchVariation;
+    [SerializeField] private AudioSource _audioSourceWithPitchVariation;
     private Dictionary<AudioClip, float> _soundsTimeRegister = new();
     private Dictionary<AudioClip, float> _soundsPitchRegister = new();
     [SerializeField] private float _soundDelay;
@@ -28,6 +29,8 @@ public class GameSounds : MonoBehaviour
 
     public void OnValidPlay(AudioClip sound, bool enablePitchVariation)
     {
+        AudioSource audioSource;
+
         if (!enablePitchVariation)
         {
             if (_soundsTimeRegister.ContainsKey(sound))
@@ -36,13 +39,15 @@ public class GameSounds : MonoBehaviour
                 else return;
             }
             else _soundsTimeRegister.Add(key: sound, value: Time.time);
+            audioSource = _audioSourceWithoutPitchVariation;
         }
         else
         {
             UpdatePitch(sound);
+            audioSource = _audioSourceWithPitchVariation;
         }
 
-        _audioSource.PlayOneShot(sound);
+        audioSource.PlayOneShot(sound);
     }
 
     private bool WithinPlayableInterval(AudioClip sound) => _soundsTimeRegister[sound] + _soundDelay < Time.time;
@@ -53,7 +58,7 @@ public class GameSounds : MonoBehaviour
         {
             if (WithinPitchVariationInterval(sound))
             {
-                _audioSource.pitch += _pitchIncreaseAmount;
+                _audioSourceWithPitchVariation.pitch += _pitchIncreaseAmount;
             }
             else NormalizePitch();
             _soundsPitchRegister[sound] = Time.time;
@@ -66,5 +71,5 @@ public class GameSounds : MonoBehaviour
     }
 
     private bool WithinPitchVariationInterval(AudioClip sound) => Time.time - _soundsPitchRegister[sound] <= _pitchDelay;
-    private void NormalizePitch() => _audioSource.pitch = 1;
+    private void NormalizePitch() => _audioSourceWithPitchVariation.pitch = 1;
 }

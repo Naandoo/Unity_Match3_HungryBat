@@ -17,8 +17,11 @@ namespace Skills
         [SerializeField] private TMP_Text _skillNameUI;
         [SerializeField] private TMP_Text _skillDescriptionUI;
         [SerializeField] private Bomb _bomb;
+        [SerializeField] private Lightning _lightning;
+        [SerializeField] private Potion _potion;
         [SerializeField] private IntVariable _moves;
         [SerializeField] private BoolVariable _isLevelFinished;
+        [SerializeField] private Animator _lightningAnimator;
         private bool skillState;
         private Skill selectedSkill = null;
 
@@ -42,6 +45,7 @@ namespace Skills
         private void InitializeSkillPool()
         {
             _bomb.InitializePool(initialSize: 10, this.transform);
+            _lightning.InitializeSkillProperties(initialSize: 10, this.transform, _lightningAnimator);
         }
 
         public void TriggerSkillMode(Skill skill)
