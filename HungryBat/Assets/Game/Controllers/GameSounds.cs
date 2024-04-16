@@ -6,6 +6,7 @@ public class GameSounds : MonoBehaviour
 {
     [SerializeField] private AudioSource _audioSourceWithoutPitchVariation;
     [SerializeField] private AudioSource _audioSourceWithPitchVariation;
+    [SerializeField] private AudioSource _audioSourceBackgroundMusic;
     private Dictionary<AudioClip, float> _soundsTimeRegister = new();
     private Dictionary<AudioClip, float> _soundsPitchRegister = new();
     [SerializeField] private float _soundDelay;
@@ -75,4 +76,17 @@ public class GameSounds : MonoBehaviour
 
     private bool WithinPitchVariationInterval(AudioClip sound) => Time.time - _soundsPitchRegister[sound] <= _pitchDelay;
     private void NormalizePitch() => _audioSourceWithPitchVariation.pitch = 1;
+
+    public void TriggerSoundEnable()
+    {
+        _soundAvailable.Value = !_soundAvailable.Value;
+        TriggerAudioListeners(_soundAvailable.Value);
+    }
+
+    private void TriggerAudioListeners(bool value)
+    {
+        _audioSourceBackgroundMusic.mute = !value;
+        _audioSourceWithoutPitchVariation.mute = !value;
+        _audioSourceWithPitchVariation.mute = !value;
+    }
 }

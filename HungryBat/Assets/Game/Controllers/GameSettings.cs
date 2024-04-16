@@ -41,6 +41,5 @@ namespace Controllers
         }
 
         private void TriggerTimeScale() => Time.timeScale = _paused.Value ? 0 : 1;
-        public void TriggerSound() => _soundAvailable.Value = !_soundAvailable.Value;
     }
 }
