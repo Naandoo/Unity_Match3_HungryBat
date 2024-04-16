@@ -7,6 +7,7 @@ namespace Skills
         [SerializeField] private Animator _animator;
         [SerializeField] private Renderer _fruitFountainRenderer;
         [SerializeField] private AudioClip _appearPortalAudio, _throwItemsAudio, _appearPotionAudio, _popAudio;
+
         public void PlayEffect(Texture2D selectedFruitTexture)
         {
             _animator.Play("PotionEffect", 0, 0);

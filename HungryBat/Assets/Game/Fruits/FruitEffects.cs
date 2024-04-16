@@ -16,6 +16,8 @@ namespace Effects
         [SerializeField] private AudioClip _explosionFruitSFX;
         [SerializeField] private Transform _particleCollector;
         [SerializeField] private Transform _batTransform;
+        [SerializeField] private AudioClip _swapFruit;
+        [SerializeField] private AudioClip _undoSwapFruit;
         private PoolSystem<ParticleSystem> _explosionEffectPool;
         private PoolSystem<ParticleSystem> _essenceEffectPool;
         private FruitEffects() { }
@@ -120,6 +122,10 @@ namespace Effects
         {
             _batTransform.DOShakePosition(0.5f, strength: 3);
         }
+
+        public void PlaySwapSound() => GameSounds.Instance.OnValidPlay(_swapFruit, enablePitchVariation: false);
+        public void PlayUndoSwapSound() => GameSounds.Instance.OnValidPlay(_undoSwapFruit, enablePitchVariation: false);
+
     }
 }
 

@@ -2,6 +2,7 @@ using UnityEngine;
 using FruitItem;
 using System.Collections;
 using ScriptableVariables;
+using Effects;
 
 namespace Board
 {
@@ -127,6 +128,7 @@ namespace Board
             Fruit firstFruit = _boardGrid.BoardFruitArray[firstFruitPlacement.x, firstFruitPlacement.y];
             Fruit secondFruit = _boardGrid.BoardFruitArray[secondFruitPlacement.x, secondFruitPlacement.y];
 
+            FruitEffects.Instance.PlaySwapSound();
             StartCoroutine(UpdateFruitPosition(firstFruit, secondFruitPlacement.x, secondFruitPlacement.y));
             yield return StartCoroutine(UpdateFruitPosition(secondFruit, firstFruitPlacement.x, firstFruitPlacement.y));
         }

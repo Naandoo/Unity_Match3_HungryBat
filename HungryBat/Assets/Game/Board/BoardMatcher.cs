@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections;
 using ScriptableVariables;
 using Controllers;
+using Effects;
 
 namespace Board
 {
@@ -68,6 +69,7 @@ namespace Board
             else if (fruitsToMatch.Count <= 3 && matchWithMovement)
             {
                 StartCoroutine(SwapFruits(_swappedItemsPlacement[1], _swappedItemsPlacement[0]));
+                FruitEffects.Instance.PlayUndoSwapSound();
                 BoardState.Instance.SetState(State.Common);
                 return;
             }
