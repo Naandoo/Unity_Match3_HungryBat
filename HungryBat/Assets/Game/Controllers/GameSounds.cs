@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using ScriptableVariables;
 
 public class GameSounds : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class GameSounds : MonoBehaviour
     [SerializeField] private float _soundDelay;
     [SerializeField] private float _pitchDelay;
     [SerializeField] private float _pitchIncreaseAmount;
+    [SerializeField] private BoolVariable _soundAvailable;
     private GameSounds() { }
     public static GameSounds Instance { get; private set; }
 
@@ -25,6 +27,7 @@ public class GameSounds : MonoBehaviour
         }
 
         DontDestroyOnLoad(gameObject);
+        _soundAvailable.Value = true;
     }
 
     public void OnValidPlay(AudioClip sound, bool enablePitchVariation)

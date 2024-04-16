@@ -14,4 +14,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _value: 0
   _initialValue: 0
-  _resetOn: 1

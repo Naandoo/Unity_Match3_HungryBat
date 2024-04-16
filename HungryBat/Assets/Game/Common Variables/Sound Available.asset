@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 038744256df683c47bd3767d7f4caa69, type: 3}
   m_Name: Sound Available
   m_EditorClassIdentifier: 
-  _value: 0
-  _initialValue: 1
+  _value: 1
+  _initialValue: 0
