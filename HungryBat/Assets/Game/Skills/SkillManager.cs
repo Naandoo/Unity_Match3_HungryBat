@@ -22,6 +22,7 @@ namespace Skills
         [SerializeField] private IntVariable _moves;
         [SerializeField] private BoolVariable _isLevelFinished;
         [SerializeField] private Animator _lightningAnimator;
+        [SerializeField] private PotionEffectInstance _potionEffectInstance;
         private bool skillState;
         private Skill selectedSkill = null;
 
@@ -31,7 +32,7 @@ namespace Skills
             {
                 StartCoroutine(ReleaseBombsOnFlawlessWin());
             });
-            InitializeSkillPool();
+            InitializeSkillProperties();
         }
 
         private void OnDestroy()
@@ -42,10 +43,11 @@ namespace Skills
             });
         }
 
-        private void InitializeSkillPool()
+        private void InitializeSkillProperties()
         {
             _bomb.InitializePool(initialSize: 10, this.transform);
             _lightning.InitializeSkillProperties(initialSize: 10, this.transform, _lightningAnimator);
+            _potion.InitializeProperties(_potionEffectInstance);
         }
 
         public void TriggerSkillMode(Skill skill)

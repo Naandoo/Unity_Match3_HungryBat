@@ -121,19 +121,5 @@ namespace Effects
             _batTransform.DOShakePosition(0.5f, strength: 3);
         }
     }
-
-    [Serializable]
-    public class FruitColorDictionary
-    {
-        [SerializeField] FruitColor[] fruitColors;
-        public Dictionary<FruitType, FruitColor> dictionary = new();
-        public void InitializeDictionary()
-        {
-            foreach (FruitColor fruitColor in fruitColors)
-            {
-                dictionary.Add(fruitColor.FruitType, fruitColor);
-            }
-        }
-    }
 }
 

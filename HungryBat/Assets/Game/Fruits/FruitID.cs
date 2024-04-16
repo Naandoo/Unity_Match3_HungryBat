@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,5 +13,38 @@ namespace FruitItem
 
         public Sprite FruitSprite { get => _fruitSprite; private set { } }
         public FruitType FruitType { get => _fruitType; private set { } }
+    }
+
+    [Serializable]
+    public class FruitColorDictionary
+    {
+        [SerializeField] FruitColor[] fruitColors;
+        public Dictionary<FruitType, FruitColor> dictionary = new();
+        public void InitializeDictionary()
+        {
+            dictionary.Clear();
+
+            foreach (FruitColor fruitColor in fruitColors)
+            {
+                dictionary.Add(fruitColor.FruitType, fruitColor);
+            }
+        }
+    }
+
+    [Serializable]
+    public class FruitIdDictionary
+    {
+        [SerializeField] FruitID[] fruitIds;
+        public Dictionary<FruitType, FruitID> dictionary = new();
+
+        public void InitializeDictionary()
+        {
+            dictionary.Clear();
+
+            foreach (FruitID fruitID in fruitIds)
+            {
+                dictionary.Add(fruitID.FruitType, fruitID);
+            }
+        }
     }
 }

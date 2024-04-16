@@ -12,6 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 919f28cce56fcb744bf55e230fb45b89, type: 3}
   m_Name: Potion Current Amount
   m_EditorClassIdentifier: 
-  _value: 1
-  _initialValue: 0
-  _resetOn: 1
+  _value: 11
+  _initialValue: 19

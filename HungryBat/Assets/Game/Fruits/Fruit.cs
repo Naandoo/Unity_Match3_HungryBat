@@ -77,4 +77,6 @@ namespace FruitItem
     public class ItemMovedEvent : UnityEvent<int, int, Direction> { }
 
     public class SelectedFruit : UnityEvent<Fruit> { }
+
 }
+
