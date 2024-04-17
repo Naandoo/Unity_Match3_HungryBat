@@ -13,6 +13,7 @@ public class GameSounds : MonoBehaviour
     [SerializeField] private float _pitchDelay;
     [SerializeField] private float _pitchIncreaseAmount;
     [SerializeField] private BoolVariable _soundAvailable;
+    [SerializeField] private AudioClip _defaultBackgroundMusic;
     private GameSounds() { }
     public static GameSounds Instance { get; private set; }
 
@@ -88,5 +89,17 @@ public class GameSounds : MonoBehaviour
         _audioSourceBackgroundMusic.mute = !value;
         _audioSourceWithoutPitchVariation.mute = !value;
         _audioSourceWithPitchVariation.mute = !value;
+    }
+
+    public void SwitchBackgroundMusic(AudioClip audioClip, bool loopEnabled)
+    {
+        _audioSourceBackgroundMusic.clip = audioClip;
+        _audioSourceBackgroundMusic.loop = loopEnabled;
+        _audioSourceBackgroundMusic.Play();
+    }
+
+    public void PlayDefaultBackgroundMusic()
+    {
+        SwitchBackgroundMusic(audioClip: _defaultBackgroundMusic, loopEnabled: true);
     }
 }

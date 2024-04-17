@@ -51,6 +51,7 @@ namespace Controllers
                 _gameManager.CopyLevelGoals(_currentLevel);
                 _levelUIData.UpdateUILevelData();
                 InitializeLevelSkills();
+                GameSounds.Instance.PlayDefaultBackgroundMusic();
                 yield return StartCoroutine(_uiAnimation.InitializeLevelUI());
                 _boardGrid.CreateBoard();
                 _ableToRestartLevel = true;

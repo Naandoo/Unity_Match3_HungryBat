@@ -19,13 +19,11 @@ namespace Game.UI
         [SerializeField] private Transform _soundToggle;
         [SerializeField] private BoolVariable _soundAvailable;
         [SerializeField] private Button _restartButton;
-        private Vector3 _soundToggleInitialPosition;
 
         public IEnumerator InitializeLevelUI()
         {
             ResetStarsTransform();
             ResetSlider();
-            // AnimateSoundToggle();
             _restartButton.interactable = false;
 
             Sequence sequence = DOTween.Sequence();
@@ -51,11 +49,6 @@ namespace Game.UI
 
         private void ResetSlider() => _starSlider.value = 0f;
 
-        private void SetToggleInitialPosition()
-        {
-            _soundToggleInitialPosition = Vector3.zero;
-
-        }
         private Tween AnimateMovesAppearing()
         {
             Vector3 finalPosition = _moves.localPosition;
