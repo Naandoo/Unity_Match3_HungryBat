@@ -4,7 +4,7 @@ using Controllers;
 using ScriptableVariables;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+
 namespace Game.UI
 {
     public class VictoryPopupFeedbacks : MonoBehaviour
