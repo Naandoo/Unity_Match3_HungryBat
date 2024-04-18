@@ -23,6 +23,5 @@ namespace Skills
         public void PlayThrowItems() => GameSounds.Instance.OnValidPlay(_throwItemsAudio, enablePitchVariation: false);
         public void PlayAppearPotion() => GameSounds.Instance.OnValidPlay(_appearPotionAudio, enablePitchVariation: false);
         public void PlayPop() => GameSounds.Instance.OnValidPlay(_popAudio, enablePitchVariation: false);
-
     }
 }

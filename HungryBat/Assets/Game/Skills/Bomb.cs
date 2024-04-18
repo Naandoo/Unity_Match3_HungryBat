@@ -3,7 +3,6 @@ using UnityEngine;
 using FruitItem;
 using System.Collections.Generic;
 using Controllers;
-using Unity.VisualScripting;
 
 namespace Skills
 {

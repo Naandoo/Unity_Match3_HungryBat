@@ -3,8 +3,6 @@ using UnityEngine.Tilemaps;
 using FruitItem;
 using ScriptableVariables;
 using System.Collections.Generic;
-using Toolbox;
-using System.Collections;
 
 namespace Board
 {

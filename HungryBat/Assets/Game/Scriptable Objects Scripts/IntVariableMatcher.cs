@@ -10,7 +10,7 @@ namespace ScriptableVariables
         [SerializeField] private MatchRule comparisonRule;
         [SerializeField] private UnityEvent _onMatch, _onMismatch;
 
-        public void onEnable()
+        public void OnEnable()
         {
             _valueToCompare.OnValueChanged += CompareValue;
             CompareValue(_valueToCompare.Value);
@@ -26,19 +26,19 @@ namespace ScriptableVariables
             switch (comparisonRule)
             {
                 case MatchRule.Smaller:
-                    isMatch = (value < _referenceAmount);
+                    isMatch = value < _referenceAmount;
                     break;
                 case MatchRule.SmallerOrEqual:
-                    isMatch = (value <= _referenceAmount);
+                    isMatch = value <= _referenceAmount;
                     break;
                 case MatchRule.Equal:
-                    isMatch = (value == _referenceAmount);
+                    isMatch = value == _referenceAmount;
                     break;
                 case MatchRule.EqualOrBigger:
-                    isMatch = (value >= _referenceAmount);
+                    isMatch = value >= _referenceAmount;
                     break;
                 case MatchRule.Bigger:
-                    isMatch = (value > _referenceAmount);
+                    isMatch = value > _referenceAmount;
                     break;
             }
 

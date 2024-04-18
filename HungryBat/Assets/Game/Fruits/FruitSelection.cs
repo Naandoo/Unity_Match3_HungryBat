@@ -1,6 +1,5 @@
 using UnityEngine;
 using ScriptableVariables;
-using UnityEngine.Events;
 using Board;
 
 namespace FruitItem
@@ -112,6 +111,5 @@ namespace FruitItem
 
             return Direction.Undefined;
         }
-
     }
 }

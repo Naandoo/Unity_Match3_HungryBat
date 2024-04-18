@@ -38,5 +38,4 @@ namespace FruitItem
         Right,
         Undefined,
     }
-
 }

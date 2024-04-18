@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections.Generic;
-using System;
 using Controllers;
 using System.Collections;
 using FruitItem;
@@ -125,7 +124,6 @@ namespace Effects
 
         public void PlaySwapSound() => GameSounds.Instance.OnValidPlay(_swapFruit, enablePitchVariation: false);
         public void PlayUndoSwapSound() => GameSounds.Instance.OnValidPlay(_undoSwapFruit, enablePitchVariation: false);
-
     }
 }
 

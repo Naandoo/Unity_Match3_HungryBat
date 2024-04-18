@@ -1,7 +1,6 @@
 using UnityEngine;
 using FruitItem;
 using DG.Tweening;
-using LevelData;
 using System.Collections.Generic;
 
 namespace Board

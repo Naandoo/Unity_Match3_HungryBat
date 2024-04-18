@@ -87,7 +87,6 @@ namespace Board
         {
             List<Fruit> fruitsToMatch = new();
 
-            //TODO: Check the impact of this algorithm in performance and consider apply changes
             for (int i = 0; i < _boardColumns; i++)
             {
                 for (int j = 0; j < _boardRows; j++)
