@@ -5,7 +5,7 @@ using ScriptableVariables;
 using TMPro;
 using UnityEngine;
 using Controllers;
-
+using DG.Tweening;
 namespace Skills
 {
     public class SkillManager : MonoBehaviour
@@ -23,6 +23,7 @@ namespace Skills
         [SerializeField] private BoolVariable _isLevelFinished;
         [SerializeField] private Animator _lightningAnimator;
         [SerializeField] private PotionEffectInstance _potionEffectInstance;
+        [SerializeField] private PopupHandler _popupHandler;
         private bool skillState;
         private Skill selectedSkill = null;
 
@@ -63,7 +64,7 @@ namespace Skills
         public IEnumerator CheckSkillState(Fruit fruit)
         {
             if (!skillState) yield break;
-            _skillUI.enabled = false;
+            DisableSkillCanvas();
 
             skillState = false;
             selectedSkill.CurrentAmount.Value--;
@@ -83,14 +84,14 @@ namespace Skills
 
         private void UpdateSkillUI(Skill selectedSkill)
         {
-            _skillUI.enabled = true;
+            EnableSkillCanvas();
             _skillNameUI.text = selectedSkill.Name;
             _skillDescriptionUI.text = selectedSkill.Description;
         }
 
         public void CancelSkillUse()
         {
-            _skillUI.enabled = false;
+            DisableSkillCanvas();
             skillState = false;
             selectedSkill = null;
         }
@@ -123,5 +124,26 @@ namespace Skills
             }
         }
 
+        private void EnableSkillCanvas()
+        {
+            Tween tween = _skillUI.transform.DOScale(Vector3.one, 0.5f)
+            .SetEase(Ease.OutBack)
+            .SetUpdate(isIndependentUpdate: true)
+            .OnStart(() =>
+            {
+                _skillUI.enabled = true;
+            });
+        }
+
+        private void DisableSkillCanvas()
+        {
+            Tween tween = _skillUI.transform.DOScale(Vector3.zero, 0.25f)
+            .SetEase(Ease.InBack)
+            .SetUpdate(isIndependentUpdate: true)
+            .OnComplete(() =>
+            {
+                _skillUI.enabled = false;
+            });
+        }
     }
 }
