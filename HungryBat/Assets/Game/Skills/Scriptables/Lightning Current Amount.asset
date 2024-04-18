@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 919f28cce56fcb744bf55e230fb45b89, type: 3}
   m_Name: Lightning Current Amount
   m_EditorClassIdentifier: 
-  _value: 15
+  _value: 43
   _initialValue: 24

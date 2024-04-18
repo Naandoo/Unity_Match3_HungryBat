@@ -35,7 +35,19 @@ namespace Skills
             GameEvents.Instance.OnWinWithExtraMovements.AddListener(() =>
             {
                 StartCoroutine(ReleaseBombsOnFlawlessWin());
+                _popupHandler.DisablePopup(_skillUI);
             });
+
+            GameEvents.Instance.OnWinEvent.AddListener(() =>
+            {
+                _popupHandler.DisablePopup(_skillUI);
+            });
+
+            GameEvents.Instance.OnLoseEvent.AddListener(() =>
+            {
+                _popupHandler.DisablePopup(_skillUI);
+            });
+
             InitializeSkillProperties();
 
             _secondsToNextBomb = new(0.5f);
@@ -47,6 +59,17 @@ namespace Skills
             GameEvents.Instance.OnWinWithExtraMovements.RemoveListener(() =>
             {
                 StartCoroutine(ReleaseBombsOnFlawlessWin());
+                _popupHandler.DisablePopup(_skillUI);
+            });
+
+            GameEvents.Instance.OnWinEvent.RemoveListener(() =>
+            {
+                _popupHandler.DisablePopup(_skillUI);
+            });
+
+            GameEvents.Instance.OnLoseEvent.RemoveListener(() =>
+            {
+                _popupHandler.DisablePopup(_skillUI);
             });
         }
 

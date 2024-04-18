@@ -4769,7 +4769,7 @@ MonoBehaviour:
   _isLevelFinished: {fileID: 11400000, guid: f8bb3993e6b4ade408f32b8995dabc6d, type: 2}
   _lightningAnimator: {fileID: 1591204791}
   _potionEffectInstance: {fileID: 1121329766}
-  _popupHandler: {fileID: 0}
+  _popupHandler: {fileID: 1805342091}
 --- !u!4 &1369777080
 Transform:
   m_ObjectHideFlags: 0
