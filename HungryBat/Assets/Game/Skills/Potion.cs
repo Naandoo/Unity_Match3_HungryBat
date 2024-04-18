@@ -27,7 +27,7 @@ namespace Skills
             _potionEffectInstance.PlayEffect(fruitTexture);
             List<Fruit> randomFruits = GetRandomFruits(boardFruit, selectedFruit.FruitID);
 
-            yield return new WaitForSeconds(0.1f); //Wait to catch the duration of the correctly state after transition.
+            yield return new WaitForSeconds(0.1f); // This line is responsible for waiting to catch the duration of the correctly state after transition.
             _effectDuration = _potionEffectInstance.GetEffectDuration();
 
             yield return new WaitForSeconds(_effectDuration / 2);

@@ -4,6 +4,7 @@ using FruitItem;
 using LevelData;
 using ScriptableVariables;
 using UnityEngine;
+using Game.UI;
 
 namespace Controllers
 {
