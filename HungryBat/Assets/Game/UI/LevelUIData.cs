@@ -83,14 +83,21 @@ public class LevelUIData : MonoBehaviour
         float starPercentage = _score.Value;
         _UIAnimation.AnimateSliderIncreasing(starPercentage);
 
-        if (_starSlider.value >= _gameManager.FirstStarPercentage) _levelStars.Value = 1;
-
-        if (_starSlider.value >= _gameManager.SecondStarPercentage) _levelStars.Value = 2;
-
-        if (_starSlider.value >= _gameManager.ThirdStarPercentage) _levelStars.Value = 3;
-
-        if (_levelStars.Value >= 1)
+        if (_starSlider.value >= _gameManager.FirstStarPercentage)
         {
+            _levelStars.Value = 1;
+            _UIAnimation.AnimateStarAppearing(levelStar: _levelStars.Value);
+        }
+
+        if (_starSlider.value >= _gameManager.SecondStarPercentage)
+        {
+            _levelStars.Value = 2;
+            _UIAnimation.AnimateStarAppearing(levelStar: _levelStars.Value);
+        }
+
+        if (_starSlider.value >= _gameManager.ThirdStarPercentage)
+        {
+            _levelStars.Value = 3;
             _UIAnimation.AnimateStarAppearing(levelStar: _levelStars.Value);
         }
     }

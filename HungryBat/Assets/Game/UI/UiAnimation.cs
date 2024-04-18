@@ -16,6 +16,7 @@ namespace Game.UI
         [SerializeField] private Transform _score;
         [SerializeField] private Slider _starSlider;
         [SerializeField] private Image[] _stars;
+        [SerializeField] private Animator[] _starsProgressionAnimator;
         [SerializeField] private Transform _soundToggle;
         [SerializeField] private BoolVariable _soundAvailable;
         [SerializeField] private Button _restartButton;
@@ -130,10 +131,13 @@ namespace Game.UI
         public void AnimateStarAppearing(int levelStar)
         {
             int index = levelStar - 1;
-            if (_stars[index].transform.localScale == Vector3.one) return;
 
-            float scalingTime = 0.25f;
-            _stars[index].transform.DOScale(Vector3.one, scalingTime).SetEase(Ease.OutBounce);
+            if (_starsProgressionAnimator[index].enabled == false)
+            {
+                _starsProgressionAnimator[index].enabled = true;
+                _starsProgressionAnimator[index].Play("StarProgressionAppear", 0, 0);
+            }
+            else return;
         }
 
         public void AnimateSoundToggle()
