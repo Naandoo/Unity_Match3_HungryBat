@@ -65,7 +65,7 @@ namespace Board
             {
                 fruit.onSelectedFruit.AddListener((fruit) =>
                 {
-                    StartCoroutine(_skillManager.CheckSkillState(fruit));
+                    StartCoroutine(_skillManager.TriggerSkillOn(fruit));
                 });
             }
 

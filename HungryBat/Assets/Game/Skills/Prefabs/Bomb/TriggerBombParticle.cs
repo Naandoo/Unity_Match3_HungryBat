@@ -11,7 +11,7 @@ namespace Skills
         public void TriggerParticle()
         {
             _onBombExplode.Play();
-            GameSounds.Instance.OnValidPlay(_audioClip, enablePitchVariation: true);
+            GameSounds.Instance.OnValidPlay(_audioClip, enablePitchVariation: false);
         }
     }
 }

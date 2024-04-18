@@ -23,11 +23,11 @@ namespace Skills
             _thunderboltAnimationDuration = new(_lightningAnimator.GetCurrentAnimatorStateInfo(0).length);
         }
 
-        public override IEnumerator Execute(Fruit selectedFruit, Fruit[,] boardFruit)
+        public override IEnumerator Execute(Fruit selectedFruit, Fruit[,] boardFruit, Vector3 fruitPosition)
         {
             float thunderboltSpeed = 0.5f;
 
-            _lightningAnimator.transform.position = selectedFruit.transform.position;
+            _lightningAnimator.transform.position = fruitPosition;
             _lightningAnimator.Play("LightningAnimation", 0, 0);
 
             yield return _thunderboltAnimationDuration;

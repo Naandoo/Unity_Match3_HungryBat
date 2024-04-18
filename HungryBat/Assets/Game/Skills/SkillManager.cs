@@ -26,9 +26,10 @@ namespace Skills
         [SerializeField] private Animator _lightningAnimator;
         [SerializeField] private PotionEffectInstance _potionEffectInstance;
         [SerializeField] private PopupHandler _popupHandler;
-        private bool skillState;
-        private Skill selectedSkill = null;
-
+        private bool _skillState;
+        private Skill _selectedSkill = null;
+        private WaitForSeconds _secondsToNextBomb;
+        private WaitForSeconds _secondsToWinScreen;
         private void Start()
         {
             GameEvents.Instance.OnWinWithExtraMovements.AddListener(() =>
@@ -36,6 +37,9 @@ namespace Skills
                 StartCoroutine(ReleaseBombsOnFlawlessWin());
             });
             InitializeSkillProperties();
+
+            _secondsToNextBomb = new(0.5f);
+            _secondsToWinScreen = new(1f);
         }
 
         private void OnDestroy()
@@ -57,31 +61,30 @@ namespace Skills
         {
             if (skill.CurrentAmount.Value > 0 && !_isLevelFinished.Value)
             {
-                skillState = true;
+                _skillState = true;
                 UpdateSkillUI(selectedSkill: skill);
-                selectedSkill = skill;
+                _selectedSkill = skill;
             }
         }
 
-        public IEnumerator CheckSkillState(Fruit fruit)
+        public IEnumerator TriggerSkillOn(Fruit fruit)
         {
-            if (!skillState) yield break;
+            if (!_skillState) yield break;
             DisableSkillCanvas();
 
-            skillState = false;
-            selectedSkill.CurrentAmount.Value--;
+            _skillState = false;
+            _selectedSkill.CurrentAmount.Value--;
             BoardState.Instance.SetState(State.WaitingAction);
 
-            yield return StartCoroutine(ExecuteSkill(selectedSkill, fruit));
+            yield return StartCoroutine(ExecuteSkill(_selectedSkill, fruit));
             StartCoroutine(_boardSorter.SortBoard());
             _boardMatcher.TryMatchFruits(matchWithMovement: false);
-
-            selectedSkill = null;
         }
 
         private IEnumerator ExecuteSkill(Skill selectedSkill, Fruit selectedFruit)
         {
-            yield return StartCoroutine(selectedSkill.Execute(selectedFruit, _boardGrid.BoardFruitArray));
+            Vector3 fruitPosition = _boardGrid.GetFruitPosition(selectedFruit.Column, selectedFruit.Row);
+            yield return StartCoroutine(selectedSkill.Execute(selectedFruit, _boardGrid.BoardFruitArray, fruitPosition));
         }
 
         private void UpdateSkillUI(Skill selectedSkill)
@@ -94,8 +97,8 @@ namespace Skills
         public void CancelSkillUse()
         {
             DisableSkillCanvas();
-            skillState = false;
-            selectedSkill = null;
+            _skillState = false;
+            _selectedSkill = null;
         }
 
         private IEnumerator ReleaseBombsOnFlawlessWin()
@@ -104,12 +107,15 @@ namespace Skills
 
             for (int i = 0; i < remainingMoves; i++)
             {
+                yield return _secondsToNextBomb;
                 _moves.Value--;
-                yield return StartCoroutine(ExecuteSkill(_bomb, GetRandomFruit()));
+                StartCoroutine(ExecuteSkill(_bomb, GetRandomFruit()));
                 StartCoroutine(_boardSorter.SortBoard());
                 _boardMatcher.TryMatchFruits(matchWithMovement: false);
             }
 
+            yield return _secondsToWinScreen;
+            StartCoroutine(_boardSorter.SortBoard());
             GameEvents.Instance.OnWinEvent.Invoke();
         }
 

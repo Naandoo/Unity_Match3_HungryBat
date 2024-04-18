@@ -26,9 +26,9 @@ namespace Skills
             _halfEffectDuration = new(_effectDuration / 2);
         }
 
-        public override IEnumerator Execute(Fruit selectedFruit, Fruit[,] boardFruit)
+        public override IEnumerator Execute(Fruit selectedFruit, Fruit[,] boardFruit, Vector3 fruitPosition)
         {
-            _potionEffectInstance.transform.position = selectedFruit.transform.position;
+            _potionEffectInstance.transform.position = fruitPosition;
             Texture2D fruitTexture = _fruitIdDictionary.dictionary[selectedFruit.FruitID.FruitType].FruitSprite.texture;
             _potionEffectInstance.PlayEffect(fruitTexture);
             List<Fruit> randomFruits = GetRandomFruits(boardFruit, selectedFruit.FruitID);

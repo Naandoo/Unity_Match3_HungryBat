@@ -9311,7 +9311,7 @@ MonoBehaviour:
   _onCompleteSFX: {fileID: 8300000, guid: 3ad4b556c508a244d88a2f9eb16420fe, type: 3}
   _scorePoints: {fileID: 11400000, guid: 6af3665ee63be0f43bde3a55554f830b, type: 2}
   _textPoints: {fileID: 1059221448788415727}
-  _secondsDelayToIncreaseText: 0.0001
+  _secondsDelayToIncreaseText: 0.000001
   _secondsDelayToShowStars: 0.5
   _starsAnimator:
   - {fileID: 2675376036396260693}

@@ -10,6 +10,6 @@ namespace Skills
         public string Name;
         public IntVariable CurrentAmount;
         public string Description;
-        public abstract IEnumerator Execute(Fruit selectedFruit, Fruit[,] boardFruit);
+        public abstract IEnumerator Execute(Fruit selectedFruit, Fruit[,] boardFruit, Vector3 fruitPosition);
     }
 }

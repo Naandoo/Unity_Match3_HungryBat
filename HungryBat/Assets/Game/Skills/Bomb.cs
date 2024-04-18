@@ -25,10 +25,10 @@ namespace Skills
             _bombPool.Return(bomb);
         }
 
-        public override IEnumerator Execute(Fruit selectedFruit, Fruit[,] boardFruit)
+        public override IEnumerator Execute(Fruit selectedFruit, Fruit[,] boardFruit, Vector3 fruitPosition)
         {
             GameObject bomb = _bombPool.Get();
-            bomb.transform.position = selectedFruit.gameObject.transform.position;
+            bomb.transform.position = fruitPosition;
 
             Animator _bombAnimator = bomb.GetComponent<Animator>();
             while (_bombAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1)
