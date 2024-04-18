@@ -49,6 +49,7 @@ namespace Controllers
                 _currentLevel = _levelManager.GetCurrentLevel();
                 _levelManager.UpdateLevelScriptable(_currentLevel);
                 _gameManager.CopyLevelGoals(_currentLevel);
+                _gameManager.SetStarsGoalPercentage();
                 _levelUIData.UpdateUILevelData();
                 InitializeLevelSkills();
                 GameSounds.Instance.PlayDefaultBackgroundMusic();

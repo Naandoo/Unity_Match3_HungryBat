@@ -112,10 +112,11 @@ namespace Controllers
             float goalAmountSum = firstGoalCopy.Amount + secondGoalCopy.Amount + thirdGoalCopy.Amount;
             float minimumScore = goalAmountSum * GoalFruitPoints;
             float highestScore = minimumScore * 1.5f;
+
             return highestScore;
         }
 
-        private void SetStarsGoalPercentage()
+        public void SetStarsGoalPercentage()
         {
             FirstStarPercentage = GetHighestScore() * 0.2f;
             SecondStarPercentage = GetHighestScore() * 0.5f;

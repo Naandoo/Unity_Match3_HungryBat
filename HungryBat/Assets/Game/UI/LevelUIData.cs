@@ -84,19 +84,19 @@ namespace Game.UI
             float starPercentage = _score.Value;
             _UIAnimation.AnimateSliderIncreasing(starPercentage);
 
-            if (_starSlider.value >= _gameManager.FirstStarPercentage)
+            if (starPercentage >= _gameManager.FirstStarPercentage)
             {
                 _levelStars.Value = 1;
                 _UIAnimation.AnimateStarAppearing(levelStar: _levelStars.Value);
             }
 
-            if (_starSlider.value >= _gameManager.SecondStarPercentage)
+            if (starPercentage >= _gameManager.SecondStarPercentage)
             {
                 _levelStars.Value = 2;
                 _UIAnimation.AnimateStarAppearing(levelStar: _levelStars.Value);
             }
 
-            if (_starSlider.value >= _gameManager.ThirdStarPercentage)
+            if (starPercentage >= _gameManager.ThirdStarPercentage)
             {
                 _levelStars.Value = 3;
                 _UIAnimation.AnimateStarAppearing(levelStar: _levelStars.Value);
