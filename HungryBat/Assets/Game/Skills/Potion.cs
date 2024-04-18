@@ -13,11 +13,17 @@ namespace Skills
         private PotionEffectInstance _potionEffectInstance;
         [SerializeField] private FruitIdDictionary _fruitIdDictionary;
         private float _effectDuration;
+        private WaitForSeconds _stateTransitionDuration;
+        private WaitForSeconds _halfEffectDuration;
 
         public void InitializeProperties(PotionEffectInstance potionEffectInstance)
         {
             this._potionEffectInstance = potionEffectInstance;
             _fruitIdDictionary.InitializeDictionary();
+
+            _effectDuration = _potionEffectInstance.GetEffectDuration();
+            _stateTransitionDuration = new(0.1f);
+            _halfEffectDuration = new(_effectDuration / 2);
         }
 
         public override IEnumerator Execute(Fruit selectedFruit, Fruit[,] boardFruit)
@@ -27,13 +33,13 @@ namespace Skills
             _potionEffectInstance.PlayEffect(fruitTexture);
             List<Fruit> randomFruits = GetRandomFruits(boardFruit, selectedFruit.FruitID);
 
-            yield return new WaitForSeconds(0.1f); // This line is responsible for waiting to catch the duration of the correctly state after transition.
+            yield return _stateTransitionDuration; // This line is responsible for waiting to catch the duration of the correctly state after transition.
             _effectDuration = _potionEffectInstance.GetEffectDuration();
 
-            yield return new WaitForSeconds(_effectDuration / 2);
+            yield return _halfEffectDuration;
             ShakeFruitsScale(randomFruits);
 
-            yield return new WaitForSeconds(_effectDuration / 2);
+            yield return _halfEffectDuration;
             Clone(selectedFruit: selectedFruit, randomFruits);
         }
 

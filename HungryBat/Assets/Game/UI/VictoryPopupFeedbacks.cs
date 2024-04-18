@@ -16,6 +16,8 @@ namespace Game.UI
         [SerializeField] private float _secondsDelayToShowStars;
         [SerializeField] private Animator[] _starsAnimator;
         [SerializeField] private IntVariable _starsEarned;
+        private WaitForSeconds _secondsToIncreaseText;
+        private WaitForSeconds _secondsToShowStars;
 
         private void Start()
         {
@@ -23,6 +25,9 @@ namespace Game.UI
             {
                 TriggerFeedbacks();
             });
+
+            _secondsToIncreaseText = new(_secondsDelayToIncreaseText);
+            _secondsToShowStars = new(_secondsDelayToShowStars);
         }
 
         private void OnDestroy()
@@ -49,7 +54,7 @@ namespace Game.UI
             {
                 currentScore = Math.Min(currentScore + 5, _scorePoints.Value);
                 _textPoints.text = currentScore.ToString();
-                yield return new WaitForSeconds(_secondsDelayToIncreaseText);
+                yield return _secondsToIncreaseText;
             }
         }
 
@@ -60,7 +65,7 @@ namespace Game.UI
             {
                 _starsAnimator[i].enabled = true;
                 _starsAnimator[i].Play("StarAppearance", 0, 0);
-                yield return new WaitForSeconds(_secondsDelayToShowStars);
+                yield return _secondsToShowStars;
             }
         }
     }

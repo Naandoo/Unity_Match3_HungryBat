@@ -13,11 +13,14 @@ namespace Skills
         [SerializeField] private Thunderbolt _thunderboltObject;
         private PoolSystem<Thunderbolt> _thunderboltPool;
         private Animator _lightningAnimator;
+        private WaitForSeconds _thunderboltAnimationDuration;
 
         public void InitializeSkillProperties(int initialSize, Transform parent, Animator lightningAnimator)
         {
             _thunderboltPool = new(_thunderboltObject, initialSize, parent);
             this._lightningAnimator = lightningAnimator;
+
+            _thunderboltAnimationDuration = new(_lightningAnimator.GetCurrentAnimatorStateInfo(0).length);
         }
 
         public override IEnumerator Execute(Fruit selectedFruit, Fruit[,] boardFruit)
@@ -27,7 +30,7 @@ namespace Skills
             _lightningAnimator.transform.position = selectedFruit.transform.position;
             _lightningAnimator.Play("LightningAnimation", 0, 0);
 
-            yield return new WaitForSeconds(_lightningAnimator.GetCurrentAnimatorStateInfo(0).length);
+            yield return _thunderboltAnimationDuration;
 
             List<Fruit> equalFruits = GetAllFruitsOfType(selectedFruit, boardFruit);
             List<Thunderbolt> _invokedThunderbolts = new();

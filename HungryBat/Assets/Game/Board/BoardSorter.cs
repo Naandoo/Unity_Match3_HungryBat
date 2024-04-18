@@ -11,11 +11,11 @@ namespace Board
         [SerializeField] private BoardGrid _boardGrid;
         [SerializeField] private BoardMatcher _boardMatcher;
         [SerializeField] private FloatVariable _fruitMovementTime;
-        private WaitForSeconds secondsToMatch;
+        private WaitForSeconds _secondsToMatch;
 
         private void Awake()
         {
-            secondsToMatch = new(_fruitMovementTime.Value + 0.1f);
+            _secondsToMatch = new(_fruitMovementTime.Value + 0.1f);
         }
 
         public IEnumerator SortBoard()
@@ -42,7 +42,7 @@ namespace Board
                 FillEmptySpacesInBoard(column: i, emptyItemsInColumn);
             }
 
-            yield return secondsToMatch;
+            yield return _secondsToMatch;
             _boardMatcher.TryMatchFruits(matchWithMovement: false);
         }
 

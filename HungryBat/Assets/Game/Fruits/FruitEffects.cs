@@ -21,6 +21,7 @@ namespace Effects
         private PoolSystem<ParticleSystem> _essenceEffectPool;
         private FruitEffects() { }
         public static FruitEffects Instance { get; private set; }
+        private WaitForSeconds _secondsToTriggerExternalForces;
 
         private void Awake()
         {
@@ -35,6 +36,8 @@ namespace Effects
 
             DontDestroyOnLoad(gameObject);
             InitializeVariables();
+
+            _secondsToTriggerExternalForces = new(0.5f);
         }
 
         private void Start()
@@ -94,7 +97,7 @@ namespace Effects
 
         private IEnumerator TriggerExternalForces(ParticleSystem particle)
         {
-            yield return new WaitForSeconds(0.5f);
+            yield return _secondsToTriggerExternalForces;
             ParticleSystem.ExternalForcesModule externalForces = particle.externalForces;
             externalForces.multiplier = 1;
         }
