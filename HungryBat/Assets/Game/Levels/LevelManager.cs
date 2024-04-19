@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using FruitItem;
 using Board;
+using ScriptableVariables;
 
 namespace LevelData
 {

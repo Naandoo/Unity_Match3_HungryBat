@@ -19,10 +19,13 @@ namespace Game.UI
         [SerializeField] private IntVariable _score;
         [SerializeField] private IntVariable _levelStars;
         [SerializeField] private IntVariable _moves;
+        [SerializeField] private IntVariable _currentLevel;
         private Level currentLevel;
+
         public void UpdateUILevelData()
         {
             currentLevel = _levelManager.GetCurrentLevel();
+            _currentLevel.Value = currentLevel.Number;
             UpdateMoves(currentLevel);
             SetGoal(currentLevel);
             SetSliderMaxValue();

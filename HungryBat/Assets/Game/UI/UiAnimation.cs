@@ -9,6 +9,7 @@ namespace Game.UI
     public class UiAnimation : MonoBehaviour
     {
         [SerializeField] private Transform _moves;
+        [SerializeField] private Transform _level;
         [SerializeField] private Transform _bat;
         [SerializeField] private Transform _goal;
         [SerializeField] private Transform _skills;
@@ -29,6 +30,7 @@ namespace Game.UI
 
             Sequence sequence = DOTween.Sequence();
             sequence.Append(AnimateMovesAppearing());
+            sequence.Join(AnimateLevelAppearing());
             sequence.Append(AnimateStarProgressAppearing());
             sequence.Append(AnimateScoreAppearing());
             sequence.Append(AnimateBatAppearing());
@@ -60,6 +62,18 @@ namespace Game.UI
 
 
             return MoveToPosition(_moves, initialPosition, finalPosition, duration);
+        }
+
+        private Tween AnimateLevelAppearing()
+        {
+            Vector3 finalPosition = _level.localPosition;
+            int initialDistance = 200;
+
+            Vector3 initialPosition = new(finalPosition.x, finalPosition.y + initialDistance, finalPosition.z);
+            float duration = 0.5f;
+
+
+            return MoveToPosition(_level, initialPosition, finalPosition, duration);
         }
 
         private Tween AnimateStarProgressAppearing()
