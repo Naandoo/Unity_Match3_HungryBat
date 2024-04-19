@@ -29,6 +29,7 @@ MonoBehaviour:
   Obstacles:
     FirstFruitObstacle: {fileID: 11400000, guid: c3a1b3fe2c80efa45949aa3ed63dcae0, type: 2}
     SecondFruitObstacle: {fileID: 11400000, guid: 8bed8ef240fd8d3418075c107d119d29, type: 2}
+    ThirdFruitObstacle: {fileID: 11400000, guid: f5ae2f2b7ef607e4597e835e048fcf6c, type: 2}
   SkillsAvailability:
     BombsAmount: 1
     PotionAmount: 0

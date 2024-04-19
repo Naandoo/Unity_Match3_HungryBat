@@ -37,21 +37,16 @@ namespace Board
             }
             else
             {
-                int maxColumns = _boardGrid.Columns;
-                int maxRows = _boardGrid.Rows;
-
                 Fruit leftFruit = _boardGrid.GetFruit(Mathf.Max(fruit.Column - 1, 0), row);
                 Fruit belowFruit = _boardGrid.GetFruit(column, Mathf.Max(fruit.Row - 1, 0));
-                Fruit rightFruit = _boardGrid.GetFruit(Mathf.Min(fruit.Column + 1, maxColumns), row);
-                Fruit aboveFruit = _boardGrid.GetFruit(column, Mathf.Min(fruit.Row + 1, maxRows));
 
                 List<FruitID> fruitIDsExclusive = new();
                 fruitIDsExclusive.AddRange(_availableFruitIDs);
 
                 if (leftFruit != null) fruitIDsExclusive.Remove(leftFruit.FruitID);
                 if (belowFruit != null) fruitIDsExclusive.Remove(belowFruit.FruitID);
-                if (rightFruit != null) fruitIDsExclusive.Remove(rightFruit.FruitID);
-                if (aboveFruit != null) fruitIDsExclusive.Remove(aboveFruit.FruitID);
+                fruitIDsExclusive.Remove(fruit.FruitID);
+
 
                 int randomFruitID = Random.Range(0, fruitIDsExclusive.Count);
                 fruit.SetFruitID(fruitIDsExclusive[randomFruitID]);

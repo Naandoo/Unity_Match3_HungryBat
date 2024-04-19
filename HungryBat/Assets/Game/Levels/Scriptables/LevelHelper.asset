@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db3bb53d968cf3241b675df09fb49f3d, type: 3}
   m_Name: LevelHelper
   m_EditorClassIdentifier: 
-  levelNumber: 2
+  levelNumber: 1

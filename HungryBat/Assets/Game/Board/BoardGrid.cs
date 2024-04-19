@@ -47,12 +47,15 @@ namespace Board
         {
             List<Fruit> initialMatches = _boardMatcher.GetAllMatchesInBoard();
 
+            if (initialMatches.Count == 0) return;
+
             foreach (Fruit fruit in initialMatches)
             {
                 _boardFruitPool.ReleaseFruit(fruit);
                 GenerateBoardFruit(fruit.Column, fruit.Row, distinctNeighbor: true);
             }
 
+            RemoveInitialMatches();
         }
 
         public bool HasTileAt(int column, int row)

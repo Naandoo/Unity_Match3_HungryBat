@@ -25,7 +25,7 @@ namespace LevelData
     [Serializable]
     public struct Obstacles
     {
-        public FruitID FirstFruitObstacle, SecondFruitObstacle;
+        public FruitID FirstFruitObstacle, SecondFruitObstacle, ThirdFruitObstacle;
     }
 
     [Serializable]
