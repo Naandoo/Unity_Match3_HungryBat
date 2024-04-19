@@ -15,6 +15,7 @@ namespace Board
         [SerializeField] private BoardMatcher _boardMatcher;
         [SerializeField] private BoardAuthenticator _boardAuthenticator;
         [SerializeField] private BoardSorter _boardSorter;
+        [SerializeField] private Transform _maskTransform;
         private const float _fruitOffset = 0.25f;
         private Fruit[,] _boardFruitArray;
 
@@ -77,6 +78,7 @@ namespace Board
             Vector3 finalItemPosition = GetFruitPosition(column, row);
             Vector3 initialItemPosition = new(finalItemPosition.x, finalItemPosition.y + offset, finalItemPosition.z);
             fruit.transform.position = initialItemPosition;
+            fruit.transform.parent = _maskTransform;
 
             StartCoroutine(fruit.UpdatePosition(column, row, itemPosition: finalItemPosition));
             _boardListener.SubscribeEventsIn(fruit);

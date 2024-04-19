@@ -12,6 +12,7 @@ namespace FruitItem
     {
         [SerializeField] private SpriteRenderer _spriteRenderer;
         [SerializeField] private FloatVariable _fruitMovementTime;
+        [SerializeField] private SpriteMask _spriteMask;
         private FruitID _fruitID;
         private int _column;
         private int _row;
@@ -41,8 +42,11 @@ namespace FruitItem
             UpdateVisual();
         }
 
-        private void UpdateVisual() => _spriteRenderer.sprite = _fruitID.FruitSprite;
-
+        private void UpdateVisual()
+        {
+            _spriteRenderer.sprite = _fruitID.FruitSprite;
+            _spriteMask.sprite = _fruitID.FruitSprite;
+        }
         public IEnumerator UpdatePosition(int Column, int Row, Vector3 itemPosition)
         {
             _column = Column;
