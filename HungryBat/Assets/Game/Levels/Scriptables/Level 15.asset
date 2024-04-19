@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Level 15
   m_EditorClassIdentifier: 
   Number: 15
-  Moves: 40
+  Moves: 15
   FirstGoal:
     ID: 1
     Amount: 25

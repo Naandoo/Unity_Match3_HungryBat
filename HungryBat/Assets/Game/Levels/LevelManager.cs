@@ -51,7 +51,6 @@ namespace LevelData
                 level.ThirdGoal.FruitID,
                 level.Obstacles.FirstFruitObstacle,
                 level.Obstacles.SecondFruitObstacle,
-                level.Obstacles.ThirdFruitObstacle,
             };
 
             _boardFruitPool.SetAvailableFruits(availableFruitsInLevel);
