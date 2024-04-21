@@ -77,7 +77,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_IsActive
-    path: StunExplosion2
+    path: Star Effect Header
     classID: 1
     script: {fileID: 0}
     flags: 0
@@ -99,7 +99,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3970290892
+      path: 1219475396
       attribute: 2086281974
       script: {fileID: 0}
       typeID: 1
@@ -272,7 +272,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_IsActive
-    path: StunExplosion2
+    path: Star Effect Header
     classID: 1
     script: {fileID: 0}
     flags: 0

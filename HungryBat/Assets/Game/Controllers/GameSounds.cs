@@ -7,6 +7,7 @@ namespace Controllers
 
     public class GameSounds : MonoBehaviour
     {
+        [SerializeField] private List<AudioSource> _gameAudioSources;
         [SerializeField] private AudioSource _audioSourceWithoutPitchVariation;
         [SerializeField] private AudioSource _audioSourceWithPitchVariation;
         [SerializeField] private AudioSource _audioSourceBackgroundMusic;
@@ -89,9 +90,10 @@ namespace Controllers
 
         private void TriggerAudioListeners(bool value)
         {
-            _audioSourceBackgroundMusic.mute = !value;
-            _audioSourceWithoutPitchVariation.mute = !value;
-            _audioSourceWithPitchVariation.mute = !value;
+            foreach (AudioSource audioSource in _gameAudioSources)
+            {
+                audioSource.mute = !value;
+            }
         }
 
         public void SwitchBackgroundMusic(AudioClip audioClip, bool loopEnabled)
