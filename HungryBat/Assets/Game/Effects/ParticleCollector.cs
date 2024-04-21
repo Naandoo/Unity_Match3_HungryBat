@@ -11,6 +11,22 @@ namespace Effects
 
         private List<ParticleSystem.Particle> _particles = new();
 
+        private void Start()
+        {
+            GameEvents.Instance.OnInitiateLevel.AddListener(() =>
+            {
+                _particle.gameObject.SetActive(false);
+            });
+        }
+
+        private void OnDestroy()
+        {
+            GameEvents.Instance.OnInitiateLevel.RemoveListener(() =>
+            {
+                _particle.gameObject.SetActive(false);
+            });
+        }
+
         private void OnParticleTrigger()
         {
             int triggeredParticles = _particle.GetTriggerParticles(ParticleSystemTriggerEventType.Enter, _particles);

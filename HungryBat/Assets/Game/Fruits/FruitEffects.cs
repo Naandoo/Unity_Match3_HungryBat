@@ -72,6 +72,7 @@ namespace Effects
         public void PlayEssenceParticle(Vector3 position, FruitType fruitType)
         {
             ParticleSystem essenceFeedback = _essenceEffectPool.Get();
+            essenceFeedback.gameObject.SetActive(true);
             essenceFeedback.transform.position = position;
 
             Color essenceColor = _fruitColorDictionary.dictionary[fruitType].EssenceColor;
