@@ -15,13 +15,13 @@
   - Skills
     - [x] Bomb that explodes a square range around the selected fruit.
     - [x] Potion that transforms X fruits into the selected one.
-    - [x] Lightning strikes every single fruit on the board that matches the selected one.
+    - [x] Lightning strikes every fruit on the board that matches the selected one.
   - UI
     - [x] Responsive UI created for the WEBGL platform.
     - [x] UI Animations to improve satisfaction.
     - [X] Integration between the system and the UI.  
   - Level System
-    - [x] System that allows quick creation of levels based on inputs that represent the goals and obstacles.
+    - [x] System that allows quick level creation based on inputs representing the goals and obstacles.
     - [x] Skill availability per level to make it easier to create good game design.
   - Feedbacks
     - [x] Game Sounds.
@@ -35,7 +35,7 @@
 
 ## Functionalities ##
 - Asynchronous System
-  - [x] Utilized Coroutines to manage the system in an appropriate way to ensure the functionalities without losing performance.
+  - [x] Utilized Coroutines to manage the system appropriately to ensure the functionalities without losing performance.
 - Events
   - [x] Utilized events to reduce coupling and create nested code.
 - Particles
@@ -43,4 +43,7 @@
 - Animations
   - [x] Created animations using Unity's Animator component and DoTween system.
 
-## Gameplay Showcase ## 
+## [Gameplay Showcase](https://youtu.be/13on7-aTH4E?si=_RPKODWaCva8d3dM) ##
+https://github.com/Naandoo/Unity_Match3_HungryBat/assets/97987565/89f4ece4-dd71-48af-b6a1-22872e9c79c5
+
+Credits: https://assetstore.unity.com/publishers/71769
