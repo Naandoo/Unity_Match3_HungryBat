@@ -1,4 +1,4 @@
-## Features ##
+## Functionalities ##
  - Tilemap
    - [x] Represents the board and allows the product owner to create boards with different shapes. 
  - Board
@@ -33,7 +33,7 @@
     - [X] Retry/Quit option.
     - [X] Win/Lose actions.
 
-## Functionalities ##
+## Systems ##
 - Asynchronous System
   - [x] Utilized Coroutines to manage the system appropriately to ensure the functionalities without losing performance.
 - Events
