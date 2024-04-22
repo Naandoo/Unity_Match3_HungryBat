@@ -46,4 +46,6 @@
 ## [Gameplay Showcase](https://youtu.be/13on7-aTH4E?si=_RPKODWaCva8d3dM) ##
 https://github.com/Naandoo/Unity_Match3_HungryBat/assets/97987565/89f4ece4-dd71-48af-b6a1-22872e9c79c5
 
-Credits: https://assetstore.unity.com/publishers/71769
+Credits: 
+- https://assetstore.unity.com/publishers/71769
+- https://simasart.artstation.com/
