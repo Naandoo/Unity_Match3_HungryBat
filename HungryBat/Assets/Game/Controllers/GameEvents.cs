@@ -9,7 +9,7 @@ namespace Controllers
     {
         private GameEvents() { }
         public static GameEvents Instance { get; private set; }
-        public UnityEvent OnWinEvent, OnWinWithExtraMovements, OnLoseEvent;
+        public UnityEvent OnWinEvent, OnWinWithExtraMovements, OnLoseEvent, OnInitiateLevel;
         public UnityEvent OnFruitMovedEvent;
         public UnityEvent OnBoardFinishMovement;
         public OnFruitsExploded OnFruitsExplodedEvent = new();

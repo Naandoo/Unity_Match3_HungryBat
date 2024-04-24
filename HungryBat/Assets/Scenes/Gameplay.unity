@@ -357,6 +357,11 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!82 &106314271 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 7518698551101181579, guid: 862b818495b77df49979952f561976a8, type: 3}
+  m_PrefabInstance: {fileID: 1975369679}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &107170236
 GameObject:
   m_ObjectHideFlags: 0
@@ -1190,9 +1195,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.050317824
+    y: 0
     width: 1
-    height: 0.89936435
+    height: 1
   near clip plane: -100
   far clip plane: 100
   field of view: 60
@@ -1719,6 +1724,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 413722053}
   m_CullTransparentMesh: 1
+--- !u!82 &425304081 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 4317689825807005790, guid: 68a3c366b352ce04b8369b26d236f2d7, type: 3}
+  m_PrefabInstance: {fileID: 933177678}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &438239885
 GameObject:
   m_ObjectHideFlags: 0
@@ -3607,6 +3617,11 @@ Animator:
   m_CorrespondingSourceObject: {fileID: 4330350661154986103, guid: 68a3c366b352ce04b8369b26d236f2d7, type: 3}
   m_PrefabInstance: {fileID: 3791726166366108181}
   m_PrefabAsset: {fileID: 0}
+--- !u!82 &852605183 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 7518698551101181579, guid: 862b818495b77df49979952f561976a8, type: 3}
+  m_PrefabInstance: {fileID: 1361270291}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &858048645
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3760,6 +3775,11 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!82 &914711452 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 4317689825807005790, guid: 68a3c366b352ce04b8369b26d236f2d7, type: 3}
+  m_PrefabInstance: {fileID: 1157221036}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &933177678
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3768,6 +3788,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7752918358213843818}
     m_Modifications:
+    - target: {fileID: 1185005007036377917, guid: 68a3c366b352ce04b8369b26d236f2d7, type: 3}
+      propertyPath: m_Name
+      value: Star Effect Header
+      objectReference: {fileID: 0}
     - target: {fileID: 1869818690460086664, guid: 68a3c366b352ce04b8369b26d236f2d7, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -4131,6 +4155,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7752918358213843818}
     m_Modifications:
+    - target: {fileID: 1185005007036377917, guid: 68a3c366b352ce04b8369b26d236f2d7, type: 3}
+      propertyPath: m_Name
+      value: Star Effect Header
+      objectReference: {fileID: 0}
     - target: {fileID: 1869818690460086664, guid: 68a3c366b352ce04b8369b26d236f2d7, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -4753,6 +4781,10 @@ PrefabInstance:
       propertyPath: m_ApplyRootMotion
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3968539353189176421, guid: 862b818495b77df49979952f561976a8, type: 3}
+      propertyPath: m_Name
+      value: Star Effect Complete
+      objectReference: {fileID: 0}
     - target: {fileID: 6199713134253907225, guid: 862b818495b77df49979952f561976a8, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -5011,6 +5043,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   OnLoseEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnInitiateLevel:
     m_PersistentCalls:
       m_Calls: []
   OnFruitMovedEvent:
@@ -5513,6 +5548,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbc033e821013c54ea1b5cce9c19be8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _gameAudioSources:
+  - {fileID: 717297531}
+  - {fileID: 1700829573}
+  - {fileID: 99292841}
+  - {fileID: 2033367119}
+  - {fileID: 106314271}
+  - {fileID: 852605183}
+  - {fileID: 2064841066}
+  - {fileID: 425304081}
+  - {fileID: 914711452}
   _audioSourceWithoutPitchVariation: {fileID: 717297531}
   _audioSourceWithPitchVariation: {fileID: 1700829573}
   _audioSourceBackgroundMusic: {fileID: 99292841}
@@ -7784,6 +7829,10 @@ PrefabInstance:
       propertyPath: m_ApplyRootMotion
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3968539353189176421, guid: 862b818495b77df49979952f561976a8, type: 3}
+      propertyPath: m_Name
+      value: Star Effect Complete
+      objectReference: {fileID: 0}
     - target: {fileID: 6199713134253907225, guid: 862b818495b77df49979952f561976a8, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -7944,8 +7993,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -299, y: 91.5}
-  m_SizeDelta: {x: 598.4562, y: 182.9614}
+  m_AnchoredPosition: {x: -299.2281, y: 91.4807}
+  m_SizeDelta: {x: 598.4562, y: 182.96143}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1982705201
 MonoBehaviour:
@@ -8013,6 +8062,11 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!82 &2033367119 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 7518698551101181579, guid: 862b818495b77df49979952f561976a8, type: 3}
+  m_PrefabInstance: {fileID: 6273785627548026354}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2037384183
 GameObject:
   m_ObjectHideFlags: 0
@@ -8909,6 +8963,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2062860592}
   m_CullTransparentMesh: 1
+--- !u!82 &2064841066 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 4317689825807005790, guid: 68a3c366b352ce04b8369b26d236f2d7, type: 3}
+  m_PrefabInstance: {fileID: 3791726166366108181}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2065670910
 GameObject:
   m_ObjectHideFlags: 0
@@ -9683,6 +9742,8 @@ MonoBehaviour:
   - {fileID: 1975369681}
   - {fileID: 1589232387}
   _starsEarned: {fileID: 11400000, guid: 261a5545b5c5dc342b4f6a96aa4effdc, type: 2}
+  _completeButton: {fileID: 4191596840051898195}
+  _restartButton: {fileID: 1059221449452172309}
 --- !u!1 &1059221448788415721
 GameObject:
   m_ObjectHideFlags: 0
@@ -10256,6 +10317,30 @@ MonoBehaviour:
       - m_Target: {fileID: 1589232387}
         m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
         m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 4191596840051898195}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
+        m_MethodName: set_interactable
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1059221449452172309}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
+        m_MethodName: set_interactable
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12513,6 +12598,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7752918358213843818}
     m_Modifications:
+    - target: {fileID: 1185005007036377917, guid: 68a3c366b352ce04b8369b26d236f2d7, type: 3}
+      propertyPath: m_Name
+      value: Star Effect Header
+      objectReference: {fileID: 0}
     - target: {fileID: 1869818690460086664, guid: 68a3c366b352ce04b8369b26d236f2d7, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -12884,6 +12973,30 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: Effects.ClickButtonEffect, Assembly-CSharp
         m_MethodName: OnClickButtonEffect
         m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 4191596840051898195}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
+        m_MethodName: set_interactable
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1059221449452172309}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
+        m_MethodName: set_interactable
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -14675,6 +14788,10 @@ PrefabInstance:
     - target: {fileID: 635910368319956203, guid: 862b818495b77df49979952f561976a8, type: 3}
       propertyPath: m_ApplyRootMotion
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3968539353189176421, guid: 862b818495b77df49979952f561976a8, type: 3}
+      propertyPath: m_Name
+      value: Star Effect Complete
       objectReference: {fileID: 0}
     - target: {fileID: 6199713134253907225, guid: 862b818495b77df49979952f561976a8, type: 3}
       propertyPath: m_Pivot.x

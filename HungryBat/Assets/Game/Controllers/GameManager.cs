@@ -44,6 +44,7 @@ namespace Controllers
             GameEvents.Instance.OnBoardFinishMovement.RemoveListener(CheckLevelProgression);
         }
 
+
         private void DecreaseMovements()
         {
             _moveAmount.Value -= 1;

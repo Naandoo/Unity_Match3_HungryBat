@@ -101,7 +101,6 @@ namespace Skills
 
             yield return StartCoroutine(ExecuteSkill(_selectedSkill, fruit));
             StartCoroutine(_boardSorter.SortBoard());
-            _boardMatcher.TryMatchFruits(matchWithMovement: false);
         }
 
         private IEnumerator ExecuteSkill(Skill selectedSkill, Fruit selectedFruit)
@@ -134,11 +133,9 @@ namespace Skills
                 _moves.Value--;
                 StartCoroutine(ExecuteSkill(_bomb, GetRandomFruit()));
                 StartCoroutine(_boardSorter.SortBoard());
-                _boardMatcher.TryMatchFruits(matchWithMovement: false);
             }
 
             yield return _secondsToWinScreen;
-            StartCoroutine(_boardSorter.SortBoard());
             GameEvents.Instance.OnWinEvent.Invoke();
         }
 

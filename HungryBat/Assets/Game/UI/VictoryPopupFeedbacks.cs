@@ -4,6 +4,7 @@ using Controllers;
 using ScriptableVariables;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Game.UI
 {
@@ -16,6 +17,8 @@ namespace Game.UI
         [SerializeField] private float _secondsDelayToShowStars;
         [SerializeField] private Animator[] _starsAnimator;
         [SerializeField] private IntVariable _starsEarned;
+        [SerializeField] private Button _completeButton;
+        [SerializeField] private Button _restartButton;
         private WaitForSeconds _secondsToIncreaseText;
         private WaitForSeconds _secondsToShowStars;
 
@@ -24,6 +27,8 @@ namespace Game.UI
             GameEvents.Instance.OnWinEvent.AddListener(() =>
             {
                 TriggerFeedbacks();
+                _completeButton.interactable = true;
+                _restartButton.interactable = true;
             });
 
             _secondsToIncreaseText = new(_secondsDelayToIncreaseText);

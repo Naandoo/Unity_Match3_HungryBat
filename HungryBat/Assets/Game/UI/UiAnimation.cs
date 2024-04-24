@@ -8,13 +8,13 @@ namespace Game.UI
 {
     public class UiAnimation : MonoBehaviour
     {
-        [SerializeField] private Transform _moves;
-        [SerializeField] private Transform _level;
-        [SerializeField] private Transform _bat;
-        [SerializeField] private Transform _goal;
-        [SerializeField] private Transform _skills;
-        [SerializeField] private Transform _starProgress;
-        [SerializeField] private Transform _score;
+        [SerializeField] private RectTransform _moves;
+        [SerializeField] private RectTransform _level;
+        [SerializeField] private RectTransform _bat;
+        [SerializeField] private RectTransform _goal;
+        [SerializeField] private RectTransform _skills;
+        [SerializeField] private RectTransform _starProgress;
+        [SerializeField] private RectTransform _score;
         [SerializeField] private Slider _starSlider;
         [SerializeField] private Image[] _stars;
         [SerializeField] private Animator[] _starsProgressionAnimator;
@@ -54,38 +54,33 @@ namespace Game.UI
 
         private Tween AnimateMovesAppearing()
         {
-            Vector3 finalPosition = _moves.localPosition;
-            int initialDistance = 200;
+            Vector2 finalPosition = _moves.anchoredPosition;
 
-            Vector3 initialPosition = new(finalPosition.x, finalPosition.y + initialDistance, finalPosition.z);
+            Vector2 positionToMoveFrom = new(finalPosition.x, Screen.height / 2);
             float duration = 0.5f;
 
-
-            return MoveToPosition(_moves, initialPosition, finalPosition, duration);
+            return MoveToPosition(_moves, positionToMoveFrom, duration);
         }
 
         private Tween AnimateLevelAppearing()
         {
-            Vector3 finalPosition = _level.localPosition;
-            int initialDistance = 200;
+            Vector2 finalPosition = _level.anchoredPosition;
 
-            Vector3 initialPosition = new(finalPosition.x, finalPosition.y + initialDistance, finalPosition.z);
+            Vector2 positionToMoveFrom = new(finalPosition.x, Screen.height / 2);
             float duration = 0.5f;
 
-
-            return MoveToPosition(_level, initialPosition, finalPosition, duration);
+            return MoveToPosition(_level, positionToMoveFrom, duration);
         }
 
         private Tween AnimateStarProgressAppearing()
         {
-            Vector3 finalPosition = _starProgress.localPosition;
-            int initialDistance = 100;
+            Vector3 finalPosition = _starProgress.anchoredPosition;
 
-            Vector3 initialPosition = new(finalPosition.x, finalPosition.y + initialDistance, finalPosition.z);
+            Vector3 positionToMoveFrom = new(finalPosition.x, Screen.height / 2);
             float duration = 0.5f;
 
 
-            return MoveToPosition(_starProgress, initialPosition, finalPosition, duration);
+            return MoveToPosition(_starProgress, positionToMoveFrom, duration);
         }
 
         private Tween AnimateScoreAppearing()
@@ -96,13 +91,12 @@ namespace Game.UI
 
         private Tween AnimateBatAppearing()
         {
-            Vector3 finalPosition = _bat.localPosition;
-            int initialDistance = 250;
+            Vector3 finalPosition = _bat.anchoredPosition;
 
-            Vector3 initialPosition = new(finalPosition.x - initialDistance, finalPosition.y, finalPosition.z);
+            Vector3 positionToMoveFrom = new(Screen.width * -0.5f, finalPosition.y);
             float duration = 0.5f;
 
-            return MoveToPosition(_bat, initialPosition, finalPosition, duration);
+            return MoveToPosition(_bat, positionToMoveFrom, duration);
         }
 
         private Tween AnimateGoalAppearing()
@@ -113,13 +107,12 @@ namespace Game.UI
 
         private Tween AnimateSkillsAppearing()
         {
-            Vector3 finalPosition = _skills.localPosition;
-            int initialDistance = 600;
+            Vector3 finalPosition = _skills.anchoredPosition;
 
-            Vector3 initialPosition = new(finalPosition.x + initialDistance, finalPosition.y, finalPosition.z);
+            Vector3 positionToMoveFrom = new(Screen.width / 2, finalPosition.y, finalPosition.z);
             float duration = 0.25f;
 
-            return MoveToPosition(_skills, initialPosition, finalPosition, duration);
+            return MoveToPosition(_skills, positionToMoveFrom, duration);
         }
 
         private Tween PopAnimation(Transform transform, float duration, Ease ease = Ease.Linear)
@@ -130,10 +123,13 @@ namespace Game.UI
             return transform.DOScale(initialScale, duration).SetEase(ease);
         }
 
-        private Tween MoveToPosition(Transform transform, Vector3 initialPosition, Vector3 finalPosition, float duration)
+        private Tween MoveToPosition(RectTransform rectTransform, Vector3 positionToMoveFrom, float duration)
         {
-            transform.localPosition = initialPosition;
-            return transform.DOLocalMove(finalPosition, duration);
+            Vector2 finalPosition = rectTransform.anchoredPosition;
+
+            rectTransform.anchoredPosition = positionToMoveFrom;
+
+            return rectTransform.DOAnchorPos(finalPosition, duration);
         }
 
         public void AnimateSliderIncreasing(float currentValue)

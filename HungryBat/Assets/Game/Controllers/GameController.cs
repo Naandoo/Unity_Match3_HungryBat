@@ -43,6 +43,7 @@ namespace Controllers
         {
             if (_ableToRestartLevel)
             {
+                GameEvents.Instance.OnInitiateLevel.Invoke();
                 _ableToRestartLevel = false;
                 _isLevelFinished.Value = false;
                 _boardGrid.ClearBoard();
